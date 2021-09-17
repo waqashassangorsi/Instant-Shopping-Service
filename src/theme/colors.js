@@ -1,5 +1,5 @@
 export default colors = {
-  primary: '#fa8072',
+  primary: '#ECECEC',
   secondary: '#1abc9c',
   ternary: '#D5BDA3',
   forth: '#2A9DF4',
@@ -11,4 +11,5 @@ export default colors = {
   gray: '#616161',
   darkBlack: '#000',
   lightWhite: '#F3F3F3',
+  greenColor:"#005016"
 };

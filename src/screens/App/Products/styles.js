@@ -7,7 +7,7 @@ const ICON_WRAPPER_SIZE = 25;
 import {Fonts} from '../../../utils/Fonts';
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
+   
   },
   logo: {
     height: 50,
