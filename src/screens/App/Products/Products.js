@@ -65,9 +65,14 @@ const Product = ({
   let navigation = useNavigation();
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={{flex:1}}>
       <MainHeader />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{flex: 1}}
+        contentContainerStyle={{
+          // flexGrow: 1,
+        }}>
         <ProductsDetails />
         <Footer />
       </ScrollView>

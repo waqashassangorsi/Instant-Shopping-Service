@@ -37,7 +37,7 @@ const kitchen = [
 
 const PopularKitchen = () => {
   return (
-    <View>
+    <View style={{flex:1}}>
       <View style={{marginTop: 10}}>
         <Image
           source={require('../../../assets/pro.jpg')}

@@ -16,14 +16,14 @@ const STORE = [
 
 const Store = () => {
   return (
-    <View>
+    <View style={{flex:1}}>
       <View>
         <Image
           source={require('../../../assets/pro.jpg')}
           style={{height: 150}}
         />
       </View>
-      <View style={{marginTop: 10, padding: 10}}>
+      <View style={{padding: 10}}>
         <View
           style={{
             flexDirection: 'row',

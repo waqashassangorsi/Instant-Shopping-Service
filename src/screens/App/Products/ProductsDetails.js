@@ -10,14 +10,14 @@ import { colors } from 'react-native-elements';
 
 const ProductsDetails = () => {
     return (
-      <View style={{backgroundColor:colors.white}}>
-        <ScrollView>
+      <View style={{backgroundColor: colors.white, flex: 1}}>
+        <ScrollView
+          style={{flex: 1}}>
           <Store />
           <BestSellProduct />
           <PopularFashion />
           <PopularKitchen />
-         <TopPerformingCategories/>
-         
+          <TopPerformingCategories />
         </ScrollView>
       </View>
     );

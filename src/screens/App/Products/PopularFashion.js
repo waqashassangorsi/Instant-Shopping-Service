@@ -37,7 +37,7 @@ const fashion = [
 
 const PopularFashion = () => {
   return (
-    <View style={{marginTop: 10, padding: 10}}>
+    <View style={{flex:1, padding: 10}}>
       <View
         style={{
           flexDirection: 'row',

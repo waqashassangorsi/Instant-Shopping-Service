@@ -5,6 +5,7 @@ const TopPerformingCategories = () => {
     return (
       <View
         style={{
+          flex:1,
           marginTop: 10,
           padding: 10,
           backgroundColor: colors.WebGLQuery,
@@ -85,7 +86,7 @@ const TopPerformingCategories = () => {
           <View
             style={{
               flex: 1,
-              margin: 1,
+              margin: 2,
               backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
             }}>
@@ -148,7 +149,7 @@ const TopPerformingCategories = () => {
             android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
-              margin: 1,
+              margin: 2,
               backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
             }}>
