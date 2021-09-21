@@ -11,5 +11,7 @@ export default colors = {
   gray: '#616161',
   darkBlack: '#000',
   lightWhite: '#F3F3F3',
-  greenColor:"#005016"
+  greenColor: '#00A42E',
+  WebGLQuery: '#D5DBDB',
+  red:'#FD4747'
 };

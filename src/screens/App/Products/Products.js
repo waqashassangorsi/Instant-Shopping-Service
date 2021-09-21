@@ -41,6 +41,12 @@ import {addToCart} from '../../../Redux/Action/cart';
 import {saveCharity} from '../../../Redux/Action/Loginaction';
 import {Alert} from 'react-native';
 import {compose} from 'redux';
+import Store from './Store';
+import BestSellProduct from './BestSellProduct';
+import PopularFashion from './PopularFashion';
+import PopularKitchen from './PopularKitchen';
+import Footer from '../../../components/Footer';
+import ProductsDetails from './ProductsDetails';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -79,143 +85,8 @@ const Product = ({
 
   return (
     <View style={styles.mainContainer}>
-      <Header
-        containerStyle={{paddingTop: 10, alignItems: 'center'}}
-        backgroundColor={colors.primary}
-        leftComponent={
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Entypo
-              name="menu"
-              size={30}
-              color="black"
-              onPress={() => {
-                console.log('navigation', navigation);
-               navigation.openDrawer()
-              }}
-            />
-            <View>
-              <Image
-                source={require('../../../assets/logo.png')}
-                style={{width: 110, height: 45, resizeMode: 'contain'}}
-              />
-            </View>
-          </View>
-        }
-        rightComponent={
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 5,
-            }}>
-            <View
-              style={{
-                marginHorizontal: 5,
-                alignItems: 'center',
-                flexDirection: 'row',
-                marginRight: 10,
-              }}>
-              <TouchableOpacity>
-                <Text style={{fontSize: 13}}>Log in</Text>
-              </TouchableOpacity>
-              <View style={{marginHorizontal: 5}} />
-              <TouchableOpacity
-                style={{
-                  borderWidth: 2,
-                  borderColor: colors.secondary,
-                  borderRadius: 5,
-                  padding: 5,
-                }}>
-                <Text style={{fontSize: 13}}>Sign up</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View>
-              <Image
-                source={require('../../../assets/person.png')}
-                style={{
-                  borderRadius: 30 / 2,
-                  resizeMode: 'cover',
-                  width: 30,
-                  height: 30,
-                }}
-              />
-            </View>
-            <Ionicons name="basket-outline" size={30} color="#005016" />
-          </View>
-        }
-      />
-      {/* Search Categories */}
-      <View style={{backgroundColor: colors.white, paddingHorizontal: 10}}>
-        <Text style={{color: colors.greenColor, fontSize: 8,marginTop:4 }}>
-          SEARCH CATEGORIES
-        </Text>
-
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <TouchableOpacity
-              style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{fontSize: 13, fontWeight: '600'}}>
-                All Categories
-              </Text>
-              <AntDesign
-                name="caretdown"
-                size={13}
-                style={{marginLeft: 5}}
-                color="black"
-              />
-            </TouchableOpacity>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TextInput
-                style={{
-                  borderBottomColor: colors.gray,
-                  borderBottomWidth: 1,
-                  width: '75%',
-                }}
-                // onChangeText={onChangeNumber}
-                // value={number}
-                placeholder="Enter search keyphrase"
-                // keyboardType=""
-              />
-              <Fontisto
-                name="search"
-                size={15}
-                style={{right: 15}}
-                color={colors.secondary}
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <ScrollView
-        contentContainerStyle={{
-          backgroundColor: colors.greenColor,
-          marginTop: 5,
-        }}
-        horizontal
-        showsHorizontalScrollIndicator={false}>
-        {DATA.map((item) => (
-          <Pressable
-            key={item.id}
-            android_ripple={{color: colors.white, borderless: false}}
-            style={{padding: 10}}>
-            <Text
-              style={{
-                textTransform: 'uppercase',
-                color: colors.white,
-                fontSize: 12,
-              }}>
-              {item.name}
-            </Text>
-          </Pressable>
-        ))}
-      </ScrollView>
+     
+      <Footer />
     </View>
   );
 };
@@ -241,3 +112,7 @@ export default connect(mapStateToProps, {
   saveCharity,
   getCateg,
 })(Product);
+
+
+
+
