@@ -4,7 +4,7 @@ import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 
-const STORE = [
+const fashion = [
   {
     id: 1,
     name: 'Gucci Shirt',
@@ -80,7 +80,7 @@ const PopularFashion = () => {
             }}
             horizontal
             showsHorizontalScrollIndicator={false}>
-            {STORE.map((item) => (
+            {fashion.map((item) => (
               <View key={item.id}>
                 <View
                   android_ripple={{color: colors.white, borderless: false}}

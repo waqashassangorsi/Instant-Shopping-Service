@@ -5,6 +5,7 @@ import BestSellProduct from './BestSellProduct'
 import PopularFashion from './PopularFashion';
 import PopularKitchen from './PopularKitchen';
 import Footer from '../../../components/Footer';
+import TopPerformingCategories from './TopPerformingCategories';
 
 const ProductsDetails = () => {
     return (
@@ -20,7 +21,7 @@ const ProductsDetails = () => {
           <BestSellProduct />
           <PopularFashion />
           <PopularKitchen />
-         
+         <TopPerformingCategories/>
         </ScrollView>
       </View>
     );

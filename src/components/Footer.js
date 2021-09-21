@@ -19,8 +19,7 @@ const Footer = () => {
   return (
     <View
       style={{
-        // position: 'absolute',
-        // bottom: 0,
+        flex:1,
         backgroundColor: colors.primary,
         // width: 375,
         height: 320,
@@ -176,7 +175,7 @@ const Footer = () => {
           backgroundColor: colors.greenColor,
           height: 40,
           width: 375,
-          marginTop: 10,
+          marginTop: 13,
           justifyContent: 'center',
         }}>
         <View

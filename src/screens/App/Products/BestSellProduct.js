@@ -4,7 +4,7 @@ import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 
-const STORE = [
+const product1 = [
   {
     id: 1,
     name: 'Blender & Grinder',
@@ -47,7 +47,7 @@ const STORE = [
   //   {id: 11, name: 'ebay'},
   //   {id: 12, name: 'amazon'},
 ];
-const STORE2 = [
+const product2 = [
   {
     id: 1,
     name: 'one more feet',
@@ -107,7 +107,7 @@ const BestSellProduct = () => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {STORE.map((item) => (
+          {product1.map((item) => (
             <View key={item.id}>
               <View
                 android_ripple={{color: colors.white, borderless: false}}
@@ -146,7 +146,7 @@ const BestSellProduct = () => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {STORE2.map((item) => (
+          {product2.map((item) => (
             <View key={item.id}>
               <View
                 android_ripple={{color: colors.white, borderless: false}}

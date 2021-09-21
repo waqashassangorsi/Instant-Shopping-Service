@@ -16,13 +16,6 @@ import {
   Pressable,
 } from 'react-native';
 import styles from './styles';
-import {Header, Badge} from 'react-native-elements';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import Entypo from 'react-native-vector-icons/Entypo';
-import {primary, logo, secondary, ternary, forth} from '../../../assets';
-import colors from '../../../theme/colors';
 import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
@@ -47,23 +40,11 @@ import PopularFashion from './PopularFashion';
 import PopularKitchen from './PopularKitchen';
 import Footer from '../../../components/Footer';
 import ProductsDetails from './ProductsDetails';
+import MainHeader from './MainHeader';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-const DATA = [
-  {id: 1, name: 'shop by category'},
-  {id: 2, name: 'ebay'},
-  {id: 3, name: 'amazon'},
-  {id: 4, name: 'shop by category'},
-  {id: 5, name: 'ebay'},
-  {id: 6, name: 'amazon'},
-  {id: 7, name: 'shop by category'},
-  {id: 8, name: 'ebay'},
-  {id: 9, name: 'amazon'},
-  {id: 10, name: 'shop by category'},
-  {id: 11, name: 'ebay'},
-  {id: 12, name: 'amazon'},
-];
+
 
 const Product = ({
   params,
@@ -85,8 +66,11 @@ const Product = ({
 
   return (
     <View style={styles.mainContainer}>
-     
-      <Footer />
+      {/* <MainHeader /> */}
+      <ScrollView>
+        <ProductsDetails />
+        <Footer />
+      </ScrollView>
     </View>
   );
 };

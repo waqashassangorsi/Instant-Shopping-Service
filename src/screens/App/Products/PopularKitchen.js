@@ -4,7 +4,7 @@ import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 
-const STORE = [
+const kitchen = [
   {
     id: 1,
     name: 'frozen veggies',
@@ -49,7 +49,7 @@ const PopularKitchen = () => {
           style={{height: 150}}
         />
       </View>
-      <View style={{marginTop: 10}}>
+      <View style={{marginTop: 10, backgroundColor: colors.white}}>
         <View
           style={{
             flexDirection: 'row',
@@ -85,7 +85,7 @@ const PopularKitchen = () => {
             }}
             horizontal
             showsHorizontalScrollIndicator={false}>
-            {STORE.map((item) => (
+            {kitchen.map((item) => (
               <View key={item.id}>
                 <View
                   android_ripple={{color: colors.white, borderless: false}}
@@ -123,6 +123,7 @@ const PopularKitchen = () => {
             ))}
           </ScrollView>
         </View>
+        <View>{/* for add */}</View>
       </View>
     </View>
   );
