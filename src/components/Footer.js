@@ -19,16 +19,13 @@ const Footer = () => {
   return (
     <View
       style={{
-        flex:1,
-        backgroundColor: colors.primary,
-        // width: 375,
-        height: 320,
-        // elevation: 5,
+        flex: 1,
+        marginTop:5,
+        backgroundColor: colors.WebGLQuery,
       }}>
       <View
         style={{
           flexDirection: 'row',
-
           height: 150,
           justifyContent: 'space-between',
         }}>
@@ -79,7 +76,7 @@ const Footer = () => {
             style={{
               borderBottomColor: colors.gray,
               borderBottomWidth: 1,
-              width: '90%',
+              width: '95%',
             }}
             // onChangeText={onChangeNumber}
             // value={number}
@@ -89,11 +86,11 @@ const Footer = () => {
           <MaterialCommunityIcons
             name="email-outline"
             size={15}
-            style={{right: 80}}
+            style={{right: 76}}
             color={colors.greenColor}
           />
           <View>
-            <Text style={{color: colors.greenColor, right: 75, fontSize: 11}}>
+            <Text style={{color: colors.greenColor, right: 70, fontSize: 11}}>
               Subscribe
             </Text>
           </View>
@@ -105,9 +102,7 @@ const Footer = () => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            // justifyContent: 'space-between',
             marginTop: 10,
-            // width: '50%',
           }}>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -130,6 +125,7 @@ const Footer = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.5}
             style={{
               borderRadius: 40 / 2,
               elevation: 1,
@@ -150,6 +146,7 @@ const Footer = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.5}
             style={{
               borderRadius: 40 / 2,
               elevation: 1,
@@ -174,7 +171,7 @@ const Footer = () => {
         style={{
           backgroundColor: colors.greenColor,
           height: 40,
-          width: 375,
+          // width: 375,
           marginTop: 13,
           justifyContent: 'center',
         }}>
@@ -182,9 +179,9 @@ const Footer = () => {
           style={{
             flexDirection: 'row',
             left: 15,
-            width: '52%',
+            // width: '52%',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
           }}>
           <Image
             source={require('../assets/copyRight.png')}
@@ -198,6 +195,7 @@ const Footer = () => {
             style={{
               color: colors.white,
               fontSize: 11,
+              marginLeft:10
             }}>
             CopyRight 2021.All Rights Reserved.
           </Text>

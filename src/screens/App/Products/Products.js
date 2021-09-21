@@ -66,8 +66,8 @@ const Product = ({
 
   return (
     <View style={styles.mainContainer}>
-      {/* <MainHeader /> */}
-      <ScrollView>
+      <MainHeader />
+      <ScrollView showsVerticalScrollIndicator={false}>
         <ProductsDetails />
         <Footer />
       </ScrollView>

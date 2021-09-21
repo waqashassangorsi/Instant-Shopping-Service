@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const STORE = [
   {id: 1, name: 'eBay', img: require('../../../assets/eBay.png')},
@@ -10,43 +11,55 @@ const STORE = [
   {id: 4, name: 'Nike', img: require('../../../assets/nike.png')},
   {id: 5, name: 'Spar', img: require('../../../assets/spar.png')},
   {id: 6, name: 'amazon', img: require('../../../assets/eBay.png')},
-  {id: 7, name: 'Shoprite', img: require('../../../assets/eBay.png')},
-  //   {id: 8, name: 'ebay'},
-  //   {id: 9, name: 'amazon'},
-  //   {id: 10, name: 'shop by category'},
-  //   {id: 11, name: 'ebay'},
-  //   {id: 12, name: 'amazon'},
+  {id: 7, name: 'Shoprite', img: require('../../../assets/eBay.png')}
 ];
 
 const Store = () => {
   return (
     <View>
-
-      <View style={{marginTop: 10}}>
+      <View>
+        <Image
+          source={require('../../../assets/pro.jpg')}
+          style={{height: 150}}
+        />
+      </View>
+      <View style={{marginTop: 10, padding: 10}}>
         <View
           style={{
             flexDirection: 'row',
             borderBottomColor: colors.WebGLQuery,
             borderBottomWidth: 1,
-            justifyContent:'space-between'
-            //   width: 330,
-            //   left: 10,
+            justifyContent: 'space-between'
           }}>
-          <Text style={{fontWeight: '700', fontSize: 12,textTransform:'capitalize'}}>explore stores</Text>
           <Text
             style={{
-              fontSize: 10,
-            //   left: 220,
-              color: colors.WebGLQuery,
-              textTransform: 'uppercase',
+              fontWeight: '700',
+              fontSize: 12,
+              textTransform: 'capitalize',
             }}>
-            See All
+            explore stores
           </Text>
+
+            <Pressable
+              android_ripple={{
+                color: colors.black,
+                borderless: false,
+              }}>
+              <Text
+                style={{
+                  fontSize: 10,
+                  color: colors.WebGLQuery,
+                  textTransform: 'uppercase',
+                }}>
+                See All
+              </Text>
+            </Pressable>
+          
         </View>
         <View>
           <ScrollView
             contentContainerStyle={{
-              backgroundColor: colors.primary,
+              backgroundColor: colors.white,
               marginTop: 10,
             }}
             horizontal
@@ -63,7 +76,7 @@ const Store = () => {
                     height: 85,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    elevation: 1,
+                    elevation: 5,
                   }}>
                   <Image
                     source={item.img}

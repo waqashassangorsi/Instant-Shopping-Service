@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView,Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
@@ -32,12 +32,7 @@ const kitchen = [
     star: '4.5(566)',
     price: '$250.99',
     img: require('../../../assets/spar.png'),
-  },
-  //   {id: 8, name: 'ebay'},
-  //   {id: 9, name: 'amazon'},
-  //   {id: 10, name: 'shop by category'},
-  //   {id: 11, name: 'ebay'},
-  //   {id: 12, name: 'amazon'},
+  }
 ];
 
 const PopularKitchen = () => {
@@ -49,15 +44,13 @@ const PopularKitchen = () => {
           style={{height: 150}}
         />
       </View>
-      <View style={{marginTop: 10, backgroundColor: colors.white}}>
+      <View style={{marginTop: 10, padding: 10, backgroundColor: colors.white}}>
         <View
           style={{
             flexDirection: 'row',
             borderBottomColor: colors.WebGLQuery,
             borderBottomWidth: 1,
-            justifyContent: 'space-between',
-            //   width: 330,
-            //   left: 10,
+            justifyContent: 'space-between'
           }}>
           <Text
             style={{
@@ -67,15 +60,20 @@ const PopularKitchen = () => {
             }}>
             popular in kitchen
           </Text>
-          <Text
-            style={{
-              fontSize: 10,
-              //   left: 220,
-              color: colors.WebGLQuery,
-              textTransform: 'uppercase',
+          <Pressable
+            android_ripple={{
+              color: colors.black,
+              borderless: false,
             }}>
-            See All
-          </Text>
+            <Text
+              style={{
+                fontSize: 10,
+                color: colors.WebGLQuery,
+                textTransform: 'uppercase',
+              }}>
+              See All
+            </Text>
+          </Pressable>
         </View>
         <View>
           <ScrollView
@@ -86,16 +84,13 @@ const PopularKitchen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}>
             {kitchen.map((item) => (
-              <View key={item.id}>
+              <View key={item.id} style={{backgroundColor: colors.white}}>
                 <View
-                  android_ripple={{color: colors.white, borderless: false}}
+
                   style={{
                     flex: 1,
                     margin: 2,
-                    backgroundColor: colors.white,
                     borderRadius: 10,
-                    // width: 100,
-                    // height: 120,
                     alignItems: 'center',
                     justifyContent: 'center',
                     elevation: 1,

@@ -1,17 +1,21 @@
 import React from 'react'
-import { View,Image, Text } from 'react-native'
-
+import { View,Image, Text,Pressable } from 'react-native'
+import colors from '../../../theme/colors';
 const TopPerformingCategories = () => {
     return (
-      <View style={{marginTop: 10}}>
+      <View
+        style={{
+          marginTop: 10,
+          padding: 10,
+          backgroundColor: colors.WebGLQuery,
+        }}>
         <View
           style={{
             flexDirection: 'row',
             borderBottomColor: colors.WebGLQuery,
             borderBottomWidth: 1,
             justifyContent: 'space-between',
-            //   width: 330,
-            //   left: 10,
+            marginTop: 10,
           }}>
           <Text
             style={{
@@ -21,29 +25,28 @@ const TopPerformingCategories = () => {
             }}>
             top performing categories
           </Text>
-          <Text
-            style={{
-              fontSize: 10,
-              //   left: 220,
-              color: colors.WebGLQuery,
-              textTransform: 'uppercase',
+          <Pressable
+            android_ripple={{
+              color: colors.black,
+              borderless: false,
             }}>
-            See All
-          </Text>
+            <Text
+              style={{
+                fontSize: 10,
+                color: colors.gray,
+                textTransform: 'uppercase',
+              }}>
+              See All
+            </Text>
+          </Pressable>
         </View>
         <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
           <View
-            android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
               margin: 2,
-              backgroundColor: colors.white,
+              backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
-              // width: 100,
-              // height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 1,
             }}>
             <Image
               source={require('../../../assets/gardening.png')}
@@ -54,20 +57,17 @@ const TopPerformingCategories = () => {
                 borderRadius: 10,
               }}
             />
+            <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              gardening
+            </Text>
           </View>
 
           <View
-            android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
               margin: 2,
-              backgroundColor: colors.white,
+              backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
-              // width: 100,
-              // height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 1,
             }}>
             <Image
               source={require('../../../assets/fashion.png')}
@@ -78,19 +78,16 @@ const TopPerformingCategories = () => {
                 borderRadius: 10,
               }}
             />
+            <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              fashion
+            </Text>
           </View>
           <View
-            android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
               margin: 1,
-              backgroundColor: colors.white,
+              backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
-              // width: 100,
-              // height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 1,
             }}>
             <Image
               source={require('../../../assets/mensWear.png')}
@@ -101,21 +98,18 @@ const TopPerformingCategories = () => {
                 borderRadius: 10,
               }}
             />
+            <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              mens wears
+            </Text>
           </View>
         </View>
         <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
           <View
-            android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
               margin: 2,
-              backgroundColor: colors.white,
+              backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
-              // width: 100,
-              // height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 1,
             }}>
             <Image
               source={require('../../../assets/sports.png')}
@@ -126,19 +120,16 @@ const TopPerformingCategories = () => {
                 borderRadius: 10,
               }}
             />
+            <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              sports
+            </Text>
           </View>
           <View
-            android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
               margin: 2,
-              backgroundColor: colors.white,
+              backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
-              // width: 100,
-              // height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 1,
             }}>
             <Image
               source={require('../../../assets/kitchen.png')}
@@ -149,19 +140,17 @@ const TopPerformingCategories = () => {
                 borderRadius: 10,
               }}
             />
+            <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              kitchen
+            </Text>
           </View>
           <View
             android_ripple={{color: colors.white, borderless: false}}
             style={{
               flex: 1,
               margin: 1,
-              backgroundColor: colors.white,
+              backgroundColor: colors.WebGLQuery,
               borderRadius: 12,
-              // width: 100,
-              // height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 1,
             }}>
             <Image
               source={require('../../../assets/gamming.png')}
@@ -172,6 +161,9 @@ const TopPerformingCategories = () => {
                 borderRadius: 10,
               }}
             />
+            <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              gamming
+            </Text>
           </View>
         </View>
       </View>

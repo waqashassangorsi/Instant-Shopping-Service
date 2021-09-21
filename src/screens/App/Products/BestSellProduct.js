@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView,Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
@@ -39,13 +39,7 @@ const product1 = [
     star: '4.5(566)',
     price: '$250.99',
     img: require('../../../assets/hairDryer.png'),
-  },
-
-  //   {id: 8, name: 'ebay'},
-  //   {id: 9, name: 'amazon'},
-  //   {id: 10, name: 'shop by category'},
-  //   {id: 11, name: 'ebay'},
-  //   {id: 12, name: 'amazon'},
+  }
 ];
 const product2 = [
   {
@@ -71,15 +65,13 @@ const product2 = [
 
 const BestSellProduct = () => {
   return (
-    <View style={{marginTop: 10}}>
+    <View style={{padding: 10}}>
       <View
         style={{
           flexDirection: 'row',
           borderBottomColor: colors.WebGLQuery,
           borderBottomWidth: 1,
-          justifyContent: 'space-between',
-          //   width: 330,
-          //   left: 10,
+          justifyContent: 'space-between'
         }}>
         <Text
           style={{
@@ -89,20 +81,25 @@ const BestSellProduct = () => {
           }}>
           best selling products
         </Text>
-        <Text
-          style={{
-            fontSize: 10,
-            //   left: 190,
-            color: colors.WebGLQuery,
-            textTransform: 'uppercase',
+        <Pressable
+          android_ripple={{
+            color: colors.black,
+            borderless: false,
           }}>
-          See All
-        </Text>
+          <Text
+            style={{
+              fontSize: 10,
+              color: colors.WebGLQuery,
+              textTransform: 'uppercase',
+            }}>
+            See All
+          </Text>
+        </Pressable>
       </View>
       <View>
         <ScrollView
           contentContainerStyle={{
-            backgroundColor: colors.primary,
+            backgroundColor: colors.white,
             marginTop: 10,
           }}
           horizontal
@@ -141,7 +138,7 @@ const BestSellProduct = () => {
       <View>
         <ScrollView
           contentContainerStyle={{
-            backgroundColor: colors.primary,
+            backgroundColor: colors.white,
             marginTop: 10,
           }}
           horizontal
@@ -149,14 +146,14 @@ const BestSellProduct = () => {
           {product2.map((item) => (
             <View key={item.id}>
               <View
-                android_ripple={{color: colors.white, borderless: false}}
+  
                 style={{
                   flex: 1,
                   margin: 2,
                   backgroundColor: colors.white,
                   borderRadius: 15,
-                  //   width: 100,
-                  //   height: 120,
+                  borderWidth:1,
+                  borderColor:colors.greenColor,
                   alignItems: 'center',
                   justifyContent: 'center',
                   elevation: 1,

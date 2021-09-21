@@ -112,8 +112,8 @@ const MainHeader = () => {
       />
       {/* Search Categories */}
       <View style={{backgroundColor: colors.white, paddingHorizontal: 10}}>
-        <Text style={{color: colors.greenColor, fontSize: 8, marginTop: 4}}>
-          SEARCH CATEGORIES
+        <Text style={{color: colors.greenColor, fontSize: 8, marginTop: 4,textTransform:'uppercase'}}>
+          search categories
         </Text>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -131,7 +131,7 @@ const MainHeader = () => {
               <AntDesign
                 name="caretdown"
                 size={13}
-                style={{marginLeft: 5}}
+                style={{marginHorizontal:5}}
                 color="black"
               />
             </TouchableOpacity>

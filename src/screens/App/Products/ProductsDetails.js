@@ -6,22 +6,18 @@ import PopularFashion from './PopularFashion';
 import PopularKitchen from './PopularKitchen';
 import Footer from '../../../components/Footer';
 import TopPerformingCategories from './TopPerformingCategories';
+import { colors } from 'react-native-elements';
 
 const ProductsDetails = () => {
     return (
-      <View style={{padding: 10}}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View>
-            <Image
-              source={require('../../../assets/pro.jpg')}
-              style={{height: 150}}
-            />
-          </View>
+      <View style={{backgroundColor:colors.white}}>
+        <ScrollView>
           <Store />
           <BestSellProduct />
           <PopularFashion />
           <PopularKitchen />
          <TopPerformingCategories/>
+         
         </ScrollView>
       </View>
     );
