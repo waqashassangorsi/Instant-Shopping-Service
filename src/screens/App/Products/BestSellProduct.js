@@ -1,5 +1,6 @@
+
 import React from 'react';
-import {View, Text, Image, ScrollView,Pressable} from 'react-native';
+import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
@@ -39,7 +40,7 @@ const product1 = [
     star: '4.5(566)',
     price: '$250.99',
     img: require('../../../assets/hairDryer.png'),
-  }
+  },
 ];
 const product2 = [
   {
@@ -59,19 +60,18 @@ const product2 = [
     name: 'Shoprite',
     title: 'nike | sportwear',
     img: require('../../../assets/eBay.png'),
-  }
-  
+  },
 ];
 
 const BestSellProduct = () => {
   return (
-    <View style={{flex:1, padding: 10}}>
+    <View style={{flex: 1, padding: 10}}>
       <View
         style={{
           flexDirection: 'row',
           borderBottomColor: colors.WebGLQuery,
           borderBottomWidth: 1,
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}>
         <Text
           style={{
@@ -146,14 +146,13 @@ const BestSellProduct = () => {
           {product2.map((item) => (
             <View key={item.id}>
               <View
-  
                 style={{
                   flex: 1,
                   margin: 2,
                   backgroundColor: colors.white,
                   borderRadius: 15,
-                  borderWidth:1,
-                  borderColor:colors.greenColor,
+                  borderWidth: 1,
+                  borderColor: colors.greenColor,
                   alignItems: 'center',
                   justifyContent: 'center',
                   elevation: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, ScrollView,Pressable} from 'react-native';
+import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
@@ -32,12 +32,12 @@ const kitchen = [
     star: '4.5(566)',
     price: '$250.99',
     img: require('../../../assets/spar.png'),
-  }
+  },
 ];
 
 const PopularKitchen = () => {
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <View style={{marginTop: 10}}>
         <Image
           source={require('../../../assets/pro.jpg')}
@@ -50,7 +50,7 @@ const PopularKitchen = () => {
             flexDirection: 'row',
             borderBottomColor: colors.WebGLQuery,
             borderBottomWidth: 1,
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
           }}>
           <Text
             style={{
@@ -86,7 +86,6 @@ const PopularKitchen = () => {
             {kitchen.map((item) => (
               <View key={item.id} style={{backgroundColor: colors.white}}>
                 <View
-
                   style={{
                     flex: 1,
                     margin: 2,

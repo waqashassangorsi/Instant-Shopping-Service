@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, ScrollView,Pressable} from 'react-native';
+import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
@@ -32,18 +32,18 @@ const fashion = [
     star: '4.5(566)',
     price: '$250.99',
     img: require('../../../assets/spar.png'),
-  }
+  },
 ];
 
 const PopularFashion = () => {
   return (
-    <View style={{flex:1, padding: 10}}>
+    <View style={{flex: 1, padding: 10}}>
       <View
         style={{
           flexDirection: 'row',
           borderBottomColor: colors.WebGLQuery,
           borderBottomWidth: 1,
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}>
         <Text
           style={{
@@ -79,7 +79,6 @@ const PopularFashion = () => {
           {fashion.map((item) => (
             <View key={item.id} style={{backgroundColor: colors.white}}>
               <View
-
                 style={{
                   flex: 1,
                   margin: 2,

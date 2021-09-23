@@ -41,6 +41,13 @@ import PopularKitchen from './PopularKitchen';
 import Footer from '../../../components/Footer';
 import ProductsDetails from './ProductsDetails';
 import MainHeader from './MainHeader';
+import SignUpModal from '../../../components/SignUpModal';
+import LogInModal from '../../../components/LogInModal';
+import CreateCart from '../Cart/CreateCart';
+
+import ConfirmationCart from '../Cart/ConfirmationCart';
+import DeliveryLocationCart from '../Cart/DeliveryLocationCart';
+import CongratulationCart from '../Cart/CongratulationCart';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -65,17 +72,18 @@ const Product = ({
   let navigation = useNavigation();
 
   return (
-    <View style={{flex:1}}>
-      <MainHeader />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{flex: 1}}
-        contentContainerStyle={{
-          // flexGrow: 1,
-        }}>
-        <ProductsDetails />
+    <View style={{flex: 1}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+        <MainHeader />
+        {/* <ProductsDetails /> */}
+        <CreateCart />
+        {/* <DeliveryLocationCart/> */}
+        {/* <ConfirmationCart/> */}
+        {/* <CongratulationCart/> */}
         <Footer />
       </ScrollView>
+      {/* <SignUpModal/> */}
+      {/* <LogInModal/> */}
     </View>
   );
 };
