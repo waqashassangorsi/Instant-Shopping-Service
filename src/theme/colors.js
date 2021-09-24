@@ -15,4 +15,5 @@ export default colors = {
   WebGLQuery: '#D5DBDB',
   red: '#FD4747',
   lightSlategrey: '#545B64',
+  HexColor: '#754C24',
 };

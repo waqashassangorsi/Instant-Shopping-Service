@@ -48,6 +48,7 @@ import CreateCart from '../Cart/CreateCart';
 import ConfirmationCart from '../Cart/ConfirmationCart';
 import DeliveryLocationCart from '../Cart/DeliveryLocationCart';
 import CongratulationCart from '../Cart/CongratulationCart';
+import ProductViewDetail from './ProductViewDetail';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -76,10 +77,13 @@ const Product = ({
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
         <MainHeader />
         {/* <ProductsDetails /> */}
-        <CreateCart />
+
+        {/* <CreateCart /> */}
+       
         {/* <DeliveryLocationCart/> */}
         {/* <ConfirmationCart/> */}
         {/* <CongratulationCart/> */}
+        <ProductViewDetail/>
         <Footer />
       </ScrollView>
       {/* <SignUpModal/> */}

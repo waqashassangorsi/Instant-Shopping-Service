@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
+import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 
@@ -8,28 +9,32 @@ const fashion = [
   {
     id: 1,
     name: 'Gucci Shirt',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/gucciShirt.png'),
   },
   {
     id: 2,
     name: 'Mini dress',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/miniDress.png'),
   },
   {
     id: 4,
     name: 'denim trousers',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/denimTrousers.png'),
   },
   {
     id: 5,
     name: 'Spar',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/spar.png'),
   },
@@ -82,18 +87,18 @@ const PopularFashion = () => {
                 style={{
                   flex: 1,
                   margin: 2,
-                  borderRadius: 12,
+                  borderRadius: 10,
+                  overflow: 'hidden',
                   alignItems: 'center',
                   justifyContent: 'center',
                   elevation: 1,
                 }}>
                 <Image
                   source={item.img}
+                  resizeMode="cover"
                   style={{
-                    resizeMode: 'contain',
                     width: 115,
                     height: 115,
-                    borderRadius: 10,
                   }}
                 />
               </View>
@@ -101,7 +106,12 @@ const PopularFashion = () => {
                 {item.name}
               </Text>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-                {item.star}
+                <Entypo name="star" color={colors.HexColor} size={13} />
+                {item.rating}
+                <Text style={{color: colors.WebGLQuery}}>
+                  {' '}
+                  ({item.totalUser ? item.totalUser : 0})
+                </Text>
               </Text>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.price}

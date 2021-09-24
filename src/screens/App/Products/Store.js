@@ -80,7 +80,8 @@ const Store = () => {
                   }}>
                   <Image
                     source={item.img}
-                    style={{resizeMode: 'contain', width: 50}}
+                    resizeMode={'contain'}
+                    style={{width: 50}}
                   />
                 </View>
                 <Text style={{fontSize: 10}}>{item.name}</Text>

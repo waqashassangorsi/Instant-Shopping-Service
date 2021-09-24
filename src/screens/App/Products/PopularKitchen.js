@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
+import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 
@@ -8,28 +9,32 @@ const kitchen = [
   {
     id: 1,
     name: 'frozen veggies',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/frozenVegies.png'),
   },
   {
     id: 2,
     name: 'bag of rice 50kg',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/rice.png'),
   },
   {
     id: 4,
     name: 'palm oil 4ltr',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/palmOil.png'),
   },
   {
     id: 5,
     name: 'Spar',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/spar.png'),
   },
@@ -92,15 +97,15 @@ const PopularKitchen = () => {
                     borderRadius: 10,
                     alignItems: 'center',
                     justifyContent: 'center',
+                    overflow: 'hidden',
                     elevation: 1,
                   }}>
                   <Image
                     source={item.img}
+                    resizeMode={'cover'}
                     style={{
-                      resizeMode: 'contain',
                       width: 115,
                       height: 115,
-                      borderRadius: 10,
                     }}
                   />
                 </View>
@@ -108,7 +113,12 @@ const PopularKitchen = () => {
                   {item.name}
                 </Text>
                 <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-                  {item.star}
+                  <Entypo name="star" color={colors.HexColor} size={13} />
+                  {item.rating}
+                  <Text style={{color: colors.WebGLQuery}}>
+                    {' '}
+                    ({item.totalUser ? item.totalUser : 0})
+                  </Text>
                 </Text>
                 <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                   {item.price}

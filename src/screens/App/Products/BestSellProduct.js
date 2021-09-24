@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
+import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../../../theme/colors';
 import styles from './styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
@@ -9,35 +10,40 @@ const product1 = [
   {
     id: 1,
     name: 'Blender & Grinder',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/grinder.png'),
   },
   {
     id: 2,
     name: 'beard growth cream',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/beard.png'),
   },
   {
     id: 4,
     name: 'hair dryer',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/hairDryer.png'),
   },
   {
     id: 5,
     name: 'hair dryer',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/hairDryer.png'),
   },
   {
     id: 6,
     name: 'hair dryer',
-    star: '4.5(566)',
+    rating: '4.5',
+    totalUser: '566',
     price: '$250.99',
     img: require('../../../assets/hairDryer.png'),
   },
@@ -46,19 +52,22 @@ const product2 = [
   {
     id: 1,
     name: 'one more feet',
-    title: 'nike | sportwear',
+    title: 'nike',
+    subTitle: '| sportwear',
     img: require('../../../assets/product.jpg'),
   },
   {
     id: 2,
     name: 'amazon',
-    title: 'nike | sportwear',
+    title: 'nike',
+    subTitle: '| sportwear',
     img: require('../../../assets/product.jpg'),
   },
   {
     id: 3,
     name: 'Shoprite',
-    title: 'nike | sportwear',
+    title: 'nike',
+    subTitle: '| sportwear',
     img: require('../../../assets/eBay.png'),
   },
 ];
@@ -115,18 +124,25 @@ const BestSellProduct = () => {
 
                   alignItems: 'center',
                   justifyContent: 'center',
+                  overflow: 'hidden',
                   elevation: 1,
                 }}>
                 <Image
                   source={item.img}
-                  style={{resizeMode: 'contain', width: 115, height: 115}}
+                  resizeMode={'cover'}
+                  style={{width: 115, height: 115}}
                 />
               </View>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.name}
               </Text>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-                {item.star}
+                <Entypo name="star" color={colors.HexColor} size={13} />
+                {item.rating}
+                <Text style={{color: colors.WebGLQuery}}>
+                  {' '}
+                  ({item.totalUser ? item.totalUser : 0})
+                </Text>
               </Text>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.price}
@@ -165,8 +181,9 @@ const BestSellProduct = () => {
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.name}
               </Text>
-              <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+              <Text style={{fontSize: 10, textTransform: 'capitalize',color:colors.HexColor}}>
                 {item.title}
+                <Text style={{fontSize:10,color:colors.WebGLQuery}}>  {item.subTitle}</Text>
               </Text>
             </View>
           ))}
