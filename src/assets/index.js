@@ -4,6 +4,13 @@ export const secondary = require('./secondary.png');
 export const cover = require('./cover.png');
 export const ternary = require('./ternary.png');
 export const forth = require('./forth.png');
+<<<<<<< HEAD
+export const Persons=require('./Persons.png');
+export const shopwrite=require('./shopwrite.png');
+export const cancel=require('./cancel.png');
+export const person1=require('./person1.png');
+
+=======
 export const eBay = require('./eBay.png');
 export const puma = require('./puma.png');
 export const nike = require('./nike.png');
@@ -41,3 +48,4 @@ export const profileShirt = require('./profileShirt.png');
 export const singleStore = require('./SingleStore.png');
 export const instagram = require('./insta.png');
 export const qrCode = require('./qrCode.png');
+>>>>>>> e6e61de3a9c55db9c2c81598ceec3d4d77319d21

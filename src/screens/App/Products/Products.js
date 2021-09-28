@@ -125,16 +125,8 @@ const Product = ({
     <View style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
         <MainHeader />
+
         <ProductsDetails />
-
-        {/* <CreateCart/> */}
-       
-        {/* <DeliveryLocationCart/> */}
-        {/* <ConfirmationCart/> */}
-        {/* <CongratulationCart/> */}
-        {/* <ProductViewDetail/> */}
-        {/* <SingleStore/> */}
-
         <Footer />
       </ScrollView>
       {/* <SignUpModal/> */}
