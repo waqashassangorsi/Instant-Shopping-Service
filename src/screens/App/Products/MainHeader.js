@@ -21,6 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../../../theme/colors';
+import {useNavigation} from '@react-navigation/native';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -41,6 +42,7 @@ const DATA = [
 ];
 
 const MainHeader = () => {
+  let navigation = useNavigation();
   return (
     <View>
       <Header
@@ -107,7 +109,12 @@ const MainHeader = () => {
                 }}
               />
             </View>
-            <TouchableOpacity style={{borderWidth:1,borderColor:colors.greenColor,width:26,height:26,borderRadius:26/2,alignItems:'center',justifyContent:'center',marginHorizontal:5}}>
+            <TouchableOpacity 
+            onPress = {() => {navigation.navigate('CreateCart')}}
+            style={{
+              borderWidth:1,
+              borderColor:colors.greenColor,
+              width:26,height:26,borderRadius:26/2,alignItems:'center',justifyContent:'center',marginHorizontal:5}}>
               <Ionicons name="basket-outline" size={15} color={colors.greenColor} />
             </TouchableOpacity>
           </View>

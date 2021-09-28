@@ -154,9 +154,8 @@ const CustomProgressStep = () => {
             </View>
           </View>
         </View>
-         <CreateCart/>
-         {/* <DeliveryLocationCart/> */}
         
+         
       </View>
     );
 }

@@ -1,137 +1,314 @@
 import React, { useState } from 'react'
-import { View, Text,TouchableOpacity,TextInput,Pressable,Image } from 'react-native'
+import { View, Text,TouchableOpacity,TextInput,Pressable,Image,ScrollView } from 'react-native'
 import {Picker} from '@react-native-picker/picker';
 import colors from '../../../theme/colors';
-
-// const countries = ['Pakistan','Egypt', 'Canada', 'Australia', 'Ireland'];
+import Footer from '../../../components/Footer';
+import MainHeader from '../Products/MainHeader';
+import {useNavigation} from '@react-navigation/native';
 
 const DeliveryLocationCart = () => {
-const [selectedLanguage, setSelectedLanguage] = useState();
+  let navigation = useNavigation();
     return (
-      <View
-        style={{
-          flex: 1,
-          padding: 10,
-          margin: 10,
-          backgroundColor: colors.white,
-        }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <View>
-            <Text style={{fontSize: 12, color: colors.greenColor}}>City</Text>
-            <TouchableOpacity
-              style={{
-                flex:1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                marginTop: 10,
-                width: 130,
-                height: 36,
-                borderWidth: 1,
-                fontSize: 11,
-                borderColor: colors.greenColor,
-              }}>
-              <Text style={{fontSize: 12, color: colors.greenColor}}>Abuja</Text>
-              <Image source={require('../../../assets/dropDown.png')} />
-            </TouchableOpacity>
-          </View>
+      <ScrollView>
+        <MainHeader />
+        <View style={{flex: 1, backgroundColor: colors.white}}>
           <View
             style={{
-              paddingLeft: 20,
+              padding: 10,
+              paddingVertical: 20,
+              backgroundColor: colors.WebGLQuery,
             }}>
-            <Text style={{fontSize: 12, color: colors.greenColor}}>
-              Location
-            </Text>
-            <TouchableOpacity
+            <View style={{flex: 1, flexDirection: 'row', left: 10}}>
+              <TouchableOpacity>
+                <Image
+                  source={require('../../../assets/cancel.png')}
+                  style={{width: 13, height: 13}}
+                  tintColor={colors.gray}
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 12,
+                  left: 120,
+                  textTransform: 'capitalize',
+                  color: colors.gray,
+                }}>
+                my cart
+              </Text>
+            </View>
+
+            <View
               style={{
-                flex:1,
+                //   paddingHorizontal: 60,
+                alignSelf: 'center',
+                marginTop: 10,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 20 / 2,
+                    borderWidth: 1,
+                    borderColor: colors.greenColor,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: 16 / 2,
+                      backgroundColor: colors.greenColor,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    width: 70,
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.greenColor,
+                  }}
+                />
+
+                <View
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 20 / 2,
+                    borderWidth: 1,
+                    borderColor: colors.greenColor,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: 16 / 2,
+                      backgroundColor: colors.greenColor,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    width: 70,
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.greenColor,
+                  }}
+                />
+
+                <View
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 20 / 2,
+                    borderWidth: 1,
+                    borderColor: colors.lightSlategrey,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: 16 / 2,
+                      backgroundColor: colors.lightSlategrey,
+                    }}
+                  />
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    textTransform: 'capitalize',
+                    color: colors.gray,
+                    right: 20,
+                  }}>
+                  create cart
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    textTransform: 'capitalize',
+                    color: colors.gray,
+                    left: 5,
+                  }}>
+                  delivery location
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    textTransform: 'capitalize',
+                    color: colors.gray,
+                    left: 20,
+                  }}>
+                  confirmation
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              padding: 10,
+              margin: 10,
+              backgroundColor: colors.white,
+            }}>
+            <View
+              style={{
+                flex: 1,
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-around',
-                marginTop: 10,
-                width: 133,
-                height: 36,
-                borderWidth: 1,
-                fontSize: 11,
-                borderColor: colors.greenColor,
+                justifyContent: 'center',
               }}>
-              <Text style={{fontSize: 12, color: colors.greenColor}}>Wuse</Text>
-              <Image source={require('../../../assets/dropDown.png')} />
+              <View>
+                <Text style={{fontSize: 12, color: colors.greenColor}}>
+                  City
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    marginTop: 10,
+                    width: 135,
+                    height: 36,
+                    borderWidth: 1,
+                    fontSize: 11,
+                    borderColor: colors.greenColor,
+                  }}>
+                  <Text style={{fontSize: 12, color: colors.greenColor}}>
+                    Abuja
+                  </Text>
+                  <Image source={require('../../../assets/dropDown.png')} />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  paddingLeft: 20,
+                }}>
+                <Text style={{fontSize: 12, color: colors.greenColor}}>
+                  Location
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    marginTop: 10,
+                    width: 133,
+                    height: 36,
+                    borderWidth: 1,
+                    fontSize: 11,
+                    borderColor: colors.greenColor,
+                  }}>
+                  <Text style={{fontSize: 12, color: colors.greenColor}}>
+                    Wuse
+                  </Text>
+                  <Image source={require('../../../assets/dropDown.png')} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{marginTop: 10}}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: colors.WebGLQuery,
+                  marginLeft: 10,
+                }}>
+                Address
+              </Text>
+              <TextInput
+                style={{
+                  //   height: 100,
+                  paddingBottom: 40,
+                  margin: 10,
+                  padding: 10,
+                  borderWidth: 2,
+                  fontSize: 12,
+                  borderColor: colors.WebGLQuery,
+                }}
+                multiline={true}
+                // onChangeText={onChangeNumber}
+                // value={number}
+                placeholder="Enter delivery address"
+                keyboardType="numbers-and-punctuation"
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: colors.WebGLQuery,
+                  marginLeft: 10,
+                }}>
+                landmark
+              </Text>
+              <TextInput
+                style={{
+                  height: 45,
+                  margin: 10,
+                  padding: 10,
+                  borderWidth: 2,
+                  fontSize: 12,
+                  borderColor: colors.WebGLQuery,
+                }}
+                // onChangeText={onChangeNumber}
+                // value={number}
+                placeholder="Enter a landmark to make delivery easier and faster"
+                keyboardType="numbers-and-punctuation"
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('CreateCart');
+              }}
+              style={{
+                flex: 1,
+                borderWidth: 2,
+                borderColor: colors.WebGLQuery,
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                padding: 10,
+                margin: 10,
+              }}>
+              <Text style={{fontSize: 12, color: colors.WebGLQuery}}>
+                Go back
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ConfirmationCart');
+              }}
+              style={{
+                flex: 1,
+                backgroundColor: colors.greenColor,
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                padding: 10,
+                marginHorizontal: 10,
+              }}>
+              <Text style={{fontSize: 12, color: colors.white}}>Proceed</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{marginTop: 10}}>
-          <Text
-            style={{fontSize: 12, color: colors.WebGLQuery, marginLeft: 10}}>
-            Address
-          </Text>
-          <TextInput
-            style={{
-              //   height: 100,
-              paddingBottom: 40,
-              margin: 10,
-              padding: 10,
-              borderWidth: 2,
-              fontSize: 12,
-              borderColor: colors.WebGLQuery,
-            }}
-            multiline={true}
-            // onChangeText={onChangeNumber}
-            // value={number}
-            placeholder="Enter delivery address"
-            keyboardType="numbers-and-punctuation"
-          />
-        </View>
-        <View>
-          <Text
-            style={{fontSize: 12, color: colors.WebGLQuery, marginLeft: 10}}>
-            landmark
-          </Text>
-          <TextInput
-            style={{
-              height: 45,
-              margin: 10,
-              padding: 10,
-              borderWidth: 2,
-              fontSize: 12,
-              borderColor: colors.WebGLQuery,
-            }}
-            // onChangeText={onChangeNumber}
-            // value={number}
-            placeholder="Enter a landmark to make delivery easier and faster"
-            keyboardType="numbers-and-punctuation"
-          />
-        </View>
-        <TouchableOpacity
-          style={{
-            flex: 1,
-            borderWidth: 2,
-            borderColor: colors.WebGLQuery,
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: 10,
-            margin: 10,
-          }}>
-          <Text style={{fontSize: 12, color: colors.WebGLQuery}}>Go back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flex: 1,
-            backgroundColor: colors.greenColor,
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: 10,
-            marginHorizontal: 10,
-          }}>
-          <Text style={{fontSize: 12, color: colors.white}}>Proceed</Text>
-        </TouchableOpacity>
-      </View>
+        <Footer />
+      </ScrollView>
     );
 }
 

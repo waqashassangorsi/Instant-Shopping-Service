@@ -5,6 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../../../theme/colors';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
+import {useNavigation} from '@react-navigation/native';
 
 const product1 = [
   {
@@ -73,6 +74,7 @@ const product2 = [
 ];
 
 const BestSellProduct = () => {
+  let navigation = useNavigation();
   return (
     <View style={{flex: 1, padding: 10}}>
       <View
@@ -91,6 +93,9 @@ const BestSellProduct = () => {
           best selling products
         </Text>
         <Pressable
+          onPress={() => {
+            navigation.navigate('SingleStore');
+          }}
           android_ripple={{
             color: colors.black,
             borderless: false,
@@ -105,7 +110,9 @@ const BestSellProduct = () => {
           </Text>
         </Pressable>
       </View>
-      <View>
+      <Pressable 
+       onPress = {() => {navigation.navigate('ProductViewDetail');}}
+      >
         <ScrollView
           contentContainerStyle={{
             backgroundColor: colors.white,
@@ -150,7 +157,7 @@ const BestSellProduct = () => {
             </View>
           ))}
         </ScrollView>
-      </View>
+      </Pressable>
       <View>
         <ScrollView
           contentContainerStyle={{
@@ -181,9 +188,17 @@ const BestSellProduct = () => {
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.name}
               </Text>
-              <Text style={{fontSize: 10, textTransform: 'capitalize',color:colors.HexColor}}>
+              <Text
+                style={{
+                  fontSize: 10,
+                  textTransform: 'capitalize',
+                  color: colors.HexColor,
+                }}>
                 {item.title}
-                <Text style={{fontSize:10,color:colors.WebGLQuery}}>  {item.subTitle}</Text>
+                <Text style={{fontSize: 10, color: colors.WebGLQuery}}>
+                  {' '}
+                  {item.subTitle}
+                </Text>
               </Text>
             </View>
           ))}

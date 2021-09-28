@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
 
 } from 'react-native';
-import { color } from 'react-native-reanimated';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../theme/colors';
 const {height, width} = Dimensions.get('window');
@@ -207,7 +206,7 @@ const SignUpModal = () => {
                         or sign in via
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                    <View style={{flexDirection: 'row', marginTop: 10,paddingBottom:30}}>
                       <TouchableOpacity
                         style={{
                           padding: 5,
@@ -345,7 +344,7 @@ const SignUpModal = () => {
                         or sign in via
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                    <View style={{flexDirection: 'row', marginTop: 10,paddingBottom:30}}>
                       <TouchableOpacity
                         style={{
                           padding: 5,
@@ -426,7 +425,7 @@ const styles = StyleSheet.create({
   modalView: {
     padding: 10,
     width: '90%',
-    height:500,
+    // height:500,
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',

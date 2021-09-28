@@ -1,175 +1,160 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Footer from '../../../components/Footer';
 import colors from '../../../theme/colors';
+import MainHeader from '../Products/MainHeader';
+import {useNavigation} from '@react-navigation/native';
 
 const ConfirmationCart = () => {
+  let navigation = useNavigation();
   return (
-    <View style={{flex: 1, backgroundColor: colors.white, margin: 10,padding:10}}>
-      <View
-        style={{
-          flex: 1,
-          marginTop: 10,
-          borderWidth: 2,
-          borderColor: colors.WebGLQuery,
-        }}>
+    <ScrollView>
+      <MainHeader />
+      <View style={{flex: 1, backgroundColor: colors.white}}>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            backgroundColor: '#FAFAFA',
-            borderBottomWidth: 2,
-            borderColor: colors.WebGLQuery,
             padding: 10,
+            paddingVertical: 20,
+            backgroundColor: colors.WebGLQuery,
           }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/miniDress.png')}
-              style={{width: 73, height: 73}}
-            />
-            <View style={{marginLeft: 10}}>
-              <Text style={{fontSize: 16}}>Mini Dress</Text>
-              <Text style={{fontSize: 10}}>Black</Text>
-            </View>
+          <View style={{flex: 1, flexDirection: 'row', left: 10}}>
+            <TouchableOpacity>
+              <Image
+                source={require('../../../assets/cancel.png')}
+                style={{width: 13, height: 13}}
+                tintColor={colors.gray}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 12,
+                left: 120,
+                textTransform: 'capitalize',
+                color: colors.gray,
+              }}>
+              my cart
+            </Text>
           </View>
 
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              //   paddingHorizontal: 60,
+              alignSelf: 'center',
+              marginTop: 10,
             }}>
             <View
               style={{
-                borderWidth: 1,
-                width: 30,
-                height: 30,
-                borderColor: colors.WebGLQuery,
-                backgroundColor: colors.white,
-                elevation: 1,
-                marginRight: 15,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: 20 / 2,
+                  borderWidth: 1,
+                  borderColor: colors.greenColor,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    width: 16,
+                    height: 16,
+                    borderRadius: 16 / 2,
+                    backgroundColor: colors.greenColor,
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  width: 70,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.greenColor,
+                }}
+              />
+
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: 20 / 2,
+                  borderWidth: 1,
+                  borderColor: colors.greenColor,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    width: 16,
+                    height: 16,
+                    borderRadius: 16 / 2,
+                    backgroundColor: colors.greenColor,
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  width: 70,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.gray,
+                }}
+              />
+
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: 20 / 2,
+                  borderWidth: 1,
+                  borderColor: colors.greenColor,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    width: 16,
+                    height: 16,
+                    borderRadius: 16 / 2,
+                    backgroundColor: colors.greenColor,
+                  }}
+                />
+              </View>
             </View>
-            <View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 11,
+                  textTransform: 'capitalize',
                   color: colors.gray,
+                  right: 20,
                 }}>
-                $250.99
+                create cart
               </Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            backgroundColor: '#FAFAFA',
-            borderBottomWidth: 2,
-            borderColor: colors.WebGLQuery,
-            padding: 10,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/miniDress.png')}
-              style={{width: 73, height: 73}}
-            />
-            <View style={{marginLeft: 10}}>
-              <Text style={{fontSize: 16}}>Mini Dress</Text>
-              <Text style={{fontSize: 10}}>Black</Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                borderWidth: 1,
-                width: 30,
-                height: 30,
-                borderColor: colors.WebGLQuery,
-                backgroundColor: colors.white,
-                elevation: 1,
-                marginRight: 15,
-              }}>
-              <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-            </View>
-            <View>
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 11,
+                  textTransform: 'capitalize',
                   color: colors.gray,
+                  left: 5,
                 }}>
-                $250.99
+                delivery location
               </Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            backgroundColor: '#FAFAFA',
-            borderBottomWidth: 2,
-            borderColor: colors.WebGLQuery,
-            padding: 10,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/miniDress.png')}
-              style={{width: 73, height: 73}}
-            />
-            <View style={{marginLeft: 10}}>
-              <Text style={{fontSize: 16}}>Mini Dress</Text>
-              <Text style={{fontSize: 10}}>Black</Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                borderWidth: 1,
-                width: 30,
-                height: 30,
-                borderColor: colors.WebGLQuery,
-                backgroundColor: colors.white,
-                elevation: 1,
-                marginRight: 15,
-              }}>
-              <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-            </View>
-            <View>
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 11,
+                  textTransform: 'capitalize',
                   color: colors.gray,
+                  left: 20,
                 }}>
-                $250.99
+                confirmation
               </Text>
             </View>
           </View>
@@ -178,128 +163,327 @@ const ConfirmationCart = () => {
         <View
           style={{
             flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: 10,
+            backgroundColor: colors.white,
+            margin: 10,
+            paddingHorizontal: 10,
           }}>
-          <Text style={{fontSize: 16}}>Total</Text>
-          <Text
+          <View
             style={{
-              fontSize: 16,
-              color: colors.greenColor,
-              marginHorizontal: 10,
+              flex: 1,
+              marginTop: 10,
+              borderWidth: 2,
+              borderColor: colors.WebGLQuery,
             }}>
-            $6,274.75
-          </Text>
-        </View>
-      </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: '#FAFAFA',
+                borderBottomWidth: 2,
+                borderColor: colors.WebGLQuery,
+                padding: 10,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../../assets/miniDress.png')}
+                  style={{width: 73, height: 73}}
+                />
+                <View style={{marginLeft: 10}}>
+                  <Text style={{fontSize: 16}}>Mini Dress</Text>
+                  <Text style={{fontSize: 10}}>Black</Text>
+                </View>
+              </View>
 
-      <View
-        style={{
-          flex: 1,
-          marginTop: 10,
-          borderWidth: 2,
-          borderColor: colors.WebGLQuery,
-          padding: 15,
-        }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            // padding: 15,
-          }}>
-          <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: 30,
+                    height: 30,
+                    borderColor: colors.WebGLQuery,
+                    backgroundColor: colors.white,
+                    elevation: 1,
+                    marginRight: 15,
+                  }}>
+                  <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: colors.gray,
+                    }}>
+                    $250.99
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: '#FAFAFA',
+                borderBottomWidth: 2,
+                borderColor: colors.WebGLQuery,
+                padding: 10,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../../assets/miniDress.png')}
+                  style={{width: 73, height: 73}}
+                />
+                <View style={{marginLeft: 10}}>
+                  <Text style={{fontSize: 16}}>Mini Dress</Text>
+                  <Text style={{fontSize: 10}}>Black</Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: 30,
+                    height: 30,
+                    borderColor: colors.WebGLQuery,
+                    backgroundColor: colors.white,
+                    elevation: 1,
+                    marginRight: 15,
+                  }}>
+                  <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: colors.gray,
+                    }}>
+                    $250.99
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: '#FAFAFA',
+                borderBottomWidth: 2,
+                borderColor: colors.WebGLQuery,
+                padding: 10,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../../assets/miniDress.png')}
+                  style={{width: 73, height: 73}}
+                />
+                <View style={{marginLeft: 10}}>
+                  <Text style={{fontSize: 16}}>Mini Dress</Text>
+                  <Text style={{fontSize: 10}}>Black</Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: 30,
+                    height: 30,
+                    borderColor: colors.WebGLQuery,
+                    backgroundColor: colors.white,
+                    elevation: 1,
+                    marginRight: 15,
+                  }}>
+                  <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: colors.gray,
+                    }}>
+                    $250.99
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                padding: 10,
+              }}>
+              <Text style={{fontSize: 16}}>Total</Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: colors.greenColor,
+                  marginHorizontal: 10,
+                }}>
+                $6,274.75
+              </Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              marginTop: 10,
+              borderWidth: 2,
+              borderColor: colors.WebGLQuery,
+              padding: 15,
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                // padding: 15,
+              }}>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    color: colors.WebGLQuery,
+                    textTransform: 'capitalize',
+                  }}>
+                  City
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    textTransform: 'capitalize',
+                    marginTop: 8,
+                  }}>
+                  abuja
+                </Text>
+              </View>
+              <View style={{marginLeft: 100}}>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    color: colors.WebGLQuery,
+                    textTransform: 'capitalize',
+                  }}>
+                  Location
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    textTransform: 'capitalize',
+                    marginTop: 8,
+                  }}>
+                  Wuse
+                </Text>
+              </View>
+            </View>
+            <View style={{marginTop: 10}}>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: colors.WebGLQuery,
+                  textTransform: 'capitalize',
+                }}>
+                Address
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  textTransform: 'capitalize',
+                  marginTop: 8,
+                }}>
+                Lorem ipsum dolor sit amet, consectetu adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore.
+              </Text>
+            </View>
+            <View style={{marginTop: 10, marginVertical: 10}}>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: colors.WebGLQuery,
+                  textTransform: 'capitalize',
+                }}>
+                landmark
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  textTransform: 'capitalize',
+                  marginTop: 8,
+                }}>
+                Opposite the Dome
+              </Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              borderWidth: 2,
+              borderColor: colors.WebGLQuery,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 10,
+              marginVertical: 10,
+            }}>
+            <Text style={{fontSize: 12, color: colors.WebGLQuery}}>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('CongratulationCart');
+            }}
+            style={{
+              flex: 1,
+              backgroundColor: colors.greenColor,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 10,
+            }}>
             <Text
               style={{
-                fontSize: 11,
-                color: colors.WebGLQuery,
+                fontSize: 12,
+                color: colors.white,
                 textTransform: 'capitalize',
               }}>
-              City
+              Place order
             </Text>
-            <Text
-              style={{fontSize: 12, textTransform: 'capitalize', marginTop: 8}}>
-              abuja
-            </Text>
-          </View>
-          <View style={{marginLeft: 100}}>
-            <Text
-              style={{
-                fontSize: 11,
-                color: colors.WebGLQuery,
-                textTransform: 'capitalize',
-              }}>
-              Location
-            </Text>
-            <Text
-              style={{fontSize: 12, textTransform: 'capitalize', marginTop: 8}}>
-              Wuse
-            </Text>
-          </View>
-        </View>
-        <View style={{marginTop: 10}}>
-          <Text
-            style={{
-              fontSize: 11,
-              color: colors.WebGLQuery,
-              textTransform: 'capitalize',
-            }}>
-            Address
-          </Text>
-          <Text
-            style={{fontSize: 12, textTransform: 'capitalize', marginTop: 8}}>
-            Lorem ipsum dolor sit amet, consectetu adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore.
-          </Text>
-        </View>
-        <View style={{marginTop: 10,marginVertical:10}}>
-          <Text
-            style={{
-              fontSize: 11,
-              color: colors.WebGLQuery,
-              textTransform: 'capitalize',
-            }}>
-            landmark
-          </Text>
-          <Text
-            style={{fontSize: 12, textTransform: 'capitalize', marginTop: 8}}>
-            Opposite the Dome
-          </Text>
+          </TouchableOpacity>
         </View>
       </View>
-
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          borderWidth: 2,
-          borderColor: colors.WebGLQuery,
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: 10,
-          marginVertical: 10,
-        }}>
-        <Text style={{fontSize: 12, color: colors.WebGLQuery}}>Cancel</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          backgroundColor: colors.greenColor,
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: 10,
-        }}>
-        <Text
-          style={{
-            fontSize: 12,
-            color: colors.white,
-            textTransform: 'capitalize',
-          }}>
-          Place order
-        </Text>
-      </TouchableOpacity>
-    </View>
+      <Footer />
+    </ScrollView>
   );
 };
 

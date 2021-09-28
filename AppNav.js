@@ -28,6 +28,13 @@ import PrivacyPolicy from './src/screens/App/PrivacyPolicy';
 import Contactus from './src/screens/App/Contactus/Contactus';
 import Notifications from './src/screens/App/Notifications/Notification';
 import Subscription from './src/screens/App/Subscription/Subscription';
+import CreateCart from './src/screens/App/Cart/CreateCart';
+import DeliveryLocationCart from './src/screens/App/Cart/DeliveryLocationCart';
+import ConfirmationCart from './src/screens/App/Cart/ConfirmationCart';
+import CongratulationCart from './src/screens/App/Cart/CongratulationCart';
+import SingleStore from './src/screens/App/ProductDetail/SingleStore';
+import ProductViewDetail from './src/screens/App/ProductDetail/ProductViewDetail';
+
 // import InstantBuy from './src/screens/App/InstantBuy/InstantBuy';
 import {getUserBalance} from './src/Redux/Action/Competitionaction';
 import {connect} from 'react-redux';
@@ -43,6 +50,36 @@ const AppNav = ({getUserBalance, user, isLoggedIn}) => {
         <Stack.Screen
           component={Thankyou}
           name="Thankyou"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={CreateCart}
+          name="CreateCart"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={DeliveryLocationCart}
+          name="DeliveryLocationCart"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={ConfirmationCart}
+          name="ConfirmationCart"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={CongratulationCart}
+          name="CongratulationCart"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={SingleStore}
+          name="SingleStore"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={ProductViewDetail}
+          name="ProductViewDetail"
           options={{headerShown: false}}
         />
         {/* <Stack.Screen
