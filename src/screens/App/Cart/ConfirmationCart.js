@@ -4,7 +4,7 @@ import colors from '../../../theme/colors';
 
 const ConfirmationCart = () => {
   return (
-    <View style={{flex: 1, backgroundColor: colors.white, margin: 10}}>
+    <View style={{flex: 1, backgroundColor: colors.white, margin: 10,padding:10}}>
       <View
         style={{
           flex: 1,

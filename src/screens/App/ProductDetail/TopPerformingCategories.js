@@ -154,7 +154,7 @@ const TopPerformingCategories = () => {
               borderRadius: 12,
             }}>
             <Image
-              source={require('../../../assets/gamming.png')}
+              source={require('../../../assets/gaming.png')}
               style={{
                 resizeMode: 'contain',
                 width: 110,
@@ -163,7 +163,7 @@ const TopPerformingCategories = () => {
               }}
             />
             <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-              gamming
+              gaming
             </Text>
           </View>
         </View>

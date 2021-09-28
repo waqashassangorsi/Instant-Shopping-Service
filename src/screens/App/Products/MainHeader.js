@@ -26,16 +26,16 @@ const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const DATA = [
-  {id: 1, name: 'shop by category'},
+  {id: 1, name: 'shop by store'},
   {id: 2, name: 'ebay'},
   {id: 3, name: 'amazon'},
-  {id: 4, name: 'shop by category'},
+  {id: 4, name: 'shop by KONGA'},
   {id: 5, name: 'ebay'},
   {id: 6, name: 'amazon'},
-  {id: 7, name: 'shop by category'},
+  {id: 7, name: 'shop by SHOPRITE'},
   {id: 8, name: 'ebay'},
   {id: 9, name: 'amazon'},
-  {id: 10, name: 'shop by category'},
+  {id: 10, name: 'shop by BUKKA'},
   {id: 11, name: 'ebay'},
   {id: 12, name: 'amazon'},
 ];
@@ -60,7 +60,8 @@ const MainHeader = () => {
             <View>
               <Image
                 source={require('../../../assets/logo.png')}
-                style={{width: 110, height: 45, resizeMode: 'contain'}}
+                resizeMode={'contain'}
+                style={{width: 110, height: 45}}
               />
             </View>
           </View>
@@ -98,21 +99,29 @@ const MainHeader = () => {
             <View>
               <Image
                 source={require('../../../assets/person.png')}
+                resizeMode={'contain'}
                 style={{
                   borderRadius: 30 / 2,
-                  resizeMode: 'cover',
                   width: 30,
                   height: 30,
                 }}
               />
             </View>
-            <Ionicons name="basket-outline" size={30} color="#005016" />
+            <TouchableOpacity style={{borderWidth:1,borderColor:colors.greenColor,width:26,height:26,borderRadius:26/2,alignItems:'center',justifyContent:'center',marginHorizontal:5}}>
+              <Ionicons name="basket-outline" size={15} color={colors.greenColor} />
+            </TouchableOpacity>
           </View>
         }
       />
       {/* Search Categories */}
       <View style={{backgroundColor: colors.white, paddingHorizontal: 10}}>
-        <Text style={{color: colors.greenColor, fontSize: 8, marginTop: 4,textTransform:'uppercase'}}>
+        <Text
+          style={{
+            color: colors.greenColor,
+            fontSize: 8,
+            marginTop: 4,
+            textTransform: 'uppercase',
+          }}>
           search categories
         </Text>
 
@@ -131,7 +140,7 @@ const MainHeader = () => {
               <AntDesign
                 name="caretdown"
                 size={13}
-                style={{marginHorizontal:5}}
+                style={{marginHorizontal: 5}}
                 color="black"
               />
             </TouchableOpacity>
