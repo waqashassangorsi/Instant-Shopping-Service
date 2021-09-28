@@ -2,8 +2,8 @@ import React from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import styles from './styles';
-import {primary, logo, secondary, ternary, forth} from '../../../assets';
+import styles from '../Products/styles';
+
 
 const kitchen = [
   {
@@ -12,7 +12,7 @@ const kitchen = [
     rating: '4.5',
     totalUser: '566',
     price: '$250.99',
-    img: require('../../../assets/frozenVegies.png'),
+    img: require('../../../assets/frozenVeggies.png'),
   },
   {
     id: 2,

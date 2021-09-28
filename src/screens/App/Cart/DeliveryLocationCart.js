@@ -1,20 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text,TouchableOpacity,TextInput,Pressable,Image } from 'react-native'
+import {Picker} from '@react-native-picker/picker';
 import colors from '../../../theme/colors';
 
+// const countries = ['Pakistan','Egypt', 'Canada', 'Australia', 'Ireland'];
+
 const DeliveryLocationCart = () => {
+const [selectedLanguage, setSelectedLanguage] = useState();
     return (
-      <View style={{flex: 1, margin: 10, backgroundColor: colors.white}}>
-        <View style={{flex: 1, flexDirection: 'row',alignItems:'center',justifyContent:'center'}}>
+      <View
+        style={{
+          flex: 1,
+          padding: 10,
+          margin: 10,
+          backgroundColor: colors.white,
+        }}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <View>
             <Text style={{fontSize: 12, color: colors.greenColor}}>City</Text>
             <TouchableOpacity
               style={{
+                flex:1,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-around',
                 marginTop: 10,
-                width: 150,
+                width: 130,
                 height: 36,
                 borderWidth: 1,
                 fontSize: 11,
@@ -26,16 +43,19 @@ const DeliveryLocationCart = () => {
           </View>
           <View
             style={{
-             paddingLeft: 20,
+              paddingLeft: 20,
             }}>
-            <Text style={{fontSize: 12, color: colors.greenColor}}>Location</Text>
+            <Text style={{fontSize: 12, color: colors.greenColor}}>
+              Location
+            </Text>
             <TouchableOpacity
               style={{
+                flex:1,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-around',
                 marginTop: 10,
-                width: 150,
+                width: 133,
                 height: 36,
                 borderWidth: 1,
                 fontSize: 11,
@@ -46,7 +66,7 @@ const DeliveryLocationCart = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View>
+        <View style={{marginTop: 10}}>
           <Text
             style={{fontSize: 12, color: colors.WebGLQuery, marginLeft: 10}}>
             Address

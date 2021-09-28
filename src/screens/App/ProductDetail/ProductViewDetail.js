@@ -92,6 +92,7 @@ const ProductViewDetail = () => {
             resizeMode={'contain'}
             style={{width: '100%', height: 300}}
           />
+          <Image source={require('../../../assets/qrCode.png')} resizeMode={'contain'} style={{width:40,height:40,position:'absolute',alignSelf:'flex-end',right:20}} />
           <View
             style={{
               flex: 1,
@@ -126,7 +127,7 @@ const ProductViewDetail = () => {
                 backgroundColor: colors.white,
                 alignItems: 'center',
                 justifyContent: 'center',
-                left: 185,
+                left: 190,
               }}>
               <Fontisto name="search" size={20} color={colors.black} />
             </View>

@@ -15,6 +15,51 @@ import {
   Linking,
   Pressable,
 } from 'react-native';
+
+import {
+  primary,
+  logo,
+  secondary,
+  ternary,
+  forth,
+  eBay,
+  puma,
+  nike,
+  spar,
+  grinder,
+  hairDryer,
+  beard,
+  product,
+  gucciShirt,
+  miniDress,
+  denimTrousers,
+  pro,
+  veggies,
+  rice,
+  palmOil,
+  gardening,
+  fashion,
+  mensWear,
+  sports,
+  kitchen,
+  gaming,
+  cancel,
+  cartLogo,
+  copyRight,
+  dot,
+  halfDot,
+  faceBook,
+  dropDown,
+  google,
+  heartLike,
+  adds,
+  nikeStore,
+  person,
+  profileShirt,
+  singleStore,
+  instagram,
+  qrCode,
+} from '../../../assets';
 import styles from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
@@ -34,21 +79,25 @@ import {addToCart} from '../../../Redux/Action/cart';
 import {saveCharity} from '../../../Redux/Action/Loginaction';
 import {Alert} from 'react-native';
 import {compose} from 'redux';
-import Store from './Store';
-import BestSellProduct from './BestSellProduct';
-import PopularFashion from './PopularFashion';
-import PopularKitchen from './PopularKitchen';
+import Store from '../ProductDetail/Store';
+import BestSellProduct from '../ProductDetail/BestSellProduct';
+import PopularFashion from '../ProductDetail/PopularFashion';
+import PopularKitchen from '../ProductDetail/PopularKitchen';
 import Footer from '../../../components/Footer';
-import ProductsDetails from './ProductsDetails';
+import ProductsDetails from '../ProductDetail/ProductsDetails';
 import MainHeader from './MainHeader';
 import SignUpModal from '../../../components/SignUpModal';
-import LogInModal from '../../../components/LogInModal';
+
 import CreateCart from '../Cart/CreateCart';
 
 import ConfirmationCart from '../Cart/ConfirmationCart';
 import DeliveryLocationCart from '../Cart/DeliveryLocationCart';
 import CongratulationCart from '../Cart/CongratulationCart';
-import ProductViewDetail from './ProductViewDetail';
+import ProductViewDetail from '../ProductDetail/ProductViewDetail';
+import SingleStore from '../ProductDetail/SingleStore';
+import CartStepProgress from '../Cart/CustomProgressStep';
+import CartProgressStep from '../Cart/CustomProgressStep';
+import CustomProgressStep from '../Cart/CustomProgressStep';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -78,12 +127,14 @@ const Product = ({
         <MainHeader />
         {/* <ProductsDetails /> */}
 
-        {/* <CreateCart /> */}
+        <CustomProgressStep/>
        
         {/* <DeliveryLocationCart/> */}
         {/* <ConfirmationCart/> */}
         {/* <CongratulationCart/> */}
-        <ProductViewDetail/>
+        {/* <ProductViewDetail/> */}
+        {/* <SingleStore/> */}
+
         <Footer />
       </ScrollView>
       {/* <SignUpModal/> */}

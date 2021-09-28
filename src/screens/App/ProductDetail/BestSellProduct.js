@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../../../theme/colors';
-import styles from './styles';
+import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 
 const product1 = [
