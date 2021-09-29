@@ -65,9 +65,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
 import {Fonts} from '../../../utils/Fonts';
-import {
-  useNavigation
-} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Loading} from '../../../components/Loading';
 import {
   competition,
@@ -98,10 +96,12 @@ import SingleStore from '../ProductDetail/SingleStore';
 import CartStepProgress from '../Cart/CustomProgressStep';
 import CartProgressStep from '../Cart/CustomProgressStep';
 import CustomProgressStep from '../Cart/CustomProgressStep';
+import UserProfile from '../Cart/UserProfile';
+import OrderPage from '../Cart/OrderPage';
+import ShopperMessenger from '../Cart/ShopperMessenger';
+import ShopperDetail from '../Cart/ShopperDetail';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
-
-
 
 const Product = ({
   params,
@@ -124,13 +124,18 @@ const Product = ({
   return (
     <View style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        <MainHeader />
+        {/* <MainHeader /> */}
 
-        <ProductsDetails />
-        <Footer />
+        {/* <ProductsDetails /> */}
+        {/* <CongratulationCart/> */}
+        {/* <CreateCart/> */}
+        {/* <UserProfile /> */}
+        {/* <ShopperMessenger /> */}
+        {/* <OrderPage /> */}
+        <ShopperDetail />
+        {/* <Footer /> */}
       </ScrollView>
       {/* <SignUpModal/> */}
-      
     </View>
   );
 };
@@ -156,7 +161,3 @@ export default connect(mapStateToProps, {
   saveCharity,
   getCateg,
 })(Product);
-
-
-
-

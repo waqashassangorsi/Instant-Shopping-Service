@@ -11,14 +11,13 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../theme/colors';
 const {height, width} = Dimensions.get('window');
 
-const SignUpModal = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+const SignUpModal = (props) => {
+  // const [modalVisible, setModalVisible] = useState(false);
   const [userType, setUserType] = useState(1);
 
   return (
@@ -33,7 +32,7 @@ const SignUpModal = () => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={props.modalVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
@@ -50,7 +49,7 @@ const SignUpModal = () => {
                 elevation: 2,
                 backgroundColor: colors.greenColor,
               }}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={() => props.setModalVisible(false)}>
               <Image
                 source={require('../assets/cancel.png')}
                 style={{width: 10, height: 10}}
@@ -98,7 +97,7 @@ const SignUpModal = () => {
                     style={{
                       fontSize: 14,
                       color:
-                        userType == 1 ? colors.WebGLQuery : colors.WebGLQuery,
+                        userType == 1 ? colors.WebGLQuery : colors.greenColor,
 
                       textTransform: 'capitalize',
                     }}>
@@ -206,7 +205,12 @@ const SignUpModal = () => {
                         or sign in via
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 10,paddingBottom:30}}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginTop: 10,
+                        paddingBottom: 30,
+                      }}>
                       <TouchableOpacity
                         style={{
                           padding: 5,
@@ -344,7 +348,12 @@ const SignUpModal = () => {
                         or sign in via
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 10,paddingBottom:30}}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginTop: 10,
+                        paddingBottom: 30,
+                      }}>
                       <TouchableOpacity
                         style={{
                           padding: 5,
@@ -401,11 +410,6 @@ const SignUpModal = () => {
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={{backgroundColor: 'white'}}
-        onPress={() => setModalVisible(true)}>
-        <Text>Show Modal</Text>
-      </Pressable>
     </View>
   );
 };
@@ -416,7 +420,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top:20,
+    top: 20,
     // right: 0,
     width: width,
     // alignSelf: 'center',

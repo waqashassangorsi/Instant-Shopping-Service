@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -110,9 +109,10 @@ const BestSellProduct = () => {
           </Text>
         </Pressable>
       </View>
-      <Pressable 
-       onPress = {() => {navigation.navigate('ProductViewDetail');}}
-      >
+      <Pressable
+        onPress={() => {
+          navigation.navigate('ProductViewDetail');
+        }}>
         <ScrollView
           contentContainerStyle={{
             backgroundColor: colors.white,

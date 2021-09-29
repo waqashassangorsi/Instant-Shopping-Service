@@ -3,7 +3,7 @@ import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const STORE = [
   {id: 1, name: 'eBay', img: require('../../../assets/eBay.png')},
@@ -11,12 +11,12 @@ const STORE = [
   {id: 4, name: 'Nike', img: require('../../../assets/nike.png')},
   {id: 5, name: 'Spar', img: require('../../../assets/spar.png')},
   {id: 6, name: 'amazon', img: require('../../../assets/eBay.png')},
-  {id: 7, name: 'Shoprite', img: require('../../../assets/eBay.png')}
+  {id: 7, name: 'Shoprite', img: require('../../../assets/eBay.png')},
 ];
 
 const Store = () => {
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <View>
         <Image
           source={require('../../../assets/pro.jpg')}
@@ -29,7 +29,7 @@ const Store = () => {
             flexDirection: 'row',
             borderBottomColor: colors.WebGLQuery,
             borderBottomWidth: 1,
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
           }}>
           <Text
             style={{
@@ -40,21 +40,20 @@ const Store = () => {
             explore stores
           </Text>
 
-            <Pressable
-              android_ripple={{
-                color: colors.black,
-                borderless: false,
+          <Pressable
+            android_ripple={{
+              color: colors.black,
+              borderless: false,
+            }}>
+            <Text
+              style={{
+                fontSize: 10,
+                color: colors.WebGLQuery,
+                textTransform: 'uppercase',
               }}>
-              <Text
-                style={{
-                  fontSize: 10,
-                  color: colors.WebGLQuery,
-                  textTransform: 'uppercase',
-                }}>
-                See All
-              </Text>
-            </Pressable>
-          
+              See All
+            </Text>
+          </Pressable>
         </View>
         <View>
           <ScrollView

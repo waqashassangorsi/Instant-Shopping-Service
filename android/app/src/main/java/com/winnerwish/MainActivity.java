@@ -1,4 +1,4 @@
-package com.winnerwish;
+package com.personalshopping;
 
 import com.facebook.react.ReactActivity;
 

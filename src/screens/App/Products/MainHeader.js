@@ -23,6 +23,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../../../theme/colors';
 import {useNavigation} from '@react-navigation/native';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
+import SignUpModal from '../../../components/SignUpModal';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -43,6 +44,7 @@ const DATA = [
 
 const MainHeader = () => {
   let navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
       <Header
@@ -54,10 +56,10 @@ const MainHeader = () => {
               name="menu"
               size={30}
               color="black"
-              onPress={() => {
-                console.log('navigation', navigation);
-                navigation.openDrawer();
-              }}
+              // onPress={() => {
+              //   console.log('navigation', navigation);
+              //   navigation.openDrawer();
+              // }}
             />
             <View>
               <Image
@@ -83,11 +85,12 @@ const MainHeader = () => {
                 flexDirection: 'row',
                 marginRight: 10,
               }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <Text style={{fontSize: 13}}>Log in</Text>
               </TouchableOpacity>
               <View style={{marginHorizontal: 5}} />
               <TouchableOpacity
+                onPress={() => setModalVisible(true)}
                 style={{
                   borderWidth: 2,
                   borderColor: colors.secondary,
@@ -98,7 +101,10 @@ const MainHeader = () => {
               </TouchableOpacity>
             </View>
 
-            <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('UserProfile');
+              }}>
               <Image
                 source={require('../../../assets/person.png')}
                 resizeMode={'contain'}
@@ -108,14 +114,26 @@ const MainHeader = () => {
                   height: 30,
                 }}
               />
-            </View>
-            <TouchableOpacity 
-            onPress = {() => {navigation.navigate('CreateCart')}}
-            style={{
-              borderWidth:1,
-              borderColor:colors.greenColor,
-              width:26,height:26,borderRadius:26/2,alignItems:'center',justifyContent:'center',marginHorizontal:5}}>
-              <Ionicons name="basket-outline" size={15} color={colors.greenColor} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('CreateCart');
+              }}
+              style={{
+                borderWidth: 1,
+                borderColor: colors.greenColor,
+                width: 26,
+                height: 26,
+                borderRadius: 26 / 2,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginHorizontal: 5,
+              }}>
+              <Ionicons
+                name="basket-outline"
+                size={15}
+                color={colors.greenColor}
+              />
             </TouchableOpacity>
           </View>
         }
@@ -200,6 +218,10 @@ const MainHeader = () => {
           </Pressable>
         ))}
       </ScrollView>
+      <SignUpModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </View>
   );
 };

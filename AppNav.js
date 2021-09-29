@@ -17,6 +17,7 @@ import Settings from './src/screens/App/Settings';
 import Cart from './src/screens/App/Cart';
 import Paypal from './src/components/Paypal';
 import Stripe from './src/components/Stripe';
+
 //screens
 
 import DrawerNav from './src/navigation/Drawer/Drawer';
@@ -32,6 +33,11 @@ import CreateCart from './src/screens/App/Cart/CreateCart';
 import DeliveryLocationCart from './src/screens/App/Cart/DeliveryLocationCart';
 import ConfirmationCart from './src/screens/App/Cart/ConfirmationCart';
 import CongratulationCart from './src/screens/App/Cart/CongratulationCart';
+import ShopperDetail from './src/screens/App/Cart/ShopperDetail';
+import OrderPage from './src/screens/App/Cart/OrderPage';
+import UserProfile from './src/screens/App/Cart/UserProfile';
+import ShopperMessenger from './src/screens/App/Cart/ShopperMessenger';
+
 import SingleStore from './src/screens/App/ProductDetail/SingleStore';
 import ProductViewDetail from './src/screens/App/ProductDetail/ProductViewDetail';
 
@@ -55,6 +61,26 @@ const AppNav = ({getUserBalance, user, isLoggedIn}) => {
         <Stack.Screen
           component={CreateCart}
           name="CreateCart"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={OrderPage}
+          name="OrderPage"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={ShopperDetail}
+          name="ShopperDetail"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={UserProfile}
+          name="UserProfile"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={ShopperMessenger}
+          name="ShopperMessenger"
           options={{headerShown: false}}
         />
         <Stack.Screen
