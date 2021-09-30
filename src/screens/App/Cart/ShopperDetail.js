@@ -360,7 +360,7 @@ const ShopperDetail = () => {
                   style={{
                     textAlign: 'right',
                     fontSize: 12,
-                    color: colors.WebGLQuery,
+                    color: colors.gray,
                     marginBottom: 10,
                     marginRight: 5,
                   }}>

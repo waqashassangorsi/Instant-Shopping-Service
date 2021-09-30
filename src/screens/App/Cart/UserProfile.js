@@ -49,49 +49,125 @@ const renderItem = ({item}) => (
   <View
     style={{
       flexDirection: 'row',
-      marginTop: 10,
       justifyContent: 'space-between',
-      marginHorizontal: 10,
+      alignItems: 'center',
+      borderBottomWidth: 2,
+      borderColor: colors.WebGLQuery,
     }}>
-    <View style={{width: '20%', justifyContent: 'center'}}>
-      <Image source={shopwrite} style={{height: 90, width: 80}} />
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <View style={{}}>
+        <Image source={shopwrite} style={{height: 90, width: 80}} />
+      </View>
+      <View style={{}}>
+        <Text style={{fontSize: 18}}>Shoprite</Text>
+        <Text style={{fontSize: 12}}>7 july 2020</Text>
+        <Text style={{fontSize: 12}}>14:25</Text>
+      </View>
     </View>
-    <View style={{width: '25%', justifyContent: 'center'}}>
-      <Text style={{color: 'black', fontSize: 22, marginLeft: 10}}>
-        Shoprite
-      </Text>
-      <Text style={{color: 'black', marginLeft: 10, fontSize: 13}}>
-        7 july 2020
-      </Text>
-      <Text style={{color: colors.greenColor, marginLeft: 10, fontSize: 13}}>
-        14:25
-      </Text>
-    </View>
-    <View style={{marginTop: 15, width: '45%', alignItems: 'center'}}>
-      <Text style={{color: 'gray', marginLeft: 10, fontSize: 16}}>
-        JFU-5892-5469224
-      </Text>
-      <View
-        style={{
-          marginTop: 10,
-        }}>
-        <TouchableOpacity
+
+    <View style={{alignItems: 'center'}}>
+      <View style={{}}>
+        <Text
           style={{
-            width: 150,
-            height: 30,
+            textAlign: 'right',
+            fontSize: 12,
+            color: colors.gray,
+            marginBottom: 10,
+            marginRight: 5,
+          }}>
+          Maitama
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            margin: 2,
-            borderRadius: 3,
-
-            borderWidth: 2,
-            borderColor: colors.greenColor,
           }}>
-          <Text style={{color: colors.greenColor}}>Ongoing</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: colors.greenColor,
+              width: 75,
+              height: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+
+              borderRadius: 3,
+              flexDirection: 'row',
+              marginRight: 5,
+            }}>
+            <AntDesign name="check" size={10} color="white" />
+            <Text style={{color: 'white', fontSize: 8}}>Accept</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'red',
+              width: 75,
+              height: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+
+              borderRadius: 3,
+              flexDirection: 'row',
+            }}>
+            <Entypo name="cross" size={10} color="white" />
+            <Text style={{color: 'white', fontSize: 8}}> Reject</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   </View>
+  // <View
+  //   style={{
+  //     flexDirection: 'row',
+  //     marginTop: 10,
+  //     justifyContent: 'space-between',
+  //     marginHorizontal: 10,
+  //   }}>
+  //   <View style={{width: '20%', justifyContent: 'center'}}>
+  //     <Image source={shopwrite} style={{height: 90, width: 80}} />
+  //   </View>
+  //   <View style={{width: '25%', justifyContent: 'center'}}>
+  //     <Text style={{color: 'black', fontSize: 22, marginLeft: 10}}>
+  //       Shoprite
+  //     </Text>
+  //     <Text style={{color: 'black', marginLeft: 10, fontSize: 13}}>
+  //       7 july 2020
+  //     </Text>
+  //     <Text style={{color: colors.greenColor, marginLeft: 10, fontSize: 13}}>
+  //       14:25
+  //     </Text>
+  //   </View>
+  //   <View style={{marginTop: 15, width: '45%', alignItems: 'center'}}>
+  //     <Text style={{color: 'gray', marginLeft: 10, fontSize: 16}}>
+  //       JFU-5892-5469224
+  //     </Text>
+  //     <View
+  //       style={{
+  //         marginTop: 10,
+  //       }}>
+  //       <TouchableOpacity
+  //         style={{
+  //           width: 150,
+  //           height: 30,
+  //           justifyContent: 'center',
+  //           alignItems: 'center',
+  //           margin: 2,
+  //           borderRadius: 3,
+
+  //           borderWidth: 2,
+  //           borderColor: colors.greenColor,
+  //         }}>
+  //         <Text style={{color: colors.greenColor}}>Ongoing</Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   </View>
+  // </View>
 );
 
 const UserProfile = () => {
@@ -370,172 +446,232 @@ const UserProfile = () => {
             />
           </TouchableOpacity>
         </View> */}
-        <View
-          style={{marginHorizontal: 10, marginTop: 20, borderBottomWidth: 0.5}}>
-          <Text
+        <View style={{padding: 20}}>
+          <View
             style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: 'gray',
-              marginBottom: 10,
-            }}>
-            User Profile
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 10,
-            justifyContent: 'space-around',
-          }}>
-          <View style={{width: '16%', alignItems: 'center'}}>
-            <Text style={{fontSize: 18, color: 'gray'}}>Gender:</Text>
-          </View>
-          <View style={{width: '14%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 16, color: 'black'}}>Male</Text>
-          </View>
-          <View style={{width: '28%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 18, color: 'gray'}}>Date of Birth:</Text>
-          </View>
-          <View style={{width: '22%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 16, color: 'black'}}>21,july,1992</Text>
-          </View>
-        </View>
-        <View
-          style={{flexDirection: 'row', paddingHorizontal: 10, paddingTop: 10}}>
-          <Text style={{fontSize: 18, color: 'gray'}}>Address:</Text>
-          <View style={{marginLeft: 10, flex: 1}}>
-            <Text style={{fontSize: 16, color: 'black'}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore.
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{marginHorizontal: 10, marginTop: 20, borderBottomWidth: 0.5}}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: 'gray',
-              marginBottom: 10,
-            }}>
-            Contact information
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 10,
-            justifyContent: 'space-around',
-          }}>
-          <View style={{width: '16%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 18, color: 'gray'}}>Phone:</Text>
-          </View>
-          <View style={{width: '14%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 16, color: colors.greenColor}}>090244</Text>
-          </View>
-          <View style={{width: '28%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 18, color: 'gray'}}>Date of Birth:</Text>
-          </View>
-          <View style={{width: '22%', alignSelf: 'center'}}>
-            <Text style={{fontSize: 16, color: colors.greenColor}}>
-              21,july,1992
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{marginHorizontal: 10, marginTop: 20, borderBottomWidth: 0.5}}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: 'black',
-              marginBottom: 20,
-            }}>
-            Transaction History
-          </Text>
-        </View>
-        <View style={styles1.tabs}>
-          <TouchableOpacity
-            onPress={() => {
-              setSelected('top');
+              borderBottomWidth: 2,
+              borderBottomColor: colors.WebGLQuery,
             }}>
             <Text
               style={{
-                fontSize: 14,
-                marginBottom: 8,
-                textAlign: 'center',
-                marginTop: 10,
+                fontSize: 12,
+                color: 'gray',
+                marginBottom: 10,
               }}>
-              PostedOrders
+              User Profile
             </Text>
-            {selected == 'top' && <Divider style={styles1.divider} />}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setSelected('like');
-            }}>
-            <Text
-              style={{
-                fontSize: 14,
-                marginBottom: 8,
-                paddingLeft: 10,
-                marginTop: 10,
-                textAlign: 'center',
-              }}>
-              Completed orders
-            </Text>
+          </View>
 
-            {selected == 'like' && <Divider style={styles1.divider} />}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setSelected('follow');
-            }}>
-            <Text
-              style={{
-                fontSize: 14,
-                marginBottom: 8,
-                paddingLeft: 10,
-                marginTop: 10,
-                textAlign: 'center',
-              }}>
-              Ongoing orders
-            </Text>
-
-            {selected == 'follow' && <Divider style={styles1.divider} />}
-          </TouchableOpacity>
-        </View>
-
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ShopperDetail');
-            }}
+          <View
             style={{
-              borderRadius: 3,
               flexDirection: 'row',
-              borderColor: colors.greenColor,
-              height: 35,
-              marginHorizontal: 10,
-              justifyContent: 'space-around',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               marginTop: 10,
-              backgroundColor: colors.greenColor,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
+              <View style={{}}>
+                <Text style={{fontSize: 12, color: 'gray'}}>Gender:</Text>
+              </View>
+              <View style={{}}>
+                <Text style={{fontSize: 12, color: 'black', marginLeft: 5}}>
+                  Male
+                </Text>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{}}>
+                <Text style={{fontSize: 12, color: 'gray'}}>
+                  Date of Birth:
+                </Text>
+              </View>
+              <View style={{}}>
+                <Text style={{fontSize: 12, color: 'black', marginLeft: 5}}>
+                  21 july, 1992
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              // paddingHorizontal: 10,
+              // paddingTop: 10,
+              marginTop: 10,
+            }}>
+            <Text style={{fontSize: 12, color: 'gray'}}>Address:</Text>
+
+            <View style={{paddingHorizontal: 5, marginRight: 25}}>
+              <Text style={{fontSize: 12, color: 'black'}}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore.
+              </Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              // marginHorizontal: 10,
+              // marginTop: 20,
+              borderBottomWidth: 2,
+              borderBottomColor: colors.WebGLQuery,
+              paddingVertical: 10,
             }}>
             <Text
               style={{
-                color: 'white',
-                alignSelf: 'center',
+                fontSize: 12,
+                color: 'gray',
+                fontWeight: 'bold',
               }}>
-              Load More Orders
+              Contact information
             </Text>
-          </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 10,
+              justifyContent: 'space-around',
+              alignItems:'center',
+              marginRight:55
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 12, color: 'gray'}}>Phone:</Text>
+              <Text
+                style={{fontSize: 12, color: colors.greenColor, marginLeft: 5}}>
+                0336-6432173
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 12, color: 'gray'}}>Email:</Text>
+              <Text
+                style={{fontSize: 12, color: colors.greenColor, marginLeft: 5}}>
+                helpdesk@psa.com
+              </Text>
+            </View>
+            {/* <View style={{width: '28%', alignSelf: 'center'}}>
+              <Text style={{fontSize: 18, color: 'gray'}}>Date of Birth:</Text>
+            </View>
+            <View style={{width: '22%', alignSelf: 'center'}}>
+              <Text style={{fontSize: 16, color: colors.greenColor}}>
+                21,july,1992
+              </Text>
+            </View> */}
+          </View>
+          <View
+            style={{
+              // marginHorizontal: 10,
+              // marginTop: 20,
+              borderBottomWidth: 2,
+              borderBottomColor: colors.WebGLQuery,
+              paddingVertical: 20,
+            }}>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: 'black',
+                // marginBottom: 20,
+              }}>
+              Transaction History
+            </Text>
+          </View>
+
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',padding:10,borderBottomWidth:2,borderBottomColor:colors.WebGLQuery}}>
+            <View>
+              <Text style={{fontSize:12,color:colors.greenColor}}>posted orders</Text>
+            </View>
+            <View>
+              <Text style={{fontSize:12,color:colors.WebGLQuery}}>Completed orders</Text>
+            </View>
+            <View>
+              <Text style={{color:colors.WebGLQuery}}>Ongoing orders</Text>
+            </View>
+          </View>
+          {/* <View style={styles1.tabs}>
+            <TouchableOpacity
+              onPress={() => {
+                setSelected('top');
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginBottom: 8,
+                  textAlign: 'center',
+                  marginTop: 10,
+                }}>
+                PostedOrders
+              </Text>
+              {selected == 'top' && <Divider style={styles1.divider} />}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setSelected('like');
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginBottom: 8,
+                  paddingLeft: 10,
+                  marginTop: 10,
+                  textAlign: 'center',
+                }}>
+                Completed orders
+              </Text>
+
+              {selected == 'like' && <Divider style={styles1.divider} />}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setSelected('follow');
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginBottom: 8,
+                  paddingLeft: 10,
+                  marginTop: 10,
+                  textAlign: 'center',
+                }}>
+                Ongoing orders
+              </Text>
+
+              {selected == 'follow' && <Divider style={styles1.divider} />}
+            </TouchableOpacity>
+          </View> */}
+
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ShopperDetail');
+              }}
+              style={{
+                borderRadius: 3,
+                flexDirection: 'row',
+                borderColor: colors.greenColor,
+                height: 35,
+                marginHorizontal: 10,
+                justifyContent: 'space-around',
+                marginTop: 10,
+                backgroundColor: colors.greenColor,
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  alignSelf: 'center',
+                }}>
+                Load More Orders
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <Footer />

@@ -124,16 +124,16 @@ const Product = ({
   return (
     <View style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        {/* <MainHeader /> */}
+        <MainHeader />
 
-        {/* <ProductsDetails /> */}
+        <ProductsDetails />
         {/* <CongratulationCart/> */}
         {/* <CreateCart/> */}
         {/* <UserProfile /> */}
         {/* <ShopperMessenger /> */}
         {/* <OrderPage /> */}
-        <ShopperDetail />
-        {/* <Footer /> */}
+        {/* <ShopperDetail /> */}
+        <Footer />
       </ScrollView>
       {/* <SignUpModal/> */}
     </View>

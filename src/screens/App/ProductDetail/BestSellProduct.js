@@ -109,10 +109,7 @@ const BestSellProduct = () => {
           </Text>
         </Pressable>
       </View>
-      <Pressable
-        onPress={() => {
-          navigation.navigate('ProductViewDetail');
-        }}>
+      <View>
         <ScrollView
           contentContainerStyle={{
             backgroundColor: colors.white,
@@ -121,9 +118,16 @@ const BestSellProduct = () => {
           horizontal
           showsHorizontalScrollIndicator={false}>
           {product1.map((item) => (
-            <View key={item.id}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('ProductViewDetail');
+              }}
+              android_ripple={{
+                color: colors.white,
+                borderless: false,
+              }}
+              key={item.id}>
               <View
-                android_ripple={{color: colors.white, borderless: false}}
                 style={{
                   flex: 1,
                   margin: 2,
@@ -154,10 +158,10 @@ const BestSellProduct = () => {
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.price}
               </Text>
-            </View>
+            </Pressable>
           ))}
         </ScrollView>
-      </Pressable>
+      </View>
       <View>
         <ScrollView
           contentContainerStyle={{
