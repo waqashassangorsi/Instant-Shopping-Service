@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 const DeliveryLocationCart = () => {
   let navigation = useNavigation();
     return (
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <MainHeader />
         <View style={{flex: 1, backgroundColor: colors.white}}>
           <View
@@ -29,11 +29,11 @@ const DeliveryLocationCart = () => {
               <Text
                 style={{
                   fontSize: 12,
-                  left: 120,
+                  left: 100,
                   textTransform: 'capitalize',
                   color: colors.gray,
                 }}>
-                my cart
+                delivery location 
               </Text>
             </View>
 
@@ -133,7 +133,7 @@ const DeliveryLocationCart = () => {
                   style={{
                     fontSize: 11,
                     textTransform: 'capitalize',
-                    color: colors.gray,
+                    color: colors.greenColor,
                     right: 20,
                   }}>
                   create cart
@@ -142,7 +142,7 @@ const DeliveryLocationCart = () => {
                   style={{
                     fontSize: 11,
                     textTransform: 'capitalize',
-                    color: colors.gray,
+                    color: colors.greenColor,
                     left: 5,
                   }}>
                   delivery location

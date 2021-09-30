@@ -5,13 +5,15 @@ import Footer from '../../../components/Footer';
 import colors from '../../../theme/colors';
 import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
+import CustomProgressStep from './CustomProgressStep';
 
 const CongratulationCart = () => {
   let navigation = useNavigation();
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
+      <CustomProgressStep />
       <View style={{flex: 1, padding: 10, marginTop: 10}}>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image

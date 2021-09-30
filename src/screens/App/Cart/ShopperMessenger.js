@@ -124,7 +124,7 @@ const ShopperMessenger = () => {
   // };
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <View

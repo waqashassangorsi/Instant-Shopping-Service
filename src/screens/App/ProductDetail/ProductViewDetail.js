@@ -87,7 +87,7 @@ const Similar_Product = [
 
 const ProductViewDetail = () => {
     return (
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <MainHeader />
         <View style={{flex: 1, padding: 20}}>
           <View style={{flex: 1, justifyContent: 'center'}}>
@@ -301,7 +301,7 @@ const ProductViewDetail = () => {
             </View>
           </View>
         </View>
-        <View style={{paddingHorizontal:10}}>
+        <View style={{paddingHorizontal: 10}}>
           <ScrollView
             contentContainerStyle={{
               backgroundColor: colors.primary,

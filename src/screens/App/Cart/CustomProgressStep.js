@@ -9,11 +9,12 @@ const CustomProgressStep = () => {
       <View style={{flex: 1, backgroundColor: colors.white}}>
         <View
           style={{
+            flex:1,
             padding: 10,
             paddingVertical: 20,
             backgroundColor: colors.WebGLQuery,
           }}>
-          <View style={{flex: 1, flexDirection: 'row', left: 10}}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
             <TouchableOpacity>
               <Image
                 source={require('../../../assets/cancel.png')}
@@ -24,17 +25,18 @@ const CustomProgressStep = () => {
             <Text
               style={{
                 fontSize: 12,
-                left: 120,
+                alignItems: 'flex-end',
                 textTransform: 'capitalize',
                 color: colors.gray,
+                paddingHorizontal: 110,
               }}>
-              my cart
+              order summary
             </Text>
           </View>
 
           <View
             style={{
-            //   paddingHorizontal: 60,
+              //   paddingHorizontal: 60,
               alignSelf: 'center',
               marginTop: 10,
             }}>
@@ -58,7 +60,7 @@ const CustomProgressStep = () => {
                     width: 16,
                     height: 16,
                     borderRadius: 16 / 2,
-                    backgroundColor: colors.greenColor
+                    backgroundColor: colors.greenColor,
                   }}
                 />
               </View>
@@ -66,7 +68,7 @@ const CustomProgressStep = () => {
                 style={{
                   width: 70,
                   borderBottomWidth: 1,
-                  borderBottomColor: colors.greenColor
+                  borderBottomColor: colors.greenColor,
                 }}
               />
 
@@ -76,7 +78,7 @@ const CustomProgressStep = () => {
                   height: 20,
                   borderRadius: 20 / 2,
                   borderWidth: 1,
-                  borderColor: colors.lightSlategrey,
+                  borderColor: colors.greenColor,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
@@ -85,7 +87,7 @@ const CustomProgressStep = () => {
                     width: 16,
                     height: 16,
                     borderRadius: 16 / 2,
-                    backgroundColor: colors.lightSlategrey,
+                    backgroundColor: colors.greenColor,
                   }}
                 />
               </View>
@@ -93,7 +95,7 @@ const CustomProgressStep = () => {
                 style={{
                   width: 70,
                   borderBottomWidth: 1,
-                  borderBottomColor: colors.gray,
+                  borderBottomColor: colors.greenColor,
                 }}
               />
 
@@ -103,7 +105,7 @@ const CustomProgressStep = () => {
                   height: 20,
                   borderRadius: 20 / 2,
                   borderWidth: 1,
-                  borderColor: colors.lightSlategrey,
+                  borderColor: colors.greenColor,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
@@ -112,7 +114,7 @@ const CustomProgressStep = () => {
                     width: 16,
                     height: 16,
                     borderRadius: 16 / 2,
-                    backgroundColor: colors.lightSlategrey,
+                    backgroundColor: colors.greenColor,
                   }}
                 />
               </View>
@@ -128,7 +130,7 @@ const CustomProgressStep = () => {
                 style={{
                   fontSize: 11,
                   textTransform: 'capitalize',
-                  color: colors.gray,
+                  color: colors.greenColor,
                   right: 20,
                 }}>
                 create cart
@@ -137,7 +139,7 @@ const CustomProgressStep = () => {
                 style={{
                   fontSize: 11,
                   textTransform: 'capitalize',
-                  color: colors.gray,
+                  color: colors.greenColor,
                   left: 5,
                 }}>
                 delivery location
@@ -146,7 +148,7 @@ const CustomProgressStep = () => {
                 style={{
                   fontSize: 11,
                   textTransform: 'capitalize',
-                  color: colors.gray,
+                  color: colors.greenColor,
                   left: 20,
                 }}>
                 confirmation
@@ -154,8 +156,6 @@ const CustomProgressStep = () => {
             </View>
           </View>
         </View>
-        
-         
       </View>
     );
 }

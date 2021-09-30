@@ -32,7 +32,7 @@ import {useNavigation} from '@react-navigation/native';
 const OrderPage = () => {
   let navigation = useNavigation();
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <View
@@ -254,6 +254,14 @@ const OrderPage = () => {
                 />
               </View>
             </View>
+            <View
+              style={{
+                borderRightWidth: 1,
+                borderRightColor:colors.WebGLQuery,
+                marginTop:10,
+                height: 130,
+              }}
+            />
             <View style={{flex: 1, marginTop: 10, backgroundColor: 'white'}}>
               <Text style={{textAlign: 'center', fontSize: 16}}>
                 Shopping sprint
@@ -342,7 +350,7 @@ const OrderPage = () => {
               style={{
                 width: 80,
                 borderBottomWidth: 1,
-                borderBottomColor: colors.gray,
+                borderBottomColor: colors.greenColor,
               }}
             />
 
@@ -369,7 +377,7 @@ const OrderPage = () => {
               style={{
                 width: 80,
                 borderBottomWidth: 1,
-                borderBottomColor: colors.gray,
+                borderBottomColor: colors.greenColor,
               }}
             />
             <View
@@ -403,7 +411,7 @@ const OrderPage = () => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.gray,
+                color: colors.greenColor,
                 right: 20,
               }}>
               create cart
@@ -412,7 +420,7 @@ const OrderPage = () => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.gray,
+                color: colors.greenColor,
                 left: 5,
               }}>
               Shopper assigned
@@ -421,7 +429,7 @@ const OrderPage = () => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.gray,
+                color: colors.greenColor,
                 left: 5,
               }}>
               shopping in progress
@@ -430,7 +438,7 @@ const OrderPage = () => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.gray,
+                color: colors.greenColor,
                 left: 15,
               }}>
               confirmation

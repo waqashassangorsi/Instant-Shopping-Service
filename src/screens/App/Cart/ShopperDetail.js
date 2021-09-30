@@ -137,7 +137,7 @@ const ShopperDetail = () => {
     </View>
   );
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
       <View>
         <View style={{flex: 1, backgroundColor: colors.greenColor}}>
@@ -269,6 +269,15 @@ const ShopperDetail = () => {
                 />
               </View>
             </View>
+            <View
+              style={{
+                borderRightWidth: 1,
+                borderRightColor: colors.WebGLQuery,
+                marginTop: 10,
+                height: 120,
+                elevation:1
+              }}
+            />
             <View style={{flex: 1, marginTop: 10}}>
               <Text style={{textAlign: 'center', fontSize: 12}}>
                 Shopping sprint

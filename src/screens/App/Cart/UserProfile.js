@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Pressable
 } from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -15,6 +16,9 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Divider} from 'react-native-paper';
+
+
+
 import {
   primary,
   logo,
@@ -70,136 +74,66 @@ const renderItem = ({item}) => (
       </View>
     </View>
 
-    <View style={{alignItems: 'center'}}>
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
       <View style={{}}>
         <Text
           style={{
-            textAlign: 'right',
+            paddingVertical:10,
             fontSize: 12,
-            color: colors.gray,
-            marginBottom: 10,
-            marginRight: 5,
+            color: colors.WebGLQuery,
           }}>
-          Maitama
+          JFU-5892-5469224
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: colors.greenColor,
-              width: 75,
-              height: 25,
-              justifyContent: 'center',
-              alignItems: 'center',
-
-              borderRadius: 3,
-              flexDirection: 'row',
-              marginRight: 5,
-            }}>
-            <AntDesign name="check" size={10} color="white" />
-            <Text style={{color: 'white', fontSize: 8}}>Accept</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'red',
-              width: 75,
-              height: 25,
-              justifyContent: 'center',
-              alignItems: 'center',
-
-              borderRadius: 3,
-              flexDirection: 'row',
-            }}>
-            <Entypo name="cross" size={10} color="white" />
-            <Text style={{color: 'white', fontSize: 8}}> Reject</Text>
-          </TouchableOpacity>
-        </View>
       </View>
+      <TouchableOpacity
+        style={{
+          width: 100,
+          height: 25,
+          borderRadius: 3,
+          borderWidth:1,
+          borderColor:colors.greenColor,
+          alignItems:'center',
+          justifyContent:'center'
+        }}>
+        <Text style={{color: 'white', fontSize: 10,color:colors.greenColor}}>Ongoing</Text>
+      </TouchableOpacity>
     </View>
   </View>
-  // <View
-  //   style={{
-  //     flexDirection: 'row',
-  //     marginTop: 10,
-  //     justifyContent: 'space-between',
-  //     marginHorizontal: 10,
-  //   }}>
-  //   <View style={{width: '20%', justifyContent: 'center'}}>
-  //     <Image source={shopwrite} style={{height: 90, width: 80}} />
-  //   </View>
-  //   <View style={{width: '25%', justifyContent: 'center'}}>
-  //     <Text style={{color: 'black', fontSize: 22, marginLeft: 10}}>
-  //       Shoprite
-  //     </Text>
-  //     <Text style={{color: 'black', marginLeft: 10, fontSize: 13}}>
-  //       7 july 2020
-  //     </Text>
-  //     <Text style={{color: colors.greenColor, marginLeft: 10, fontSize: 13}}>
-  //       14:25
-  //     </Text>
-  //   </View>
-  //   <View style={{marginTop: 15, width: '45%', alignItems: 'center'}}>
-  //     <Text style={{color: 'gray', marginLeft: 10, fontSize: 16}}>
-  //       JFU-5892-5469224
-  //     </Text>
-  //     <View
-  //       style={{
-  //         marginTop: 10,
-  //       }}>
-  //       <TouchableOpacity
-  //         style={{
-  //           width: 150,
-  //           height: 30,
-  //           justifyContent: 'center',
-  //           alignItems: 'center',
-  //           margin: 2,
-  //           borderRadius: 3,
-
-  //           borderWidth: 2,
-  //           borderColor: colors.greenColor,
-  //         }}>
-  //         <Text style={{color: colors.greenColor}}>Ongoing</Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   </View>
-  // </View>
 );
 
 const UserProfile = () => {
   let navigation = useNavigation();
-  const [selected, setSelected] = useState('top');
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <View
           style={{
+            flex: 1,
             flexDirection: 'row',
             paddingHorizontal: 12,
             justifyContent: 'space-between',
             marginTop: 20,
           }}>
-          <View
+          <TouchableOpacity
             style={{
               flex: 1,
-
               justifyContent: 'center',
             }}>
             <Image
               source={cancel}
               style={{width: 13, height: 13}}
-              tintColor={colors.WebGLQuery}
+              tintColor={colors.gray}
             />
-          </View>
+          </TouchableOpacity>
           <View style={{flex: 1, justifyContent: 'center'}}>
             <Text
               style={{
-                color: colors.WebGLQuery,
+                color: colors.gray,
                 fontSize: 12,
                 fontWeight: 'bold',
               }}>
@@ -207,106 +141,7 @@ const UserProfile = () => {
             </Text>
           </View>
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: colors.greenColor,
-            marginHorizontal: 10,
-            marginTop: 15,
-            height: 150,
-          }}>
-          <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
-            <Image
-              source={user}
-              style={{
-                height: 80,
-                width: 80,
-                borderRadius: 50,
-                alignSelf: 'flex-end',
-              }}
-            />
-            <Badge
-              value=" "
-              status="success"
-              containerStyle={{position: 'absolute', bottom: 35, right: 4}}
-            />
-          </View>
-          <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
-            <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
-              Frank Gallager
-            </Text>
-            <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
-              Active Since June 2020
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-              }}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ShopperMessenger');
-                }}
-                style={{
-                  height: 40,
-                  width: 120,
-                  backgroundColor: 'white',
-                  borderRadius: 2,
-                  flexDirection: 'row',
 
-                  justifyContent: 'center',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: colors.greenColor,
-                    fontSize: 16,
-                    textAlign: 'center',
-                  }}>
-                  Messenger
-                </Text>
-                <MaterialIcons
-                  name="messenger"
-                  size={18}
-                  style={{
-                    marginLeft: 5,
-                    color: colors.greenColor,
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  height: 40,
-                  width: 120,
-                  backgroundColor: 'white',
-                  borderRadius: 2,
-
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: colors.greenColor,
-                    fontSize: 16,
-                    textAlign: 'center',
-                  }}>
-                  Phone Call
-                </Text>
-                <Zocial
-                  name="call"
-                  size={18}
-                  style={{
-                    marginLeft: 5,
-                    color: colors.greenColor,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View> */}
         <View
           style={{
             flexDirection: 'row',
@@ -410,42 +245,7 @@ const UserProfile = () => {
             </View>
           </View>
         </View>
-        {/* <View>
-          <TouchableOpacity
-            style={{
-              height: 40,
-              width: 120,
-              backgroundColor: 'white',
-              borderRadius: 2,
-              marginLeft: 10,
-              marginTop: 5,
-              flexDirection: 'row',
 
-              justifyContent: 'center',
-
-              alignItems: 'center',
-              alignSelf: 'flex-end',
-              marginTop: -64,
-              marginRight: 30,
-            }}>
-            <Text
-              style={{
-                color: colors.greenColor,
-                fontSize: 16,
-                textAlign: 'center',
-              }}>
-              Phone Call
-            </Text>
-            <Zocial
-              name="call"
-              size={18}
-              style={{
-                marginLeft: 5,
-                color: colors.greenColor,
-              }}
-            />
-          </TouchableOpacity>
-        </View> */}
         <View style={{padding: 20}}>
           <View
             style={{
@@ -478,7 +278,7 @@ const UserProfile = () => {
                 <Text style={{fontSize: 12, color: 'gray'}}>Gender:</Text>
               </View>
               <View style={{}}>
-                <Text style={{fontSize: 12, color: 'black', marginLeft: 5}}>
+                <Text style={{fontSize: 12, color: 'black', marginLeft: 10}}>
                   Male
                 </Text>
               </View>
@@ -490,7 +290,7 @@ const UserProfile = () => {
                 </Text>
               </View>
               <View style={{}}>
-                <Text style={{fontSize: 12, color: 'black', marginLeft: 5}}>
+                <Text style={{fontSize: 12, color: 'black', marginLeft: 10}}>
                   21 july, 1992
                 </Text>
               </View>
@@ -499,13 +299,11 @@ const UserProfile = () => {
           <View
             style={{
               flexDirection: 'row',
-              // paddingHorizontal: 10,
-              // paddingTop: 10,
-              marginTop: 10,
+              paddingVertical: 15,
             }}>
             <Text style={{fontSize: 12, color: 'gray'}}>Address:</Text>
 
-            <View style={{paddingHorizontal: 5, marginRight: 25}}>
+            <View style={{left: 5, marginRight: 30}}>
               <Text style={{fontSize: 12, color: 'black'}}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore.
@@ -515,8 +313,6 @@ const UserProfile = () => {
 
           <View
             style={{
-              // marginHorizontal: 10,
-              // marginTop: 20,
               borderBottomWidth: 2,
               borderBottomColor: colors.WebGLQuery,
               paddingVertical: 10,
@@ -534,9 +330,8 @@ const UserProfile = () => {
             style={{
               flexDirection: 'row',
               marginTop: 10,
-              justifyContent: 'space-around',
-              alignItems:'center',
-              marginRight:55
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 12, color: 'gray'}}>Phone:</Text>
@@ -552,19 +347,9 @@ const UserProfile = () => {
                 helpdesk@psa.com
               </Text>
             </View>
-            {/* <View style={{width: '28%', alignSelf: 'center'}}>
-              <Text style={{fontSize: 18, color: 'gray'}}>Date of Birth:</Text>
-            </View>
-            <View style={{width: '22%', alignSelf: 'center'}}>
-              <Text style={{fontSize: 16, color: colors.greenColor}}>
-                21,july,1992
-              </Text>
-            </View> */}
           </View>
           <View
             style={{
-              // marginHorizontal: 10,
-              // marginTop: 20,
               borderBottomWidth: 2,
               borderBottomColor: colors.WebGLQuery,
               paddingVertical: 20,
@@ -574,74 +359,46 @@ const UserProfile = () => {
                 fontSize: 12,
                 fontWeight: 'bold',
                 color: 'black',
-                // marginBottom: 20,
               }}>
               Transaction History
             </Text>
           </View>
 
-          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',padding:10,borderBottomWidth:2,borderBottomColor:colors.WebGLQuery}}>
-            <View>
-              <Text style={{fontSize:12,color:colors.greenColor}}>posted orders</Text>
-            </View>
-            <View>
-              <Text style={{fontSize:12,color:colors.WebGLQuery}}>Completed orders</Text>
-            </View>
-            <View>
-              <Text style={{color:colors.WebGLQuery}}>Ongoing orders</Text>
-            </View>
-          </View>
-          {/* <View style={styles1.tabs}>
-            <TouchableOpacity
-              onPress={() => {
-                setSelected('top');
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: colors.WebGLQuery,
+            }}>
+            <Pressable
+              android_ripple={{
+                color: colors.black,
+                // borderless: false,
               }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  marginBottom: 8,
-                  textAlign: 'center',
-                  marginTop: 10,
-                }}>
-                PostedOrders
+              <Text style={{fontSize: 12, color: colors.greenColor}}>
+                posted orders
               </Text>
-              {selected == 'top' && <Divider style={styles1.divider} />}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setSelected('like');
+            </Pressable>
+            <Pressable
+              android_ripple={{
+                color: colors.black,
+                borderless: false,
               }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  marginBottom: 8,
-                  paddingLeft: 10,
-                  marginTop: 10,
-                  textAlign: 'center',
-                }}>
+              <Text style={{fontSize: 12, color: colors.WebGLQuery}}>
                 Completed orders
               </Text>
-
-              {selected == 'like' && <Divider style={styles1.divider} />}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setSelected('follow');
+            </Pressable>
+            <Pressable
+              android_ripple={{
+                color: colors.black,
+                borderless: false,
               }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  marginBottom: 8,
-                  paddingLeft: 10,
-                  marginTop: 10,
-                  textAlign: 'center',
-                }}>
-                Ongoing orders
-              </Text>
-
-              {selected == 'follow' && <Divider style={styles1.divider} />}
-            </TouchableOpacity>
-          </View> */}
+              <Text style={{color: colors.WebGLQuery}}>Ongoing orders</Text>
+            </Pressable>
+          </View>
 
           <FlatList
             data={DATA}

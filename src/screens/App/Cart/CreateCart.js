@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 const CreateCart = () => {
    let navigation = useNavigation();
     return (
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <MainHeader />
         <View style={{flex: 1, backgroundColor: colors.white}}>
           <View
@@ -456,7 +456,9 @@ const CreateCart = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {navigation.navigate('DeliveryLocationCart')}}
+              onPress={() => {
+                navigation.navigate('DeliveryLocationCart');
+              }}
               style={{
                 flex: 1,
                 backgroundColor: colors.greenColor,

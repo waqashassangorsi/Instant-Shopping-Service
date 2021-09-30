@@ -44,8 +44,8 @@ const fashion = [
 
 const SingleStore = () => {
     return (
-      <ScrollView>
-      <MainHeader/>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <MainHeader />
         <View style={{flex: 1}}>
           <View style={{marginBottom: -50}}>
             <Image
@@ -160,7 +160,7 @@ const SingleStore = () => {
           </View>
           <BestSellProduct />
         </View>
-        <Footer/>
+        <Footer />
       </ScrollView>
     );
 }

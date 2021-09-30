@@ -118,16 +118,15 @@ const BestSellProduct = () => {
           horizontal
           showsHorizontalScrollIndicator={false}>
           {product1.map((item) => (
-            <Pressable
-              onPress={() => {
-                navigation.navigate('ProductViewDetail');
-              }}
-              android_ripple={{
-                color: colors.white,
-                borderless: false,
-              }}
-              key={item.id}>
-              <View
+            <View key={item.id}>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('ProductViewDetail');
+                }}
+                android_ripple={{
+                  color:colors.black,
+                  borderLess: false,
+                }}
                 style={{
                   flex: 1,
                   margin: 2,
@@ -143,7 +142,7 @@ const BestSellProduct = () => {
                   resizeMode={'cover'}
                   style={{width: 115, height: 115}}
                 />
-              </View>
+              </Pressable>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.name}
               </Text>
@@ -158,7 +157,7 @@ const BestSellProduct = () => {
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.price}
               </Text>
-            </Pressable>
+            </View>
           ))}
         </ScrollView>
       </View>
