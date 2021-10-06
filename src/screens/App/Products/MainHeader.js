@@ -24,8 +24,22 @@ import colors from '../../../theme/colors';
 import {useNavigation} from '@react-navigation/native';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import SignUpModal from '../../../components/SignUpModal';
+import SelectDropdown from 'react-native-select-dropdown';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
+
+const categories = [
+  'Shop by store',
+  'eBay',
+  'Amazon',
+  'Shop by KONGA',
+  'eBay',
+  'Amazon',
+  'Shirts',
+  'Stylish Dress',
+  'Trousers',
+];
+
 
 const DATA = [
   {id: 1, name: 'shop by store'},
@@ -150,46 +164,83 @@ const MainHeader = () => {
           search categories
         </Text>
 
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            {/* <Text style={{fontSize: 13, fontWeight: '600'}}>
+                All Categories
+              </Text> */}
+            <SelectDropdown
+              defaultButtonText={'All Categories'}
+              buttonStyle={{
+                backgroundColor: 'white',
+                width: 120,
+                height: 30,
+              }}
+              buttonTextStyle={{
+                color: colors.black,
+                left: 10,
+                fontSize: 14,
+                textTransform: 'capitalize',
+              }}
+              rowTextStyle={{
+                fontSize: 12,
+              }}
+              data={categories}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+            <AntDesign
+              name="caretdown"
+              size={10}
+              style={{right: 20}}
+              color="black"
+            />
+          </TouchableOpacity>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
+              left: -30,
             }}>
-            <TouchableOpacity
-              style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{fontSize: 13, fontWeight: '600'}}>
-                All Categories
-              </Text>
-              <AntDesign
-                name="caretdown"
-                size={13}
-                style={{marginHorizontal: 5}}
-                color="black"
-              />
-            </TouchableOpacity>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TextInput
-                style={{
-                  borderBottomColor: colors.gray,
-                  borderBottomWidth: 1,
-                  width: '75%',
-                }}
-                // onChangeText={onChangeNumber}
-                // value={number}
-                placeholder="Enter search keyphrase"
-                // keyboardType=""
-              />
-              <Fontisto
-                name="search"
-                size={15}
-                style={{right: 15}}
-                color={colors.secondary}
-              />
-            </View>
+            <TextInput
+              style={{
+                borderBottomColor: colors.gray,
+                borderBottomWidth: 1,
+                width: '75%',
+              }}
+              // onChangeText={onChangeNumber}
+              // value={number}
+              placeholder="Enter search keyphrase"
+              // keyboardType=""
+            />
+            <Fontisto
+              name="search"
+              size={15}
+              style={{right: 15}}
+              color={colors.secondary}
+            />
           </View>
         </View>
+        {/* </View> */}
       </View>
       <ScrollView
         contentContainerStyle={{

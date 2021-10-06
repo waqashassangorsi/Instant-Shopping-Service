@@ -5,6 +5,37 @@ import colors from '../../../theme/colors';
 import Footer from '../../../components/Footer';
 import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
+import SelectDropdown from 'react-native-select-dropdown';
+
+
+const cities = [
+  'Abuja',
+  'Egypt',
+  'Canada',
+  'Australia',
+  'Ireland',
+  'Lahore',
+  'Islamabad',
+  'Faislabad',
+  'kashmir',
+  'karachi',
+  'Dera Ghazi khan',
+];
+const location = [
+  'Wuse',
+  'Egypt',
+  'Canada',
+  'Australia',
+  'Ireland',
+  'Lahore',
+  'Islamabad',
+  'Faislabad',
+  'kashmir',
+  'karachi',
+  'Dera Ghazi khan',
+];
+
+
 
 const DeliveryLocationCart = () => {
   let navigation = useNavigation();
@@ -33,7 +64,7 @@ const DeliveryLocationCart = () => {
                   textTransform: 'capitalize',
                   color: colors.gray,
                 }}>
-                delivery location 
+                delivery location
               </Text>
             </View>
 
@@ -185,16 +216,46 @@ const DeliveryLocationCart = () => {
                     alignItems: 'center',
                     justifyContent: 'space-around',
                     marginTop: 10,
-                    width: 135,
+                    width: 140,
                     height: 36,
                     borderWidth: 1,
-                    fontSize: 11,
                     borderColor: colors.greenColor,
                   }}>
-                  <Text style={{fontSize: 12, color: colors.greenColor}}>
+                  {/* <Text style={{fontSize: 12, color: colors.greenColor}}>
                     Abuja
-                  </Text>
-                  <Image source={require('../../../assets/dropDown.png')} />
+                  </Text> */}
+                  {/* <Image source={require('../../../assets/dropDown.png')} /> */}
+                  <SelectDropdown
+                    defaultButtonText={'Abuja'}
+                    buttonStyle={{
+                      backgroundColor: 'white',
+                      width: 130,
+                      height: 30,
+                      left: 5,
+                    }}
+                    buttonTextStyle={{
+                      color: colors.greenColor,
+                      left: 20,
+                      fontSize: 15,
+                    }}
+                    rowTextStyle={{
+                      fontSize: 12,
+                    }}
+                    data={cities}
+                    onSelect={(selectedItem, index) => {
+                      console.log(selectedItem, index);
+                    }}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                      return selectedItem;
+                    }}
+                    rowTextForSelection={(item, index) => {
+                      return item;
+                    }}
+                  />
+                  <Image
+                    source={require('../../../assets/dropDown.png')}
+                    style={{right: 15}}
+                  />
                 </TouchableOpacity>
               </View>
               <View
@@ -211,16 +272,47 @@ const DeliveryLocationCart = () => {
                     alignItems: 'center',
                     justifyContent: 'space-around',
                     marginTop: 10,
-                    width: 133,
+                    width: 140,
                     height: 36,
                     borderWidth: 1,
-                    fontSize: 11,
                     borderColor: colors.greenColor,
                   }}>
-                  <Text style={{fontSize: 12, color: colors.greenColor}}>
+                  {/* <Text style={{fontSize: 12, color: colors.greenColor}}>
                     Wuse
                   </Text>
-                  <Image source={require('../../../assets/dropDown.png')} />
+                  <Image source={require('../../../assets/dropDown.png')} /> */}
+
+                  <SelectDropdown
+                    defaultButtonText={'Wuse'}
+                    buttonStyle={{
+                      backgroundColor: 'white',
+                      width: 130,
+                      height: 30,
+                      left: 5,
+                    }}
+                    buttonTextStyle={{
+                      color: colors.greenColor,
+                      left: 20,
+                      fontSize: 15,
+                    }}
+                    rowTextStyle={{
+                      fontSize: 12,
+                    }}
+                    data={location}
+                    onSelect={(selectedItem, index) => {
+                      console.log(selectedItem, index);
+                    }}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                      return selectedItem;
+                    }}
+                    rowTextForSelection={(item, index) => {
+                      return item;
+                    }}
+                  />
+                  <Image
+                    source={require('../../../assets/dropDown.png')}
+                    style={{right: 15}}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
