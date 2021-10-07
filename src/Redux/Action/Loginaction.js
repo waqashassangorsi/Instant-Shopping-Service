@@ -4,19 +4,14 @@ import {BASE_URL} from '../Baseurl';
 import {LOGIN_USER, SAVE_PASSWORD, LOGOUT_USER, SAVE_CHARITY} from './types';
 
 export const loginaction = (data) => {
-  console.log(data);
   return async (dispatch) => {
-    const res = await axios.post(
-      `${BASE_URL}wp-json/winnerwish/v1/login_user`,
-      data,
-    );
-    console.log(res);
-    // return console.log(res);
-    if (res.data.status) {
+    console.log('inside dispathc', data);
+    const res = await axios.post(`${BASE_URL}login_user`, data);
+
+    if (res.data.status == true) {
       dispatch({
         type: LOGIN_USER,
         userdata: res.data.data,
-        charityId: res.data.data.charity,
       });
       return res;
     } else {

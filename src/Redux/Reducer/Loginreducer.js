@@ -9,7 +9,6 @@ const initialState = {
   user: null,
   isLoggedIn: false,
   password: '',
-  charityId: '',
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -19,7 +18,6 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         user: action.userdata,
         isLoggedIn: true,
-        charityId: action.charityId,
       };
     case SAVE_PASSWORD:
       return {

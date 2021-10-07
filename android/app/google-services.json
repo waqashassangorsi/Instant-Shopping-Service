@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "269951146954",
+    "project_id": "realtimemessaging-5c386",
+    "storage_bucket": "realtimemessaging-5c386.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269951146954:android:8cb4fcb7f34a7d0b198d33",
+        "android_client_info": {
+          "package_name": "com.personalshopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269951146954-asg1tqnkv0queriiidj95ciu9ff8b5dt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_FvMATFp1Sejvyf3JNT4DO8EKF03SvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269951146954-asg1tqnkv0queriiidj95ciu9ff8b5dt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

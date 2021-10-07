@@ -21,8 +21,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import colors from '../../../theme/colors';
 import {cancel, person1, Person} from '../../../assets';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+const ImagePicker = require('react-native-image-picker');
 import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
+import database from '@react-native-firebase/database';
+const roomRef = database().ref('rooms');
+
 // import EmojiBoard from 'react-native-emoji-board';
 
 const DATA = [
@@ -39,6 +43,56 @@ const DATA = [
     title: 'Third Item',
   },
 ];
+
+const addRoom = async (item) => {
+  alert('p[akistanm');
+  let roomsFB = [];
+  try {
+    await roomRef.push({
+      recv_name: 'waqas',
+      send_name: 'hasan',
+      send_uid: '23',
+      recv_uid: '32',
+      sender_dp: 'testdp',
+      recv_dp: 'recvdp',
+      created_at: 'date',
+    });
+
+    roomRef.on('value', (snapshot) => {
+      let roomsFB = [];
+      snapshot.forEach((element) => {
+        roomsFB.push({
+          recv_name: element.val().recv_name,
+          send_name: element.val().send_name,
+          key: element.key,
+          send_uid: element.val().send_uid,
+          recv_uid: element.val().recv_uid,
+          created_at: element.val().created_at,
+        });
+      });
+
+      const res = roomsFB?.some((element) => {
+        return 1;
+      });
+
+      if (res) {
+        const index = roomsFB.find((element) => {
+          return 1;
+        });
+        // navigation.navigate('Conversation', {
+        //   roomKey: index.key,
+        //   roomName: item.first_name + ' ' + item.last_name,
+        //   roomdp: item.dp,
+        //   userid: item.id,
+        // });
+      } else {
+        // addRoom(item);
+      }
+    });
+  } catch (err) {
+    alert(err);
+  }
+};
 
 const renderItem = () => (
   <View>
@@ -64,6 +118,12 @@ const renderItem = () => (
         <Text style={{fontSize: 10}}>17:28</Text>
       </View>
     </View>
+    <TouchableOpacity
+      onPress={() => {
+        addRoom();
+      }}>
+      <Text>asdfsd</Text>
+    </TouchableOpacity>
 
     <View style={{flexDirection: 'row', marginTop: 10, alignSelf: 'flex-end'}}>
       <View
@@ -91,7 +151,7 @@ const renderItem = () => (
             color: colors.greenColor,
             textAlign: 'center',
             marginHorizontal: 8,
-            fontSize:12
+            fontSize: 12,
           }}>
           I’ve gotten your list and im on my way to the store now
         </Text>
@@ -101,7 +161,7 @@ const renderItem = () => (
         style={{
           height: 50,
           width: 50,
-          borderRadius: 50/2,
+          borderRadius: 50 / 2,
           marginLeft: 15,
           alignSelf: 'flex-end',
         }}
@@ -114,14 +174,41 @@ const ShopperMessenger = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [value, setValue] = useState();
-  // const onClick = (emoji) => {
-  //   console.log('emoji', emoji);
+  const [filePath, setfilePath] = useState();
+  const [fileName, setfileName] = useState();
 
-  //   //  setValue(emoji)
-  // };
-  // const hideBoard = () => {
-  //   setShow(false);
-  // };
+  const openCamera1 = async (index) => {
+    // setLoader(true);
+
+    const options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log('Response = ', response.assets[0].fileName);
+      setfilePath(response.assets[0].fileName);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        // let source = response.assets[0].fileName;
+
+        let data = {
+          uri: response.assets[0].uri,
+        };
+        console.log(`Response`, response);
+        setfileName(data);
+      }
+    });
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -278,16 +365,24 @@ const ShopperMessenger = () => {
                   }}>
                   Attach media
                 </Text>
-                <Pressable onPress={() => setModalVisible(true)}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => {
+                    openCamera1(0);
+                  }}>
                   <MaterialCommunityIcons
                     name="attachment"
                     size={20}
                     color="#DADADA"
                   />
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Text>{filePath}</Text>
+          </View>
+          <Image source={{uri: fileName}} style={{width: 200, height: 200}} />
           <View
             style={{
               backgroundColor: colors.greenColor,

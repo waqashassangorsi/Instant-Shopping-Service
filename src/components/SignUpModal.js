@@ -14,11 +14,55 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../theme/colors';
+import {loginaction} from '../Redux/Action/Loginaction';
 const {height, width} = Dimensions.get('window');
+import {connect} from 'react-redux';
+import {CommonActions} from '@react-navigation/native';
 
-const SignUpModal = (props) => {
+const SignUpModal = ({
+  navigation,
+  loginaction,
+  isLoggedIn,
+  user,
+  modalVisible,
+}) => {
+  console.log('modalVisible', modalVisible);
   // const [modalVisible, setModalVisible] = useState(false);
   const [userType, setUserType] = useState(1);
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [loading, setLoading] = useState(false);
+  const check = async () => {
+    if (email == '') {
+      alert('kindly enter email');
+    } else if (pass == '') {
+      alert('kindly enter password ');
+    } else {
+      // Keyboard.dismiss();
+      // setLoading(true);
+      const formdata = new FormData();
+      formdata.append('email', email);
+      formdata.append('password', pass);
+
+      console.log('formdata', formdata);
+
+      const res = await loginaction(formdata);
+
+      if (res.data.status == true) {
+        // await savePass(pass);
+        // setLoading(false);
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'Root'}],
+          }),
+        );
+      } else {
+        alert(res.data.message);
+        // setLoading(false);
+      }
+    }
+  };
 
   return (
     <View
@@ -32,7 +76,7 @@ const SignUpModal = (props) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={props.modalVisible}
+        visible={modalVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
@@ -49,7 +93,7 @@ const SignUpModal = (props) => {
                 elevation: 2,
                 backgroundColor: colors.greenColor,
               }}
-              onPress={() => props.setModalVisible(false)}>
+              onPress={() => setModalVisible(false)}>
               <Image
                 source={require('../assets/cancel.png')}
                 style={{width: 10, height: 10}}
@@ -270,6 +314,10 @@ const SignUpModal = (props) => {
                     // value={number}
                     placeholder="Email"
                     keyboardType="email-address"
+                    value={email}
+                    onChangeText={(e) => {
+                      setEmail(e);
+                    }}
                   />
                   <TextInput
                     style={styles.input}
@@ -277,6 +325,10 @@ const SignUpModal = (props) => {
                     // value={number}
                     placeholder="Password"
                     keyboardType="visible-password"
+                    value={pass}
+                    onChangeText={(e) => {
+                      setPass(e);
+                    }}
                   />
                   <View style={{marginTop: 10, flexDirection: 'row'}}>
                     <AntDesign
@@ -296,6 +348,9 @@ const SignUpModal = (props) => {
                     </Text>
                   </View>
                   <TouchableOpacity
+                    onPress={() => {
+                      check();
+                    }}
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -453,4 +508,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpModal;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {loginaction})(SignUpModal);
