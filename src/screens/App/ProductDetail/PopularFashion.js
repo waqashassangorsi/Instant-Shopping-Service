@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
+import {connect} from 'react-redux';
+import {getallbrands} from '../../../Redux/Action/Loginaction';
 
 const fashion = [
   {
@@ -40,7 +42,16 @@ const fashion = [
   },
 ];
 
-const PopularFashion = () => {
+const PopularFashion = ({getallbrands}) => {
+  const [fashiondata, setfashiondata] = useState([]);
+  useEffect(() => {
+    // console.log('fashindata,', fashiondata);
+    (async () => {
+      const res = await getallbrands();
+      setfashiondata(res.data.data);
+    })();
+  });
+
   return (
     <View style={{flex: 1, padding: 10}}>
       <View
@@ -81,7 +92,7 @@ const PopularFashion = () => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {fashion.map((item) => (
+          {fashiondata.map((item) => (
             <View key={item.id} style={{backgroundColor: colors.white}}>
               <View
                 style={{
@@ -94,7 +105,7 @@ const PopularFashion = () => {
                   elevation: 1,
                 }}>
                 <Image
-                  source={item.img}
+                  source={{uri: item.image}}
                   resizeMode="cover"
                   style={{
                     width: 115,
@@ -124,4 +135,9 @@ const PopularFashion = () => {
   );
 };
 
-export default PopularFashion;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getallbrands})(PopularFashion);

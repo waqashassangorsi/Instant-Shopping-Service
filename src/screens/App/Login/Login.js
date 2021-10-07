@@ -54,13 +54,13 @@ const Login = ({navigation, loginaction, isLoggedIn, savePass}) => {
     }
   };
   useEffect(() => {
-    isLoggedIn &&
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{name: 'Root'}],
-        }),
-      );
+    // isLoggedIn &&
+    //   navigation.dispatch(
+    //     CommonActions.reset({
+    //       index: 1,
+    //       routes: [{name: 'Root'}],
+    //     }),
+    //   );
   }, []);
   return (
     <ImageBackground

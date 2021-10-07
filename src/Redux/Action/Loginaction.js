@@ -12,6 +12,7 @@ export const loginaction = (data) => {
       dispatch({
         type: LOGIN_USER,
         userdata: res.data.data,
+        isLoggedIn: true,
       });
       return res;
     } else {
@@ -110,3 +111,32 @@ export const saveCharity = (data) => {
     }
   };
 };
+
+//sadam works starts here
+export const getcity = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.get(`${BASE_URL}get_cities`, data);
+    console.log(res);
+    return res;
+  };
+};
+export const getallbrands = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.get(`${BASE_URL}all_brands`, data);
+    console.log(res);
+    return res;
+  };
+};
+
+export const getallproducts = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}all_products`, data);
+    console.log(res);
+    return res;
+  };
+};
+
+//sadam works ends here

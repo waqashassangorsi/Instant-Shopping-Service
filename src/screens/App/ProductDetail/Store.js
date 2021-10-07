@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
+import {getallbrands} from '../../../Redux/Action/Loginaction';
 
 const STORE = [
   {id: 1, name: 'eBay', img: require('../../../assets/eBay.png')},
@@ -14,13 +16,21 @@ const STORE = [
   {id: 7, name: 'Shoprite', img: require('../../../assets/eBay.png')},
 ];
 
-const Store = () => {
+const Store = ({getallbrands}) => {
+  const [storedata, setstoredata] = useState([]);
+  useEffect(() => {
+    // console.log('fashindata,', fashiondata);
+    (async () => {
+      const res = await getallbrands();
+      setstoredata(res.data.data);
+    })();
+  });
   return (
     <View style={{flex: 1}}>
-      <View>
+      <View style={{backgroundColor: 'red'}}>
         <Image
           source={require('../../../assets/pro.jpg')}
-          style={{height: 150}}
+          style={{height: 150, width: '100%'}}
         />
       </View>
       <View style={{padding: 10}}>
@@ -63,7 +73,7 @@ const Store = () => {
             }}
             horizontal
             showsHorizontalScrollIndicator={false}>
-            {STORE.map((item) => (
+            {storedata.map((item) => (
               <View key={item.id}>
                 <View
                   android_ripple={{color: colors.white, borderless: false}}
@@ -78,9 +88,12 @@ const Store = () => {
                     elevation: 5,
                   }}>
                   <Image
-                    source={item.img}
-                    resizeMode={'contain'}
-                    style={{width: 50}}
+                    source={{uri: item.image}}
+                    resizeMode="cover"
+                    style={{
+                      width: 115,
+                      height: 115,
+                    }}
                   />
                 </View>
                 <Text style={{fontSize: 10}}>{item.name}</Text>
@@ -93,4 +106,9 @@ const Store = () => {
   );
 };
 
-export default Store;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getallbrands})(Store);

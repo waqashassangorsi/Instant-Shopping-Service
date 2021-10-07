@@ -27,6 +27,8 @@ import SignUpModal from '../../../components/SignUpModal';
 import SelectDropdown from 'react-native-select-dropdown';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
+import {connect} from 'react-redux';
+import {getcity} from '../../../Redux/Action/Loginaction';
 
 const categories = [
   'Shop by store',
@@ -39,7 +41,6 @@ const categories = [
   'Stylish Dress',
   'Trousers',
 ];
-
 
 const DATA = [
   {id: 1, name: 'shop by store'},
@@ -56,9 +57,26 @@ const DATA = [
   {id: 12, name: 'amazon'},
 ];
 
-const MainHeader = () => {
+const MainHeader = ({user, getcity}) => {
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [listcity, setlistcity] = useState([]);
+
+  function handleChange(newValue) {
+    if (newValue == 'false') {
+      setModalVisible(false);
+    }
+  }
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await getcity();
+  //     console.log('my city', res.data.cityrecord);
+
+  //     setlistcity(res.data.cityrecord);
+  //   })();
+  // });
+
   return (
     <View>
       <Header
@@ -70,10 +88,10 @@ const MainHeader = () => {
               name="menu"
               size={30}
               color="black"
-              // onPress={() => {
-              //   console.log('navigation', navigation);
-              //   navigation.openDrawer();
-              // }}
+              onPress={() => {
+                console.log('navigation', navigation);
+                navigation.openDrawer();
+              }}
             />
             <View>
               <Image
@@ -99,36 +117,42 @@ const MainHeader = () => {
                 flexDirection: 'row',
                 marginRight: 10,
               }}>
-              <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text style={{fontSize: 13}}>Log in</Text>
-              </TouchableOpacity>
-              <View style={{marginHorizontal: 5}} />
-              <TouchableOpacity
-                onPress={() => setModalVisible(true)}
-                style={{
-                  borderWidth: 2,
-                  borderColor: colors.secondary,
-                  borderRadius: 5,
-                  padding: 5,
-                }}>
-                <Text style={{fontSize: 13}}>Sign up</Text>
-              </TouchableOpacity>
+              {!user && (
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                  <Text style={{fontSize: 13}}>Log in</Text>
+                </TouchableOpacity>
+              )}
+              {!user && (
+                <TouchableOpacity
+                  onPress={() => setModalVisible(true)}
+                  style={{
+                    borderWidth: 2,
+                    borderColor: colors.secondary,
+                    borderRadius: 5,
+                    padding: 5,
+                    marginHorizontal: 5,
+                  }}>
+                  <Text style={{fontSize: 13}}>Sign up</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('UserProfile');
-              }}>
-              <Image
-                source={require('../../../assets/person.png')}
-                resizeMode={'contain'}
-                style={{
-                  borderRadius: 30 / 2,
-                  width: 30,
-                  height: 30,
-                }}
-              />
-            </TouchableOpacity>
+            {user && (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('UserProfile');
+                }}>
+                <Image
+                  source={require('../../../assets/person.png')}
+                  resizeMode={'contain'}
+                  style={{
+                    borderRadius: 30 / 2,
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('CreateCart');
@@ -269,12 +293,19 @@ const MainHeader = () => {
           </Pressable>
         ))}
       </ScrollView>
-      <SignUpModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
+
+      {/* {myprop != false && <Modal1 status={myprop} onChange={handleChange} />} */}
+
+      {modalVisible != false && (
+        <SignUpModal modalVisible={modalVisible} onChange={handleChange} />
+      )}
     </View>
   );
 };
 
-export default MainHeader;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getcity})(MainHeader);

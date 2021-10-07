@@ -1,52 +1,26 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from '../Products/styles';
+import {connect} from 'react-redux';
+import {getallproducts} from '../../../Redux/Action/Loginaction';
 
-
-const kitchen = [
-  {
-    id: 1,
-    name: 'frozen veggies',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/frozenVeggies.png'),
-  },
-  {
-    id: 2,
-    name: 'bag of rice 50kg',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/rice.png'),
-  },
-  {
-    id: 4,
-    name: 'palm oil 4ltr',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/palmOil.png'),
-  },
-  {
-    id: 5,
-    name: 'Spar',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/spar.png'),
-  },
-];
-
-const PopularKitchen = () => {
+const PopularKitchen = ({getallproducts}) => {
+  const [productdata, setproductdata] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const res = await getallproducts();
+      console.log('fashindata,', res);
+      setproductdata(res.data.data);
+    })();
+  });
   return (
     <View style={{flex: 1}}>
       <View style={{marginTop: 10}}>
         <Image
           source={require('../../../assets/pro.jpg')}
-          style={{height: 150}}
+          style={{height: 150, width: '100%'}}
         />
       </View>
       <View style={{marginTop: 10, padding: 10, backgroundColor: colors.white}}>
@@ -88,7 +62,7 @@ const PopularKitchen = () => {
             }}
             horizontal
             showsHorizontalScrollIndicator={false}>
-            {kitchen.map((item) => (
+            {productdata.map((item) => (
               <View key={item.id} style={{backgroundColor: colors.white}}>
                 <View
                   style={{
@@ -110,7 +84,10 @@ const PopularKitchen = () => {
                   />
                 </View>
                 <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-                  {item.name}
+                  {item.productname}
+                </Text>
+                <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+                  {item.productdescription}
                 </Text>
                 <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                   <Entypo name="star" color={colors.HexColor} size={13} />
@@ -133,4 +110,9 @@ const PopularKitchen = () => {
   );
 };
 
-export default PopularKitchen;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getallproducts})(PopularKitchen);

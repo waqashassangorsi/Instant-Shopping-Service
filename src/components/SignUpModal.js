@@ -25,12 +25,14 @@ const SignUpModal = ({
   isLoggedIn,
   user,
   modalVisible,
+  onChange,
 }) => {
   console.log('modalVisible', modalVisible);
-  // const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(modalVisible);
   const [userType, setUserType] = useState(1);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [reload, setreload] = useState(false);
   const [loading, setLoading] = useState(false);
   const check = async () => {
     if (email == '') {
@@ -49,20 +51,23 @@ const SignUpModal = ({
       const res = await loginaction(formdata);
 
       if (res.data.status == true) {
+        setreload(true);
+        handleChange(false);
         // await savePass(pass);
         // setLoading(false);
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: 'Root'}],
-          }),
-        );
       } else {
         alert(res.data.message);
         // setLoading(false);
       }
     }
   };
+
+  function handleChange(event) {
+    onChange('false');
+    setModalVisible1(false);
+  }
+
+  console.log('app reload');
 
   return (
     <View
@@ -76,10 +81,10 @@ const SignUpModal = ({
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={modalVisible1}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
+          setModalVisible1(!modalVisible1);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -93,7 +98,7 @@ const SignUpModal = ({
                 elevation: 2,
                 backgroundColor: colors.greenColor,
               }}
-              onPress={() => setModalVisible(false)}>
+              onPress={() => handleChange()}>
               <Image
                 source={require('../assets/cancel.png')}
                 style={{width: 10, height: 10}}

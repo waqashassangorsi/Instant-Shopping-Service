@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../../../theme/colors';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
+import {connect} from 'react-redux';
+import {getallproducts} from '../../../Redux/Action/Loginaction';
 
 const product1 = [
   {
@@ -72,7 +74,15 @@ const product2 = [
   },
 ];
 
-const BestSellProduct = () => {
+const BestSellProduct = ({getallproducts}) => {
+  const [productdata, setproductdata] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const res = await getallproducts();
+      console.log('fashindata,', res);
+      setproductdata(res.data.data);
+    })();
+  });
   let navigation = useNavigation();
   return (
     <View style={{flex: 1, padding: 10}}>
@@ -117,14 +127,14 @@ const BestSellProduct = () => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {product1.map((item) => (
+          {productdata.map((item) => (
             <View key={item.id}>
               <Pressable
                 onPress={() => {
                   navigation.navigate('ProductViewDetail');
                 }}
                 android_ripple={{
-                  color:colors.black,
+                  color: colors.black,
                   borderLess: false,
                 }}
                 style={{
@@ -144,13 +154,15 @@ const BestSellProduct = () => {
                 />
               </Pressable>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-                {item.name}
+                {item.productname}
+              </Text>
+              <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+                {item.productdescription}
               </Text>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 <Entypo name="star" color={colors.HexColor} size={13} />
                 {item.rating}
                 <Text style={{color: colors.WebGLQuery}}>
-                  {' '}
                   ({item.totalUser ? item.totalUser : 0})
                 </Text>
               </Text>
@@ -169,7 +181,7 @@ const BestSellProduct = () => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {product2.map((item) => (
+          {productdata.map((item) => (
             <View key={item.id}>
               <View
                 style={{
@@ -189,19 +201,14 @@ const BestSellProduct = () => {
                 />
               </View>
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
-                {item.name}
+                {item.productname}
               </Text>
-              <Text
-                style={{
-                  fontSize: 10,
-                  textTransform: 'capitalize',
-                  color: colors.HexColor,
-                }}>
-                {item.title}
-                <Text style={{fontSize: 10, color: colors.WebGLQuery}}>
-                  {' '}
-                  {item.subTitle}
-                </Text>
+
+              <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+                {item.productdescription}
+              </Text>
+              <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+                {item.price}
               </Text>
             </View>
           ))}
@@ -211,4 +218,9 @@ const BestSellProduct = () => {
   );
 };
 
-export default BestSellProduct;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getallproducts})(BestSellProduct);
