@@ -1,7 +1,13 @@
 import axios from 'axios';
 import {BASE_URL} from '../Baseurl';
 
-import {LOGIN_USER, SAVE_PASSWORD, LOGOUT_USER, SAVE_CHARITY} from './types';
+import {
+  LOGIN_USER,
+  SAVE_PASSWORD,
+  LOGOUT_USER,
+  SAVE_CHARITY,
+  SIGNUP_USER,
+} from './types';
 
 export const loginaction = (data) => {
   return async (dispatch) => {
@@ -20,6 +26,59 @@ export const loginaction = (data) => {
     }
   };
 };
+
+export const signupaction = (data) => {
+  return async (dispatch) => {
+    console.log('inside dispathc', data);
+    const res = await axios.post(`${BASE_URL}signup_user`, data);
+
+    if (res.data.status == true) {
+      dispatch({
+        type: LOGIN_USER,
+        userdata: res.data.data,
+        isLoggedIn: true,
+      });
+      return res;
+    } else {
+      return res;
+    }
+  };
+};
+
+export const signupwithfb = (data, rsl, rej) => {
+  console.log('Comming' + JSON.stringify(data));
+  return async (dispatch) => {
+    console.log('Commingnew' + JSON.stringify(data));
+    await axios
+      .post(`${BASE_URL}loginwithfb`, data, {})
+
+      .then((res) => {
+        console.log(res);
+
+        if (res.data.status == true) {
+          dispatch({
+            type: LOGIN_USER,
+            user: res.data.data,
+            token: res.data.data.auth,
+            isLoggedIn: true,
+          });
+          rsl();
+        } else {
+          rej(res.data.message);
+          dispatch({
+            type: LOGIN_USER,
+            isLoggedIn: false,
+          });
+        }
+      })
+
+      .catch((err) => {
+        console.log(err);
+        rej(err.message);
+      });
+  };
+};
+
 export const changeUName = (data, auth) => {
   console.log(data);
   return async (dispatch) => {

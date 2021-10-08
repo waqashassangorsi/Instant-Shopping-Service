@@ -14,10 +14,17 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../theme/colors';
-import {loginaction} from '../Redux/Action/Loginaction';
+import {loginaction, signupaction} from '../Redux/Action/Loginaction';
 const {height, width} = Dimensions.get('window');
 import {connect} from 'react-redux';
+
 import {CommonActions} from '@react-navigation/native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+// GoogleSignin.configure({
+//   webClientId:
+//     '269951146954-asg1tqnkv0queriiidj95ciu9ff8b5dt.apps.googleusercontent.com',
+// });
 
 const SignUpModal = ({
   navigation,
@@ -26,6 +33,7 @@ const SignUpModal = ({
   user,
   modalVisible,
   onChange,
+  signupaction,
 }) => {
   console.log('modalVisible', modalVisible);
   const [modalVisible1, setModalVisible1] = useState(modalVisible);
@@ -34,6 +42,60 @@ const SignUpModal = ({
   const [pass, setPass] = useState('');
   const [reload, setreload] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [email1, setEmail1] = useState('');
+  const [pass1, setPass1] = useState('');
+  const [username, setUsername] = useState('');
+  const [cnf, setCnf] = useState('');
+  const googleLogin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(`userInfo`, userInfo);
+      const formData = new FormData();
+      formData.append('first_name', userInfo.user.givenName);
+      formData.append('last_name', userInfo.user.familyName);
+      formData.append('password', '');
+      formData.append('email', userInfo.user.email);
+      formData.append('firebase_uid', userInfo.user.id);
+      console.log('myformdata', formData);
+      // new Promise((rsl, rej) => {
+      //   signupwithfb(formData, rsl, rej);
+      // })
+      // .then(async (res) => {
+      //   console.log(res);
+      //   setLoading(false);
+      //   navigation.dispatch(
+      //     CommonActions.reset({
+      //       index: 0,
+      //       routes: [{name: 'Root'}],
+      //     }),
+      //   );
+      // })
+      // .catch((err) => {
+      //   setMsg(err);
+      //   setShowAlert(true);
+      //   setLoading(false);
+      // });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '269951146954-asg1tqnkv0queriiidj95ciu9ff8b5dt.apps.googleusercontent.com',
+    });
+  }, []);
+
   const check = async () => {
     if (email == '') {
       alert('kindly enter email');
@@ -57,6 +119,39 @@ const SignUpModal = ({
         // setLoading(false);
       } else {
         alert(res.data.message);
+        // setLoading(false);
+      }
+    }
+  };
+
+  const signUp = async () => {
+    if (email1 == '') {
+      alert('kindly enter email');
+    } else if (pass1 == '') {
+      alert('kindly enter password ');
+    } else if (cnf == '') {
+      alert('kindly enter username');
+    } else if (cnf !== pass1) {
+      alert('password did not match');
+    } else {
+      // Keyboard.dismiss();
+      // setLoading(true);
+      const formdata = new FormData();
+      formdata.append('email', email1);
+      formdata.append('password', pass1);
+
+      console.log(`formdata`, formdata);
+
+      const res = await signupaction(formdata);
+      console.log('myres', res);
+
+      if (res.data.status == true) {
+        // setreload(true);
+        // handleChange(false);
+        // await savePass(pass);
+        // setLoading(false);
+      } else {
+        // alert(res.data.message);
         // setLoading(false);
       }
     }
@@ -162,20 +257,32 @@ const SignUpModal = ({
                     // value={number}
                     placeholder="Email"
                     keyboardType="email-address"
+                    value={email1}
+                    onChangeText={(e) => {
+                      setEmail1(e);
+                    }}
                   />
-                  <TextInput
+                  {/* <TextInput
                     style={styles.input}
                     // onChangeText={onChangeNumber}
                     // value={number}
                     placeholder="Username"
                     keyboardType="default"
-                  />
+                    value={username}
+                    onChangeText={(e) => {
+                      setUsername(e);
+                    }}
+                  /> */}
                   <TextInput
                     style={styles.input}
                     // onChangeText={onChangeNumber}
                     // value={number}
                     placeholder="Password"
                     keyboardType="visible-password"
+                    value={pass1}
+                    onChangeText={(e) => {
+                      setPass1(e);
+                    }}
                   />
                   <TextInput
                     style={styles.input}
@@ -183,6 +290,10 @@ const SignUpModal = ({
                     // value={number}
                     placeholder="Confirm Password"
                     keyboardType="visible-password"
+                    value={cnf}
+                    onChangeText={(e) => {
+                      setCnf(e);
+                    }}
                   />
                   <View style={{marginTop: 10, flexDirection: 'row'}}>
                     <AntDesign
@@ -202,6 +313,9 @@ const SignUpModal = ({
                     </Text>
                   </View>
                   <TouchableOpacity
+                    onPress={() => {
+                      signUp();
+                    }}
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -261,6 +375,9 @@ const SignUpModal = ({
                         paddingBottom: 30,
                       }}>
                       <TouchableOpacity
+                        onPress={() => {
+                          googleLogin();
+                        }}
                         style={{
                           padding: 5,
                           paddingHorizontal: 15,
@@ -518,4 +635,6 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {loginaction})(SignUpModal);
+export default connect(mapStateToProps, {loginaction, signupaction})(
+  SignUpModal,
+);

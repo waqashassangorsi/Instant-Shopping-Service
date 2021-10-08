@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "269951146954",
+    "firebase_url": "https://realtimemessaging-5c386-default-rtdb.firebaseio.com",
     "project_id": "realtimemessaging-5c386",
     "storage_bucket": "realtimemessaging-5c386.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "269951146954-kq2vdmer8cnf9j6jv5c3knloot8mhjog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.personalshopping",
+            "certificate_hash": "915b234f2260ae73a641466af43c4006c606cbae"
+          }
+        },
         {
           "client_id": "269951146954-asg1tqnkv0queriiidj95ciu9ff8b5dt.apps.googleusercontent.com",
           "client_type": 3

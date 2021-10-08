@@ -7,41 +7,6 @@ import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import {connect} from 'react-redux';
 import {getallbrands} from '../../../Redux/Action/Loginaction';
 
-const fashion = [
-  {
-    id: 1,
-    name: 'Gucci Shirt',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/gucciShirt.png'),
-  },
-  {
-    id: 2,
-    name: 'Mini dress',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/miniDress.png'),
-  },
-  {
-    id: 4,
-    name: 'denim trousers',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/denimTrousers.png'),
-  },
-  {
-    id: 5,
-    name: 'Spar',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/spar.png'),
-  },
-];
-
 const PopularFashion = ({getallbrands}) => {
   const [fashiondata, setfashiondata] = useState([]);
   useEffect(() => {
@@ -50,7 +15,7 @@ const PopularFashion = ({getallbrands}) => {
       const res = await getallbrands();
       setfashiondata(res.data.data);
     })();
-  });
+  }, []);
 
   return (
     <View style={{flex: 1, padding: 10}}>

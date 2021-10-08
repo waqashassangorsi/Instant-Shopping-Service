@@ -8,81 +8,15 @@ import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {getallproducts} from '../../../Redux/Action/Loginaction';
 
-const product1 = [
-  {
-    id: 1,
-    name: 'Blender & Grinder',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/grinder.png'),
-  },
-  {
-    id: 2,
-    name: 'beard growth cream',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/beard.png'),
-  },
-  {
-    id: 4,
-    name: 'hair dryer',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/hairDryer.png'),
-  },
-  {
-    id: 5,
-    name: 'hair dryer',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/hairDryer.png'),
-  },
-  {
-    id: 6,
-    name: 'hair dryer',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/hairDryer.png'),
-  },
-];
-const product2 = [
-  {
-    id: 1,
-    name: 'one more feet',
-    title: 'nike',
-    subTitle: '| sportwear',
-    img: require('../../../assets/product.jpg'),
-  },
-  {
-    id: 2,
-    name: 'amazon',
-    title: 'nike',
-    subTitle: '| sportwear',
-    img: require('../../../assets/product.jpg'),
-  },
-  {
-    id: 3,
-    name: 'Shoprite',
-    title: 'nike',
-    subTitle: '| sportwear',
-    img: require('../../../assets/eBay.png'),
-  },
-];
-
 const BestSellProduct = ({getallproducts}) => {
   const [productdata, setproductdata] = useState([]);
   useEffect(() => {
     (async () => {
       const res = await getallproducts();
-      console.log('fashindata,', res);
+      // console.log('fashindata,', res);
       setproductdata(res.data.data);
     })();
-  });
+  }, []);
   let navigation = useNavigation();
   return (
     <View style={{flex: 1, padding: 10}}>

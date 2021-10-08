@@ -7,15 +7,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {getallbrands} from '../../../Redux/Action/Loginaction';
 
-const STORE = [
-  {id: 1, name: 'eBay', img: require('../../../assets/eBay.png')},
-  {id: 2, name: 'Puma', img: require('../../../assets/puma.png')},
-  {id: 4, name: 'Nike', img: require('../../../assets/nike.png')},
-  {id: 5, name: 'Spar', img: require('../../../assets/spar.png')},
-  {id: 6, name: 'amazon', img: require('../../../assets/eBay.png')},
-  {id: 7, name: 'Shoprite', img: require('../../../assets/eBay.png')},
-];
-
 const Store = ({getallbrands}) => {
   const [storedata, setstoredata] = useState([]);
   useEffect(() => {
@@ -24,7 +15,7 @@ const Store = ({getallbrands}) => {
       const res = await getallbrands();
       setstoredata(res.data.data);
     })();
-  });
+  }, []);
   return (
     <View style={{flex: 1}}>
       <View style={{backgroundColor: 'red'}}>

@@ -11,10 +11,10 @@ const PopularKitchen = ({getallproducts}) => {
   useEffect(() => {
     (async () => {
       const res = await getallproducts();
-      console.log('fashindata,', res);
+      // console.log('fashindata,', res);
       setproductdata(res.data.data);
     })();
-  });
+  }, []);
   return (
     <View style={{flex: 1}}>
       <View style={{marginTop: 10}}>
@@ -63,7 +63,7 @@ const PopularKitchen = ({getallproducts}) => {
             horizontal
             showsHorizontalScrollIndicator={false}>
             {productdata.map((item) => (
-              <View key={item.id} style={{backgroundColor: colors.white}}>
+              <View style={{backgroundColor: colors.white}}>
                 <View
                   style={{
                     flex: 1,
