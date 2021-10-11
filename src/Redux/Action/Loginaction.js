@@ -189,10 +189,37 @@ export const getallbrands = (data) => {
   };
 };
 
+export const getallcategory = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.get(`${BASE_URL}get_category`, data);
+    console.log(res);
+    return res;
+  };
+};
+
 export const getallproducts = (data) => {
   console.log(data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}all_products`, data);
+    console.log(res);
+    return res;
+  };
+};
+
+export const getsingleProduct = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}single_product`, data);
+    console.log(res);
+    return res;
+  };
+};
+
+export const getuserRecord = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}get_user`, data);
     console.log(res);
     return res;
   };

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
-  Pressable
+  Pressable,
 } from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -16,8 +16,6 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Divider} from 'react-native-paper';
-
-
 
 import {
   primary,
@@ -77,12 +75,12 @@ const renderItem = ({item}) => (
     <View
       style={{
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       }}>
       <View style={{}}>
         <Text
           style={{
-            paddingVertical:10,
+            paddingVertical: 10,
             fontSize: 12,
             color: colors.WebGLQuery,
           }}>
@@ -94,12 +92,14 @@ const renderItem = ({item}) => (
           width: 100,
           height: 25,
           borderRadius: 3,
-          borderWidth:1,
-          borderColor:colors.greenColor,
-          alignItems:'center',
-          justifyContent:'center'
+          borderWidth: 1,
+          borderColor: colors.greenColor,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}>
-        <Text style={{color: 'white', fontSize: 10,color:colors.greenColor}}>Ongoing</Text>
+        <Text style={{color: 'white', fontSize: 10, color: colors.greenColor}}>
+          Ongoing
+        </Text>
       </TouchableOpacity>
     </View>
   </View>

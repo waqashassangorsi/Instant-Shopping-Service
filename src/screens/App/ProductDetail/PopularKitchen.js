@@ -75,7 +75,7 @@ const PopularKitchen = ({getallproducts}) => {
                     elevation: 1,
                   }}>
                   <Image
-                    source={item.img}
+                    source={{uri: item.prduct_image}}
                     resizeMode={'cover'}
                     style={{
                       width: 115,
@@ -86,12 +86,12 @@ const PopularKitchen = ({getallproducts}) => {
                 <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                   {item.productname}
                 </Text>
-                <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
+                {/* <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                   {item.productdescription}
-                </Text>
+                </Text> */}
                 <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                   <Entypo name="star" color={colors.HexColor} size={13} />
-                  {item.rating}
+                  {item.stars}
                   <Text style={{color: colors.WebGLQuery}}>
                     {' '}
                     ({item.totalUser ? item.totalUser : 0})

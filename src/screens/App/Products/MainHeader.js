@@ -28,7 +28,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 import {connect} from 'react-redux';
-import {getcity} from '../../../Redux/Action/Loginaction';
+import {getcity, getallbrands} from '../../../Redux/Action/Loginaction';
 
 const categories = [
   'Shop by store',
@@ -43,7 +43,7 @@ const categories = [
 ];
 
 const DATA = [
-  {id: 1, name: 'shop by store'},
+  // {id: 1, name: 'shop by store'},
   {id: 2, name: 'ebay'},
   {id: 3, name: 'amazon'},
   {id: 4, name: 'shop by KONGA'},
@@ -57,10 +57,19 @@ const DATA = [
   {id: 12, name: 'amazon'},
 ];
 
-const MainHeader = ({user, getcity}) => {
+const MainHeader = ({user, getcity, getallbrands}) => {
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [listcity, setlistcity] = useState([]);
+
+  const [brandsname, setbrandsname] = useState([]);
+  useEffect(() => {
+    // console.log('fashindata,', fashiondata);
+    (async () => {
+      const res = await getallbrands();
+      setbrandsname(res.data.data);
+    })();
+  }, []);
 
   function handleChange(newValue) {
     if (newValue == 'false') {
@@ -273,7 +282,24 @@ const MainHeader = ({user, getcity}) => {
         }}
         horizontal
         showsHorizontalScrollIndicator={false}>
-        {DATA.map((item) => (
+        <Pressable
+          // key={item.id}
+          android_ripple={{color: colors.white, borderless: false}}
+          style={{
+            padding: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              textTransform: 'uppercase',
+              color: colors.white,
+              fontSize: 12,
+            }}>
+            shop by store
+          </Text>
+        </Pressable>
+        {brandsname.map((item) => (
           <Pressable
             key={item.id}
             android_ripple={{color: colors.white, borderless: false}}
@@ -308,4 +334,4 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getcity})(MainHeader);
+export default connect(mapStateToProps, {getcity, getallbrands})(MainHeader);

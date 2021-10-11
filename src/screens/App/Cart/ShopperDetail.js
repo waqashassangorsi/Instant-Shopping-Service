@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -31,6 +31,8 @@ import {Switch} from 'react-native-paper';
 
 import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
+import {connect} from 'react-redux';
+import {getuserRecord} from '../../../Redux/Action/Loginaction';
 
 const DATA = [
   {
@@ -47,10 +49,22 @@ const DATA = [
   },
 ];
 
-const ShopperDetail = () => {
+const ShopperDetail = ({getuserRecord, route}) => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  const [userdata, setuserdata] = useState([]);
+
+  const [productdata, setproductdata] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('user_id', 1);
+      const res = await getuserRecord(formdata);
+      console.log('fashindata,', res);
+      setuserdata(res.data.data);
+    })();
+  }, []);
 
   const renderItem = ({item}) => (
     <View style={{padding: 10}}>
@@ -183,7 +197,7 @@ const ShopperDetail = () => {
             }}>
             <View style={{flex: 0.58}}>
               <Image
-                source={user}
+                source={{uri: userdata.dp}}
                 style={{
                   height: 80,
                   width: 80,
@@ -199,7 +213,7 @@ const ShopperDetail = () => {
             </View>
             <View style={{flex: 1, justifyContent: 'center'}}>
               <Text style={{color: 'white', fontSize: 18, marginLeft: 10}}>
-                Frank Gallager
+                {userdata.name}
               </Text>
               <Text style={{color: 'white', marginLeft: 10, fontSize: 10}}>
                 Active Since June 2020
@@ -275,7 +289,7 @@ const ShopperDetail = () => {
                 borderRightColor: colors.WebGLQuery,
                 marginTop: 10,
                 height: 120,
-                elevation:1
+                elevation: 1,
               }}
             />
             <View style={{flex: 1, marginTop: 10}}>
@@ -428,7 +442,12 @@ const ShopperDetail = () => {
   );
 };
 
-export default ShopperDetail;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getuserRecord})(ShopperDetail);
 const styles = StyleSheet.create({
   example: {
     marginVertical: 24,
