@@ -19,7 +19,12 @@ const {height, width} = Dimensions.get('window');
 import {connect} from 'react-redux';
 
 import {CommonActions} from '@react-navigation/native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import {Settings, LoginManager, Profile} from 'react-native-fbsdk-next';
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -46,36 +51,12 @@ const SignUpModal = ({
   const [pass1, setPass1] = useState('');
   const [username, setUsername] = useState('');
   const [cnf, setCnf] = useState('');
-  const googleLogin = async () => {
+
+  const signInG = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(`userInfo`, userInfo);
-      const formData = new FormData();
-      formData.append('first_name', userInfo.user.givenName);
-      formData.append('last_name', userInfo.user.familyName);
-      formData.append('password', '');
-      formData.append('email', userInfo.user.email);
-      formData.append('firebase_uid', userInfo.user.id);
-      console.log('myformdata', formData);
-      // new Promise((rsl, rej) => {
-      //   signupwithfb(formData, rsl, rej);
-      // })
-      // .then(async (res) => {
-      //   console.log(res);
-      //   setLoading(false);
-      //   navigation.dispatch(
-      //     CommonActions.reset({
-      //       index: 0,
-      //       routes: [{name: 'Root'}],
-      //     }),
-      //   );
-      // })
-      // .catch((err) => {
-      //   setMsg(err);
-      //   setShowAlert(true);
-      //   setLoading(false);
-      // });
+      alert(JSON.stringify(userInfo));
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -89,11 +70,36 @@ const SignUpModal = ({
     }
   };
 
+  const signInF = () => {
+    LoginManager.setLoginBehavior('WEB_ONLY');
+    LoginManager.logInWithPermissions(['public_profile']).then(
+      function (result) {
+        if (result.isCancelled) {
+          console.log('Login cancelled');
+        } else {
+          console.log(
+            'Login success with permissions: ' +
+              result.grantedPermissions.toString(),
+          );
+          const currentProfile = Profile.getCurrentProfile().then(function (
+            currentProfile,
+          ) {
+            alert(currentProfile);
+          });
+        }
+      },
+      function (error) {
+        console.log('Login fail with error: ' + error);
+      },
+    );
+  };
+
   React.useEffect(() => {
     GoogleSignin.configure({
       webClientId:
         '269951146954-asg1tqnkv0queriiidj95ciu9ff8b5dt.apps.googleusercontent.com',
     });
+    Settings.initializeSDK();
   }, []);
 
   const check = async () => {
@@ -140,7 +146,7 @@ const SignUpModal = ({
       formdata.append('email', email1);
       formdata.append('password', pass1);
 
-      console.log(`formdata`, formdata);
+      console.log('formdata', formdata);
 
       const res = await signupaction(formdata);
       console.log('myres', res);
@@ -376,7 +382,7 @@ const SignUpModal = ({
                       }}>
                       <TouchableOpacity
                         onPress={() => {
-                          googleLogin();
+                          signInG();
                         }}
                         style={{
                           padding: 5,
@@ -402,6 +408,7 @@ const SignUpModal = ({
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
+                      onPress={()=> signInF()}
                         style={{
                           paddingHorizontal: 15,
                           flexDirection: 'row',

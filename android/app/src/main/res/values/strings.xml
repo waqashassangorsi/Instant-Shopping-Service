@@ -1,3 +1,5 @@
 <resources>
+<string name="facebook_app_id">393023565859161</string>
+<string name="fb_login_protocol_scheme">fb393023565859161</string>
     <string name="app_name">PersonalShopping</string>
 </resources>

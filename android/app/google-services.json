@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "269951146954-8cp46l25as6o0c8g0vacmoak83q1roon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.personalshopping",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "269951146954-kq2vdmer8cnf9j6jv5c3knloot8mhjog.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
