@@ -61,7 +61,7 @@ const ShopperDetail = ({getuserRecord, route}) => {
       const formdata = new FormData();
       formdata.append('user_id', 1);
       const res = await getuserRecord(formdata);
-      console.log('fashindata,', res);
+      // console.log('fashindata,', res);
       setuserdata(res.data.data);
     })();
   }, []);

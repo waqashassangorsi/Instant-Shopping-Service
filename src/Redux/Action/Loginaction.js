@@ -225,4 +225,13 @@ export const getuserRecord = (data) => {
   };
 };
 
+export const latLong = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}user_location`, data);
+    console.log(res);
+    return res;
+  };
+};
+
 //sadam works ends here

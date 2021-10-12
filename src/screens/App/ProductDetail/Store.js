@@ -1,14 +1,54 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, ScrollView, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Pressable,
+  Button,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import colors from '../../../theme/colors';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import {getallbrands} from '../../../Redux/Action/Loginaction';
+import {getallbrands, latLong} from '../../../Redux/Action/Loginaction';
+import Geolocation from 'react-native-geolocation-service';
 
-const Store = ({getallbrands}) => {
+const Store = ({getallbrands, latLong}) => {
   const [storedata, setstoredata] = useState([]);
+  const [userloc, setuserloc] = useState([]);
+
+  Geolocation.getCurrentPosition(
+    (position) => {
+      console.log('myposition', position);
+    },
+    (error) => {
+      // See error code charts below.
+      console.log(error.code, error.message);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 10000,
+    },
+  );
+  try {
+    const granted = PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      alert('You can use the location');
+    } else {
+      // alert('Location permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+  // alert('hi');
+
   useEffect(() => {
     // console.log('fashindata,', fashiondata);
     (async () => {
@@ -16,6 +56,18 @@ const Store = ({getallbrands}) => {
       setstoredata(res.data.data);
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('latitude', 11.41);
+      formdata.append('longitude', 123);
+      const res = await latLong(formdata);
+      console.log(`formdata`, res);
+      // setuserloc(res.data.data);
+    })();
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <View style={{backgroundColor: 'red'}}>
@@ -102,4 +154,4 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getallbrands})(Store);
+export default connect(mapStateToProps, {getallbrands, latLong})(Store);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from 'react-native';
 import colors from '../../../theme/colors';
 import {Badge} from 'react-native-elements';
@@ -13,7 +14,10 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Zocial from 'react-native-vector-icons/Zocial';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import * as Progress from 'react-native-progress';
+// import * as Progress from 'react-native-progress';
+import {connect} from 'react-redux';
+import {getuserRecord} from '../../../Redux/Action/Loginaction';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import {
   primary,
@@ -29,8 +33,29 @@ import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import {useNavigation} from '@react-navigation/native';
 
-const OrderPage = () => {
+const OrderPage = ({getuserRecord}) => {
+  const [userdata, setuserdata] = useState([]);
   let navigation = useNavigation();
+
+  const openDialScreen = () => {
+    let number = '';
+    if (Platform.OS === 'ios') {
+      number = 'telprompt:${091123456789}';
+    } else {
+      number = 'tel:${091123456789}';
+    }
+    Linking.openURL(number);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('user_id', 1);
+      const res = await getuserRecord(formdata);
+      console.log('fashindata,', res);
+      setuserdata(res.data.data);
+    })();
+  }, []);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -127,7 +152,7 @@ const OrderPage = () => {
           }}>
           <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
             <Image
-              source={user}
+              source={{uri: userdata.dp}}
               style={{
                 height: 80,
                 width: 80,
@@ -143,10 +168,10 @@ const OrderPage = () => {
           </View>
           <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
             <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
-              Frank Gallager
+              {userdata.name}
             </Text>
             <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
-              Active Since June 2020
+              {userdata.joining_date}
             </Text>
 
             <View
@@ -189,6 +214,7 @@ const OrderPage = () => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={() => openDialScreen()}
                 style={{
                   height: 36,
                   width: 100,
@@ -245,20 +271,38 @@ const OrderPage = () => {
                   alignItems: 'center',
                   marginTop: 5,
                 }}>
-                <Progress.Circle
+                {/* <Text>{userdata.success_rate}</Text> */}
+                {/* <Progress.Circle
                   size={100}
                   color={colors.greenColor}
                   allowFontScaling={true}
                   showsText={true}
                   borderWidth={4}
-                />
+                /> */}
+                <AnimatedCircularProgress
+                  size={100}
+                  width={3}
+                  fill={userdata.success_rate}
+                  tintColor={colors.greenColor}
+                  backgroundColor={colors.WebGLQuery}>
+                  {(fill) => (
+                    <Text
+                      style={{
+                        color: colors.greenColor,
+                        fontSize: 32,
+                        fontWeight: 'bold',
+                      }}>
+                      {userdata.success_rate}
+                    </Text>
+                  )}
+                </AnimatedCircularProgress>
               </View>
             </View>
             <View
               style={{
                 borderRightWidth: 1,
-                borderRightColor:colors.WebGLQuery,
-                marginTop:10,
+                borderRightColor: colors.WebGLQuery,
+                marginTop: 10,
                 height: 130,
               }}
             />
@@ -272,13 +316,24 @@ const OrderPage = () => {
                   alignItems: 'center',
                   marginTop: 5,
                 }}>
-                <Progress.Circle
+                {/* <Text>{userdata.shoping_sprint}</Text> */}
+                <AnimatedCircularProgress
                   size={100}
-                  color={colors.greenColor}
-                  allowFontScaling={true}
-                  showsText={true}
-                  borderWidth={4}
-                />
+                  width={3}
+                  fill={userdata.shoping_sprint}
+                  tintColor={colors.greenColor}
+                  backgroundColor={colors.WebGLQuery}>
+                  {(fill) => (
+                    <Text
+                      style={{
+                        color: colors.greenColor,
+                        fontSize: 32,
+                        fontWeight: 'bold',
+                      }}>
+                      {userdata.shoping_sprint}
+                    </Text>
+                  )}
+                </AnimatedCircularProgress>
               </View>
             </View>
           </View>
@@ -666,6 +721,11 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getuserRecord})(OrderPage);
 
 const styles = StyleSheet.create({});
