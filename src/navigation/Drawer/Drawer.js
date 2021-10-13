@@ -19,6 +19,7 @@ import Dashboard from '../../screens/App/Dashboard';
 import Paypal from '../../components/Paypal';
 import Stripe from '../../components/Stripe';
 import Cart from '../../screens/App/Cart/Cart';
+import MainHeader from '../../screens/App/Products/MainHeader';
 import Contactus from '../../screens/App/Contactus/Contactus';
 import InstantBuy from '../../screens/App/InstantBuy/InstantBuy';
 import Notifications from '../../screens/App/Notifications/Notification';
@@ -27,6 +28,15 @@ import Aboutus from '../../screens/App/Aboutus';
 import PrivacyPolicy from '../../screens/App/PrivacyPolicy';
 import Contact from '../../screens/App/Contactus/Contactus';
 import Subscription from '../../screens/App/Subscription/Subscription';
+import CreateCart from '../../screens/App/Cart/CreateCart';
+import OrderPage from '../../screens/App/Cart/OrderPage';
+import ShopperDetail from '../../screens/App/Cart/ShopperDetail';
+import UserProfile from '../../screens/App/Cart/UserProfile';
+import CustomProgressStep from '../../screens/App/Cart/CustomProgressStep';
+import ShopperMessenger from '../../screens/App/Cart/ShopperMessenger';
+import CongratulationCart from '../../screens/App/Cart/CongratulationCart';
+import DeliveryLocationCart from '../../screens/App/Cart/DeliveryLocationCart';
+import ConfirmationCart from '../../screens/App/Cart/ConfirmationCart';
 const DrawerNavigator = ({isLoggedIn}) => {
   return (
     <Drawer.Navigator
@@ -50,8 +60,20 @@ const DrawerNavigator = ({isLoggedIn}) => {
       {isLoggedIn && <Drawer.Screen name="Stripe" component={Stripe} />}
 
       <Drawer.Screen name="Products" component={Products} />
-
+      <Drawer.Screen name="CreateCart" component={CreateCart} />
+      <Drawer.Screen
+        name="DeliveryLocationCart"
+        component={DeliveryLocationCart}
+      />
+      <Drawer.Screen name="MainHeader" component={MainHeader} />
+      <Drawer.Screen name="ConfirmationCart" component={ConfirmationCart} />
+      <Drawer.Screen name="CongratulationCart" component={CongratulationCart} />
+      <Drawer.Screen name="OrderPage" component={OrderPage} />
+      <Drawer.Screen name="ShopperMessenger" component={ShopperMessenger} />
       <Drawer.Screen name="Thankyou" component={Thankyou} />
+      <Drawer.Screen name="ShopperDetail" component={ShopperDetail} />
+      <Drawer.Screen name="UserProfile" component={UserProfile} />
+      <Drawer.Screen name="CustomProgressStep" component={CustomProgressStep} />
     </Drawer.Navigator>
   );
 };

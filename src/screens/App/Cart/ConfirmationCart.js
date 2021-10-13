@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import Footer from '../../../components/Footer';
 import colors from '../../../theme/colors';
 import MainHeader from '../Products/MainHeader';

@@ -27,6 +27,24 @@ export const loginaction = (data) => {
   };
 };
 
+export const signupwithfb = (data) => {
+  return async (dispatch) => {
+    console.log('inside dispathc', data);
+    const res = await axios.post(`${BASE_URL}loginwithfacebook`, data);
+    // console.log(`my res`, res);
+    if (res.data.status == true) {
+      dispatch({
+        type: LOGIN_USER,
+        userdata: res.data.user_record,
+        isLoggedIn: true,
+      });
+      return res;
+    } else {
+      return res;
+    }
+  };
+};
+
 export const signupaction = (data) => {
   return async (dispatch) => {
     console.log('inside dispathc', data);
@@ -42,40 +60,6 @@ export const signupaction = (data) => {
     } else {
       return res;
     }
-  };
-};
-
-export const signupwithfb = (data, rsl, rej) => {
-  console.log('Comming' + JSON.stringify(data));
-  return async (dispatch) => {
-    console.log('Commingnew' + JSON.stringify(data));
-    await axios
-      .post(`${BASE_URL}loginwithfb`, data, {})
-
-      .then((res) => {
-        console.log(res);
-
-        if (res.data.status == true) {
-          dispatch({
-            type: LOGIN_USER,
-            user: res.data.data,
-            token: res.data.data.auth,
-            isLoggedIn: true,
-          });
-          rsl();
-        } else {
-          rej(res.data.message);
-          dispatch({
-            type: LOGIN_USER,
-            isLoggedIn: false,
-          });
-        }
-      })
-
-      .catch((err) => {
-        console.log(err);
-        rej(err.message);
-      });
   };
 };
 
@@ -220,6 +204,15 @@ export const getuserRecord = (data) => {
   console.log(data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}get_user`, data);
+    console.log(res);
+    return res;
+  };
+};
+
+export const getuserOrder = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}get_user_order`, data);
     console.log(res);
     return res;
   };
