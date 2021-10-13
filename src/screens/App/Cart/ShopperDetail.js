@@ -216,7 +216,7 @@ const ShopperDetail = ({getuserRecord, route}) => {
                 {userdata.name}
               </Text>
               <Text style={{color: 'white', marginLeft: 10, fontSize: 10}}>
-                Active Since June 2020
+                {userdata.joining_date}
               </Text>
               <TouchableOpacity
                 style={{

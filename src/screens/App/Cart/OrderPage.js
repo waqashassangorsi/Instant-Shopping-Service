@@ -9,6 +9,7 @@ import {
   Linking,
 } from 'react-native';
 import colors from '../../../theme/colors';
+import {Loading} from '../ProductDetail/Loading';
 import {Badge} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,7 +17,7 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import * as Progress from 'react-native-progress';
 import {connect} from 'react-redux';
-import {getuserRecord} from '../../../Redux/Action/Loginaction';
+import {getuserRecord, getuserOrder} from '../../../Redux/Action/Loginaction';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import {
@@ -33,16 +34,18 @@ import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import {useNavigation} from '@react-navigation/native';
 
-const OrderPage = ({getuserRecord}) => {
+const OrderPage = ({getuserRecord, getuserOrder}) => {
   const [userdata, setuserdata] = useState([]);
+  const [loading, setloading] = useState([]);
+  const [userorder, setuserorder] = useState([]);
   let navigation = useNavigation();
 
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
-      number = 'telprompt:${091123456789}';
+      number = 'telprompt:' + userdata.phone_number;
     } else {
-      number = 'tel:${091123456789}';
+      number = 'tel:' + userdata.phone_number;
     }
     Linking.openURL(number);
   };
@@ -52,13 +55,28 @@ const OrderPage = ({getuserRecord}) => {
       const formdata = new FormData();
       formdata.append('user_id', 1);
       const res = await getuserRecord(formdata);
-      console.log('fashindata,', res);
+      // console.log('fashindata,', res);
       setuserdata(res.data.data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('user_id', 1);
+
+      const res = await getuserOrder(formdata);
+
+      console.log('fashindata,', res);
+      setuserorder(res.data.data);
     })();
   }, []);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {/* <Loading visible={loading} /> */}
+
       <MainHeader />
+
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <View
           style={{
@@ -522,7 +540,7 @@ const OrderPage = ({getuserRecord}) => {
               color: colors.greenColor,
               fontWeight: 'bold',
             }}>
-            MKA-5438-5489292
+            {userorder[0].order_number}
           </Text>
         </View>
         <View
@@ -553,7 +571,9 @@ const OrderPage = ({getuserRecord}) => {
                 style={{width: 73, height: 73}}
               />
               <View style={{marginLeft: 10}}>
-                <Text style={{fontSize: 16}}>Mini Dress</Text>
+                <Text style={{fontSize: 16, color: 'red'}}>
+                  {userorder[0].order_date}
+                </Text>
                 <Text style={{fontSize: 10}}>Black</Text>
               </View>
             </View>
@@ -726,6 +746,8 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getuserRecord})(OrderPage);
+export default connect(mapStateToProps, {getuserRecord, getuserOrder})(
+  OrderPage,
+);
 
 const styles = StyleSheet.create({});

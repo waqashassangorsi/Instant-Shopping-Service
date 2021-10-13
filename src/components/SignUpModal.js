@@ -14,7 +14,11 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../theme/colors';
-import {loginaction, signupaction} from '../Redux/Action/Loginaction';
+import {
+  loginaction,
+  signupaction,
+  signupwithfb,
+} from '../Redux/Action/Loginaction';
 const {height, width} = Dimensions.get('window');
 import {connect} from 'react-redux';
 
@@ -39,6 +43,7 @@ const SignUpModal = ({
   modalVisible,
   onChange,
   signupaction,
+  signupwithfb,
 }) => {
   console.log('modalVisible', modalVisible);
   const [modalVisible1, setModalVisible1] = useState(modalVisible);
@@ -56,7 +61,42 @@ const SignUpModal = ({
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      alert(JSON.stringify(userInfo));
+      // alert(JSON.stringify(userInfo));
+      // console.log(`userInfo`, userInfo);
+      const formData = new FormData();
+
+      formData.append('email', userInfo.user.email);
+
+      console.log('myformdata', formData);
+      const res = await signupwithfb(formData);
+
+      if (res.data.status == true) {
+        setreload(true);
+        handleChange(false);
+        // await savePass(pass);
+        // setLoading(false);
+      } else {
+        alert(res.data.message);
+        // setLoading(false);
+      }
+      // new Promise((rsl, rej) => {
+      //   signupwithfb(formData, rsl, rej);
+      // })
+      //   .then(async (res) => {
+      //     console.log(res);
+      //     setLoading(false);
+      //     // navigation.dispatch(
+      //     //   CommonActions.reset({
+      //     //     index: 0,
+      //     //     routes: [{name: 'Root'}],
+      //     //   }),
+      //     // );
+      //   })
+      //   .catch((err) => {
+      //     // setMsg(err);
+      //     // setShowAlert(true);
+      //     setLoading(false);
+      //   });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -84,7 +124,7 @@ const SignUpModal = ({
           const currentProfile = Profile.getCurrentProfile().then(function (
             currentProfile,
           ) {
-            alert(currentProfile);
+            alert(JSON.stringify(currentProfile));
           });
         }
       },
@@ -408,7 +448,7 @@ const SignUpModal = ({
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                      onPress={()=> signInF()}
+                        onPress={() => signInF()}
                         style={{
                           paddingHorizontal: 15,
                           flexDirection: 'row',
@@ -642,6 +682,8 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {loginaction, signupaction})(
-  SignUpModal,
-);
+export default connect(mapStateToProps, {
+  loginaction,
+  signupaction,
+  signupwithfb,
+})(SignUpModal);

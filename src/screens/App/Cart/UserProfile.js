@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,7 @@ import {
   FlatList,
   ScrollView,
   Pressable,
+  Linking,
 } from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -16,6 +17,8 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Divider} from 'react-native-paper';
+import {connect} from 'react-redux';
+import {getuserRecord} from '../../../Redux/Action/Loginaction';
 
 import {
   primary,
@@ -105,8 +108,29 @@ const renderItem = ({item}) => (
   </View>
 );
 
-const UserProfile = () => {
+const UserProfile = ({getuserRecord, route}) => {
   let navigation = useNavigation();
+  const [userdata, setuserdata] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('user_id', 1);
+      const res = await getuserRecord(formdata);
+      console.log('fashindata,', res);
+      setuserdata(res.data.data);
+    })();
+  }, []);
+
+  const openDialScreen = () => {
+    let number = '';
+    if (Platform.OS === 'ios') {
+      number = 'telprompt:' + userdata.phone_number;
+    } else {
+      number = 'tel:' + userdata.phone_number;
+    }
+    Linking.openURL(number);
+  };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -152,7 +176,7 @@ const UserProfile = () => {
           }}>
           <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
             <Image
-              source={user}
+              source={{uri: userdata.dp}}
               style={{
                 height: 80,
                 width: 80,
@@ -168,10 +192,10 @@ const UserProfile = () => {
           </View>
           <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
             <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
-              Frank Gallager
+              {userdata.name}
             </Text>
             <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
-              Active Since June 2020
+              {userdata.joining_date}
             </Text>
 
             <View
@@ -214,6 +238,9 @@ const UserProfile = () => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={() => {
+                  openDialScreen();
+                }}
                 style={{
                   height: 36,
                   width: 100,
@@ -436,7 +463,12 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getuserRecord})(UserProfile);
 
 const styles1 = StyleSheet.create({
   tabs: {

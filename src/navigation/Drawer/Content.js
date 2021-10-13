@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {dummy, cover} from '../../assets';
+import {dummy, cover, logo} from '../../assets';
 import colors from '../../theme/colors';
 import {Drawer} from 'react-native-paper';
 import {Fonts} from '../../utils/Fonts';
@@ -44,15 +44,15 @@ const DrawerContent = ({
     try {
       await logoutUser();
       await updateCart();
-      navigation.push('Login');
+      navigation.push('Products');
     } catch (err) {}
   };
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
-        <ImageBackground style={styles.drawerItemStyle} source={cover} />
+        <ImageBackground style={styles.drawerItemStyle} source={logo} />
         <Drawer.Section style={styles.drawerSection}>
-          {isLoggedIn && (
+          {/* {isLoggedIn && (
             <DrawerItem
               style={styles.drawerItem}
               label="Dashboard"
@@ -61,8 +61,8 @@ const DrawerContent = ({
                 navigation.navigate('Dashboard');
               }}
             />
-          )}
-          {isLoggedIn && (
+          )} */}
+          {/* {isLoggedIn && (
             <TouchableOpacity
               style={{
                 position: 'absolute',
@@ -84,21 +84,32 @@ const DrawerContent = ({
                 {'£: ' + balance}
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
           {/* // icon={({color, size}) => ( */}
           {/* //   <Icon name="home" color={colors.primary} size={25} />
             // )}
           */}
           <DrawerItem
             style={styles.drawerItem}
-            label="Competitions"
+            label="My Profile"
             labelStyle={styles.labelStyle}
             onPress={() => {
-              navigation.navigate('Home');
+              navigation.navigate('UserProfile');
             }}
-            // icon={({color, size}) => (
-            //   <Icon name="home" color={colors.primary} size={25} />
-            // )}
+            icon={({color, size}) => (
+              <Icon name="home" color={colors.primary} size={25} />
+            )}
+          />
+          <DrawerItem
+            style={styles.drawerItem}
+            label="Messenger"
+            labelStyle={styles.labelStyle}
+            onPress={() => {
+              navigation.navigate('ShopperMessenger');
+            }}
+            icon={({color, size}) => (
+              <Icon name="message" color={colors.primary} size={20} />
+            )}
           />
           {/* <DrawerItem
             style={styles.drawerItem}
@@ -118,12 +129,12 @@ const DrawerContent = ({
             onPress={() => {
               navigation.navigate('Winners');
             }}
-            // icon={({color, size}) => (
-            //   <Icon name="cart" color={colors.primary} size={23} />
-            // )}
+            icon={({color, size}) => (
+              <Icon name="cart" color={colors.primary} size={23} />
+            )}
           />
 
-          <DrawerItem
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="Subscription"
             labelStyle={styles.labelStyle}
@@ -133,7 +144,7 @@ const DrawerContent = ({
             // icon={({color, size}) => (
             //   <Icon name="cart" color={colors.primary} size={23} />
             // )}
-          />
+          /> */}
 
           {/* {isLoggedIn && (
             <DrawerItem
@@ -148,7 +159,7 @@ const DrawerContent = ({
               // )}
             />
           )} */}
-          <DrawerItem
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="Charity"
             labelStyle={styles.labelStyle}
@@ -158,9 +169,9 @@ const DrawerContent = ({
             // icon={({color, size}) => (
             //   <Icon name="account" color={colors.primary} size={23} />
             // )}
-          />
+          /> */}
 
-          <DrawerItem
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="Notifications"
             labelStyle={styles.labelStyle}
@@ -170,9 +181,9 @@ const DrawerContent = ({
             // icon={({color, size}) => (
             //   <Icon name="account" color={colors.primary} size={23} />
             // )}
-          />
+          /> */}
 
-          <DrawerItem
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="About us"
             labelStyle={styles.labelStyle}
@@ -182,17 +193,17 @@ const DrawerContent = ({
             // icon={({color, size}) => (
             //   <Icon name="account" color={colors.primary} size={23} />
             // )}
-          />
-          <DrawerItem
+          /> */}
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="Privacy Policy"
             labelStyle={styles.labelStyle}
             onPress={() => {
               navigation.navigate('privacy');
             }}
-          />
+          /> */}
 
-          <DrawerItem
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="Contact Us"
             labelStyle={styles.labelStyle}
@@ -203,7 +214,7 @@ const DrawerContent = ({
             // icon={({color, size}) => (
             //   <Icon name="account" color={colors.primary} size={23} />
             // )}
-          />
+          /> */}
 
           <DrawerItem
             style={styles.drawerItem}
@@ -229,9 +240,9 @@ const DrawerContent = ({
                 navigation.navigate('Login');
               }
             }}
-            // icon={({color, size}) => (
-            //   <Icon name="information" color={colors.primary} size={23} />
-            // )}
+            icon={({color, size}) => (
+              <Icon name="information" color={colors.primary} size={23} />
+            )}
           />
           {/* <DrawerItem
             style={styles.drawerItem}
@@ -289,10 +300,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   drawerItemStyle: {
-    height: 200,
+    height: 75,
     width: '100%',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    marginVertical: 10,
   },
   drawerItem: {
     marginTop: 0,

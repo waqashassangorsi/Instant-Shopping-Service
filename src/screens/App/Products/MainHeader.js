@@ -16,7 +16,9 @@ import {
   Pressable,
 } from 'react-native';
 import {Header, Badge} from 'react-native-elements';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -98,7 +100,6 @@ const MainHeader = ({user, getcity, getallbrands}) => {
               size={30}
               color="black"
               onPress={() => {
-                console.log('navigation', navigation);
                 navigation.openDrawer();
               }}
             />
