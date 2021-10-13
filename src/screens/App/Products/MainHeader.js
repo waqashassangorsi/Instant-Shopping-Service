@@ -28,7 +28,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 import {connect} from 'react-redux';
-import {getcity, getallbrands} from '../../../Redux/Action/Loginaction';
+import {getcity, getallbrands,getallcategory} from '../../../Redux/Action/Loginaction';
 
 const categories = [
   'Shop by store',
@@ -57,10 +57,15 @@ const DATA = [
   {id: 12, name: 'amazon'},
 ];
 
-const MainHeader = ({user, getcity, getallbrands}) => {
+const MainHeader = ({user, getcity, getallbrands,getallcategory}) => {
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [listcity, setlistcity] = useState([]);
+  const [allcategory, setallcategory] = useState([]);
+  const [category, setcategory] = useState([]);
+  const [myselectedcat, setmyselectedcat] = useState();
+  
+   
 
   const [brandsname, setbrandsname] = useState([]);
   useEffect(() => {
@@ -69,6 +74,19 @@ const MainHeader = ({user, getcity, getallbrands}) => {
       const res = await getallbrands();
       setbrandsname(res.data.data);
     })();
+
+    (async () => {
+    const mycatres = await getallcategory();
+    var catarray = [];
+    for(var i=0;i<(mycatres.data.data).length;i++){
+      catarray.push(mycatres.data.data[i].category_name);
+    }
+    setallcategory(mycatres.data.data);
+    setcategory(catarray);
+
+    })();
+
+
   }, []);
 
   function handleChange(newValue) {
@@ -76,6 +94,9 @@ const MainHeader = ({user, getcity, getallbrands}) => {
       setModalVisible(false);
     }
   }
+
+
+  console.log("myallcategory",allcategory);
 
   // useEffect(() => {
   //   (async () => {
@@ -229,9 +250,10 @@ const MainHeader = ({user, getcity, getallbrands}) => {
               rowTextStyle={{
                 fontSize: 12,
               }}
-              data={categories}
+              data={category}
               onSelect={(selectedItem, index) => {
                 console.log(selectedItem, index);
+                setmyselectedcat(allcategory[index].category_id);
               }}
               buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem;
@@ -334,4 +356,4 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getcity, getallbrands})(MainHeader);
+export default connect(mapStateToProps, {getcity, getallbrands,getallcategory})(MainHeader);

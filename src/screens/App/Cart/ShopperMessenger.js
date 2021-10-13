@@ -44,19 +44,69 @@ const DATA = [
   },
 ];
 
+const myid=20;
+const myname="waqas";
+const mydp="waqasdp";
+const otherid=31;
+const othername="bilal";
+const otherdp="otherdp";
+
+
+roomRef.once('value')
+.then(snapshot => {
+  console.log("mysnapshots",snapshot.val());
+ 
+  if(snapshot.val()==null){
+
+    (async () => {
+
+      roomRef.push({
+        recv_name: othername,
+        send_name: myname,
+        send_uid: myid,
+        recv_uid: otherid,
+        sender_dp: mydp,
+        recv_dp: othername,
+        created_at: 'date',
+      });
+
+    })();
+
+
+  }else{
+    snapshot.forEach(child => {
+      
+      if((child.val().send_uid==myid && child.val().recv_uid==otherid) || (child.val().send_uid==otherid && child.val().recv_uid==myid)){
+        console.log("record exists");
+      }else{
+
+        (async () => {
+          roomRef.push({
+            recv_name: othername,
+            send_name: myname,
+            send_uid: myid,
+            recv_uid: otherid,
+            sender_dp: mydp,
+            recv_dp: othername,
+            created_at: 'date',
+          });
+
+        })();
+      
+      }
+    
+    });
+
+  }
+
+});
+
+
 const addRoom = async (item) => {
   alert('p[akistanm');
   let roomsFB = [];
   try {
-    await roomRef.push({
-      recv_name: 'waqas',
-      send_name: 'hasan',
-      send_uid: '23',
-      recv_uid: '32',
-      sender_dp: 'testdp',
-      recv_dp: 'recvdp',
-      created_at: 'date',
-    });
+    
 
     roomRef.on('value', (snapshot) => {
       let roomsFB = [];
