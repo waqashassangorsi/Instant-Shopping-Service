@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -25,7 +25,6 @@ const ImagePicker = require('react-native-image-picker');
 import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import database from '@react-native-firebase/database';
-const roomRef = database().ref('rooms');
 
 // import EmojiBoard from 'react-native-emoji-board';
 
@@ -44,108 +43,127 @@ const DATA = [
   },
 ];
 
-const myid=20;
-const myname="waqas";
-const mydp="waqasdp";
-const otherid=31;
-const othername="bilal";
-const otherdp="otherdp";
 
+
+
+const ShopperMessenger = () => {
+
+  const roomKey = "-MlyaqIzairVRteN2K7M";
+  const [modalVisible, setModalVisible] = useState(false);
+  const [show, setShow] = useState(false);
+  const [value, setValue] = useState();
+  const [filePath, setfilePath] = useState();
+  const [fileName, setfileName] = useState();
+  const [roomexist, setroomexist] = useState('no');
+  const [mymsg, setmymsg] = useState('');
+  const roomRef = database().ref('rooms');
+  const messagesRef = database().ref(`messages/${roomKey}`);
+  const [messages, setMessages] = useState([]);
+  
+  const myid=20;
+  const myname="waqas";
+  const mydp="waqasdp";
+  const otherid=30;
+  const othername="bilal";
+  const otherdp="otherdp";
+
+  function addmsg(){
+
+    if (mymsg.length > 0) {
+      messagesRef.push({
+          text: mymsg,
+          createdAt: Date.now(),
+          status: 'unread',
+          sendid: myid,
+          sendername: myname,
+          recvid: otherid,
+          recvrname: othername,
+          sndrdp: mydp,
+          recvrdp: otherdp,
+      });
+      setmymsg('');
+    }
+  
+  }
+
+  useEffect(() => {
+    listenForMessages(messagesRef);
+  }, []);
+
+  const listenForMessages = messagesRef => {
+    messagesRef.on('value', snapshot => {
+      let messagesFB = [];
+      snapshot.forEach(child => {
+        messagesFB = [
+          ...messagesFB,
+          {
+            _id: child.key,
+            text: child.val().text,
+            createdAt: child.val().createdAt,
+            recvid: child.val().recvid,
+            sendid: child.val().sendid,
+            sendername: child.val().sendername,
+            recvrname: child.val().recvrname,
+            status: child.val().status,
+            sndrdp: child.val().sndrdp,
+            recvrdp: child.val().recvrdp,
+            
+          },
+        ];
+      });
+
+      setMessages(messagesFB);
+    });
+  };
+
+
+
+
+useEffect(() => {
+
+  
 
 roomRef.once('value')
 .then(snapshot => {
-  console.log("mysnapshots",snapshot.val());
- 
-  if(snapshot.val()==null){
-
-    (async () => {
-
-      roomRef.push({
-        recv_name: othername,
-        send_name: myname,
-        send_uid: myid,
-        recv_uid: otherid,
-        sender_dp: mydp,
-        recv_dp: othername,
-        created_at: 'date',
-      });
-
-    })();
-
-
-  }else{
+  
     snapshot.forEach(child => {
-      
+      console.log("mysnapshots",child.key);
       if((child.val().send_uid==myid && child.val().recv_uid==otherid) || (child.val().send_uid==otherid && child.val().recv_uid==myid)){
         console.log("record exists");
       }else{
-
-        (async () => {
-          roomRef.push({
-            recv_name: othername,
-            send_name: myname,
-            send_uid: myid,
-            recv_uid: otherid,
-            sender_dp: mydp,
-            recv_dp: othername,
-            created_at: 'date',
-          });
-
-        })();
+        const roomexist="no";
       
       }
     
     });
-
-  }
-
+    
 });
 
+}, []);
 
-const addRoom = async (item) => {
-  alert('p[akistanm');
-  let roomsFB = [];
-  try {
-    
+// if(roomexist=="no"){
 
-    roomRef.on('value', (snapshot) => {
-      let roomsFB = [];
-      snapshot.forEach((element) => {
-        roomsFB.push({
-          recv_name: element.val().recv_name,
-          send_name: element.val().send_name,
-          key: element.key,
-          send_uid: element.val().send_uid,
-          recv_uid: element.val().recv_uid,
-          created_at: element.val().created_at,
-        });
-      });
+  // (async () => {
 
-      const res = roomsFB?.some((element) => {
-        return 1;
-      });
+  //   roomRef.push({
+  //     recv_name: othername,
+  //     send_name: myname,
+  //     send_uid: myid,
+  //     recv_uid: otherid,
+  //     sender_dp: mydp,
+  //     recv_dp: othername,
+  //     created_at: 'date',
+  //   });
 
-      if (res) {
-        const index = roomsFB.find((element) => {
-          return 1;
-        });
-        // navigation.navigate('Conversation', {
-        //   roomKey: index.key,
-        //   roomName: item.first_name + ' ' + item.last_name,
-        //   roomdp: item.dp,
-        //   userid: item.id,
-        // });
-      } else {
-        // addRoom(item);
-      }
-    });
-  } catch (err) {
-    alert(err);
-  }
-};
+  // })();
 
-const renderItem = () => (
+// }
+
+
+const renderItem = ({item,index}) => (
+  
   <View>
+    {item.sendid==myid && (
     <View style={{flexDirection: 'row', marginTop: 10}}>
       <Image
         source={person1}
@@ -158,23 +176,18 @@ const renderItem = () => (
           marginLeft: 10,
           backgroundColor: colors.greenColor,
           height: 36,
-          width: 62,
           alignSelf: 'center',
           borderRadius: 5,
         }}>
-        <Text style={{color: 'white', fontSize: 12}}>Hi</Text>
+        <Text style={{color: 'white', fontSize: 12}}>{item.text}</Text>
       </View>
       <View style={{justifyContent: 'center', marginTop: 25, marginLeft: 5}}>
         <Text style={{fontSize: 10}}>17:28</Text>
       </View>
     </View>
-    <TouchableOpacity
-      onPress={() => {
-        addRoom();
-      }}>
-      <Text>asdfsd</Text>
-    </TouchableOpacity>
-
+    )}
+   
+    {item.recvid==myid && (
     <View style={{flexDirection: 'row', marginTop: 10, alignSelf: 'flex-end'}}>
       <View
         style={{
@@ -203,7 +216,7 @@ const renderItem = () => (
             marginHorizontal: 8,
             fontSize: 12,
           }}>
-          I’ve gotten your list and im on my way to the store now
+          {item.text}
         </Text>
       </View>
       <Image
@@ -217,15 +230,11 @@ const renderItem = () => (
         }}
       />
     </View>
+    )}
+
   </View>
 );
 
-const ShopperMessenger = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [show, setShow] = useState(false);
-  const [value, setValue] = useState();
-  const [filePath, setfilePath] = useState();
-  const [fileName, setfileName] = useState();
 
   const openCamera1 = async (index) => {
     // setLoader(true);
@@ -259,6 +268,8 @@ const ShopperMessenger = () => {
       }
     });
   };
+
+ 
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -356,7 +367,7 @@ const ShopperMessenger = () => {
           </View>
 
           <FlatList
-            data={DATA}
+            data={messages}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
@@ -386,6 +397,8 @@ const ShopperMessenger = () => {
                 <TextInput
                   placeholder="Write a message"
                   // onChange={onClick(emoji)}
+                  onChangeText={(text) => setmymsg(text)}
+                  value={mymsg}
                   style={{
                     color: '#DADADA',
                     marginLeft: 20,
@@ -447,9 +460,16 @@ const ShopperMessenger = () => {
               marginBottom: 40,
             }}>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <TouchableOpacity onPress={() => {
+               addmsg();
+              }}>
               <Text style={{color: 'white', textAlign: 'center', fontSize: 12}}>
                 Send
               </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+             addmsg();
+              }}>
               <MaterialIcons
                 name="send"
                 size={15}
@@ -459,6 +479,7 @@ const ShopperMessenger = () => {
                   alignSelf: 'center',
                 }}
               />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.centeredView}>
