@@ -17,7 +17,7 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import * as Progress from 'react-native-progress';
 import {connect} from 'react-redux';
-import {getuserRecord, getuserOrder} from '../../../Redux/Action/Loginaction';
+import {getuserRecord, getorderDetail} from '../../../Redux/Action/Loginaction';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import {
@@ -34,10 +34,11 @@ import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import {useNavigation} from '@react-navigation/native';
 
-const OrderPage = ({getuserRecord, getuserOrder}) => {
+const OrderPage = ({getuserRecord, getorderDetail}) => {
   const [userdata, setuserdata] = useState([]);
   const [loading, setloading] = useState([]);
-  const [userorder, setuserorder] = useState([]);
+  const [order, setorder] = useState([]);
+  const [product, setproduct] = useState([]);
   let navigation = useNavigation();
 
   const openDialScreen = () => {
@@ -53,10 +54,11 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
-      formdata.append('user_id', 1);
-      const res = await getuserRecord(formdata);
-      // console.log('fashindata,', res);
-      setuserdata(res.data.data);
+      formdata.append('order_id', 31);
+      const res = await getorderDetail(formdata);
+      console.log('fashindata,', res);
+      setorder(res.data.data.order_detail[0]);
+      setproduct(res.data.data.product_detail);
     })();
   }, []);
 
@@ -64,13 +66,12 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
     (async () => {
       const formdata = new FormData();
       formdata.append('user_id', 1);
-
-      const res = await getuserOrder(formdata);
-
-      console.log('fashindata,', res);
-      setuserorder(res.data.data);
+      const res = await getuserRecord(formdata);
+      // console.log('fashindata,', res);
+      setuserdata(res.data.data);
     })();
   }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* <Loading visible={loading} /> */}
@@ -127,7 +128,7 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                 alignSelf: 'center',
                 marginRight: 120,
               }}>
-              MKA-5438-5489292
+              {order.order_number}
             </Text>
             <Text
               style={{
@@ -135,7 +136,7 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                 alignSelf: 'center',
                 fontFamily: 'Cochin',
               }}>
-              Ongoing
+              {order.order_status}
             </Text>
           </TouchableOpacity>
         </View>
@@ -540,7 +541,7 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
               color: colors.greenColor,
               fontWeight: 'bold',
             }}>
-            {userorder[0].order_number}
+            {order.order_number}
           </Text>
         </View>
         <View
@@ -571,8 +572,8 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                 style={{width: 73, height: 73}}
               />
               <View style={{marginLeft: 10}}>
-                <Text style={{fontSize: 16, color: 'red'}}>
-                  {userorder[0].order_date}
+                <Text style={{fontSize: 16, color: 'black'}}>
+                  {product.product_name}
                 </Text>
                 <Text style={{fontSize: 10}}>Black</Text>
               </View>
@@ -593,7 +594,9 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                   elevation: 1,
                   marginRight: 15,
                 }}>
-                <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
+                <Text style={{textAlign: 'center', marginTop: 3}}>
+                  {product.qty}
+                </Text>
               </View>
               <View>
                 <Text
@@ -601,7 +604,64 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                     fontSize: 16,
                     color: colors.gray,
                   }}>
-                  $250.99
+                  {'$' + product.product_price}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#FAFAFA',
+              borderBottomWidth: 2,
+              borderColor: colors.WebGLQuery,
+              padding: 10,
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../../../assets/miniDress.png')}
+                style={{width: 73, height: 73}}
+              />
+              <View style={{marginLeft: 10}}>
+                <Text style={{fontSize: 16}}> {product.product_name}</Text>
+                <Text style={{fontSize: 10}}>Black</Text>
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  borderWidth: 1,
+                  width: 30,
+                  height: 30,
+                  borderColor: colors.WebGLQuery,
+                  backgroundColor: colors.white,
+                  elevation: 1,
+                  marginRight: 15,
+                }}>
+                <Text style={{textAlign: 'center', marginTop: 3}}>
+                  {product.qty}
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.gray,
+                  }}>
+                  {'$' + product.product_price}
                 </Text>
               </View>
             </View>
@@ -627,7 +687,7 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                 style={{width: 73, height: 73}}
               />
               <View style={{marginLeft: 10}}>
-                <Text style={{fontSize: 16}}>Mini Dress</Text>
+                <Text style={{fontSize: 16}}> {product.product_name}</Text>
                 <Text style={{fontSize: 10}}>Black</Text>
               </View>
             </View>
@@ -647,69 +707,17 @@ const OrderPage = ({getuserRecord, getuserOrder}) => {
                   elevation: 1,
                   marginRight: 15,
                 }}>
-                <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-              </View>
-              <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: colors.gray,
-                  }}>
-                  $250.99
+                <Text style={{textAlign: 'center', marginTop: 3}}>
+                  {product.qty}
                 </Text>
               </View>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              backgroundColor: '#FAFAFA',
-              borderBottomWidth: 2,
-              borderColor: colors.WebGLQuery,
-              padding: 10,
-            }}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../../../assets/miniDress.png')}
-                style={{width: 73, height: 73}}
-              />
-              <View style={{marginLeft: 10}}>
-                <Text style={{fontSize: 16}}>Mini Dress</Text>
-                <Text style={{fontSize: 10}}>Black</Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  borderWidth: 1,
-                  width: 30,
-                  height: 30,
-                  borderColor: colors.WebGLQuery,
-                  backgroundColor: colors.white,
-                  elevation: 1,
-                  marginRight: 15,
-                }}>
-                <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-              </View>
               <View>
                 <Text
                   style={{
                     fontSize: 16,
                     color: colors.gray,
                   }}>
-                  $250.99
+                  {'$' + product.product_price}
                 </Text>
               </View>
             </View>
@@ -746,7 +754,7 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getuserRecord, getuserOrder})(
+export default connect(mapStateToProps, {getuserRecord, getorderDetail})(
   OrderPage,
 );
 
