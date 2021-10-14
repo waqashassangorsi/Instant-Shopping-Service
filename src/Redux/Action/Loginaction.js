@@ -218,6 +218,36 @@ export const getuserOrder = (data) => {
   };
 };
 
+export const getorderDetail = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}get_all_order_detail`, data);
+
+    console.log(res);
+    return res;
+  };
+};
+
+export const getassignedOrder = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}get_assigned_order_detail`, data);
+
+    console.log(res);
+    return res;
+  };
+};
+
+export const acceptrejectOrder = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}accept_reject_order`, data);
+
+    console.log(res);
+    return res;
+  };
+};
+
 export const latLong = (data) => {
   console.log(data);
   return async (dispatch) => {

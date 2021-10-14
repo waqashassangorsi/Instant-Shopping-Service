@@ -41,7 +41,7 @@ const DrawerNavigator = ({isLoggedIn}) => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
-      initialRouteName={!isLoggedIn ? 'Products' : 'Products'}>
+      initialRouteName={!isLoggedIn ? 'ShopperDetail' : 'ShopperDetail'}>
       {isLoggedIn && <Drawer.Screen name="Dashboard" component={Dashboard} />}
       <Drawer.Screen name="Home" component={Home} />
 

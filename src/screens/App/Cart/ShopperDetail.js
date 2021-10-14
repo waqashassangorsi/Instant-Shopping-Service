@@ -13,7 +13,6 @@ import {Badge} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import * as Progress from 'react-native-progress';
 
 import {
   primary,
@@ -32,7 +31,12 @@ import {Switch} from 'react-native-paper';
 import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import {connect} from 'react-redux';
-import {getuserRecord} from '../../../Redux/Action/Loginaction';
+import {
+  getuserRecord,
+  getassignedOrder,
+  acceptrejectOrder,
+} from '../../../Redux/Action/Loginaction';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 const DATA = [
   {
@@ -49,11 +53,19 @@ const DATA = [
   },
 ];
 
-const ShopperDetail = ({getuserRecord, route}) => {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+const ShopperDetail = ({
+  getuserRecord,
+  route,
+  getassignedOrder,
+  acceptrejectOrder,
+}) => {
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
 
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const [userdata, setuserdata] = useState([]);
+  const [assignedorder, setassignedorder] = useState([]);
+  const [assignedorder1, setassignedorder1] = useState([]);
+  const [accrejorder, setaccrejorder] = useState([]);
+  const [orderid, setorderid] = useState('');
 
   const [productdata, setproductdata] = useState([]);
   useEffect(() => {
@@ -65,6 +77,32 @@ const ShopperDetail = ({getuserRecord, route}) => {
       setuserdata(res.data.data);
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('user_id', 1);
+      const res = await getassignedOrder(formdata);
+      // console.log('fashindata,', res);
+      setassignedorder(res.data.data);
+      setassignedorder1(res.data.data[0]);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('order_id', orderid);
+      // formdata.append('user_id', );
+      // formdata.append('order_status', orderid);
+
+      const res = await acceptrejectOrder(formdata);
+      console.log('fashindata,', res);
+      // setaccrejorder(res.data.data);
+    })();
+  }, []);
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   const renderItem = ({item}) => (
     <View style={{padding: 10}}>
@@ -86,8 +124,8 @@ const ShopperDetail = ({getuserRecord, route}) => {
             <Image source={shopwrite} style={{height: 90, width: 80}} />
           </View>
           <View style={{}}>
-            <Text style={{fontSize: 18}}>Shoprite</Text>
-            <Text style={{fontSize: 12}}>7 july 2020</Text>
+            <Text style={{fontSize: 18}}>{item.order_number}</Text>
+            <Text style={{fontSize: 12}}>{item.order_date}</Text>
             <Text style={{fontSize: 12}}>14:25</Text>
           </View>
         </View>
@@ -111,6 +149,9 @@ const ShopperDetail = ({getuserRecord, route}) => {
                 alignItems: 'center',
               }}>
               <TouchableOpacity
+                onPress={() => {
+                  // setorderid('assignedorder');
+                }}
                 style={{
                   width: 75,
                   height: 25,
@@ -130,6 +171,7 @@ const ShopperDetail = ({getuserRecord, route}) => {
               </TouchableOpacity>
 
               <TouchableOpacity
+                onPress={() => {}}
                 style={{
                   width: 75,
                   height: 25,
@@ -273,14 +315,23 @@ const ShopperDetail = ({getuserRecord, route}) => {
                   alignItems: 'center',
                   marginTop: 5,
                 }}>
-                <Progress.Circle
-                  size={80}
-                  color={colors.greenColor}
-                  allowFontScaling={true}
-                  showsText={true}
-                  // strokeCap={'circle'}
-                  borderWidth={4}
-                />
+                <AnimatedCircularProgress
+                  size={100}
+                  width={3}
+                  fill={userdata.success_rate}
+                  tintColor={colors.greenColor}
+                  backgroundColor={colors.WebGLQuery}>
+                  {(fill) => (
+                    <Text
+                      style={{
+                        color: colors.greenColor,
+                        fontSize: 32,
+                        fontWeight: 'bold',
+                      }}>
+                      {userdata.success_rate}
+                    </Text>
+                  )}
+                </AnimatedCircularProgress>
               </View>
             </View>
             <View
@@ -302,14 +353,23 @@ const ShopperDetail = ({getuserRecord, route}) => {
                   alignItems: 'center',
                   marginTop: 5,
                 }}>
-                <Progress.Circle
-                  size={80}
-                  color={colors.greenColor}
-                  allowFontScaling={true}
-                  showsText={true}
-                  // strokeCap={'circle'}
-                  borderWidth={4}
-                />
+                <AnimatedCircularProgress
+                  size={100}
+                  width={3}
+                  fill={userdata.shoping_sprint}
+                  tintColor={colors.greenColor}
+                  backgroundColor={colors.WebGLQuery}>
+                  {(fill) => (
+                    <Text
+                      style={{
+                        color: colors.greenColor,
+                        fontSize: 32,
+                        fontWeight: 'bold',
+                      }}>
+                      {userdata.shoping_sprint}
+                    </Text>
+                  )}
+                </AnimatedCircularProgress>
               </View>
             </View>
           </View>
@@ -371,8 +431,10 @@ const ShopperDetail = ({getuserRecord, route}) => {
                 <Image source={shopwrite} style={{height: 90, width: 80}} />
               </View>
               <View style={{}}>
-                <Text style={{fontSize: 18}}>Shoprite</Text>
-                <Text style={{fontSize: 12}}>7 july 2020</Text>
+                <Text style={{fontSize: 18}}>
+                  {assignedorder1.order_number}
+                </Text>
+                <Text style={{fontSize: 12}}>{assignedorder1.order_date}</Text>
                 <Text style={{fontSize: 12}}>14:25</Text>
               </View>
             </View>
@@ -432,7 +494,7 @@ const ShopperDetail = ({getuserRecord, route}) => {
         </View>
 
         <FlatList
-          data={DATA}
+          data={assignedorder}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
@@ -447,7 +509,11 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getuserRecord})(ShopperDetail);
+export default connect(mapStateToProps, {
+  getuserRecord,
+  getassignedOrder,
+  acceptrejectOrder,
+})(ShopperDetail);
 const styles = StyleSheet.create({
   example: {
     marginVertical: 24,

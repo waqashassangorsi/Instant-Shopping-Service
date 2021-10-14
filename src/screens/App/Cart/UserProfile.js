@@ -18,7 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Divider} from 'react-native-paper';
 import {connect} from 'react-redux';
-import {getuserRecord} from '../../../Redux/Action/Loginaction';
+import {getuserRecord, getuserOrder} from '../../../Redux/Action/Loginaction';
 
 import {
   primary,
@@ -58,6 +58,7 @@ const renderItem = ({item}) => (
       alignItems: 'center',
       borderBottomWidth: 2,
       borderColor: colors.WebGLQuery,
+      marginVertical: 10,
     }}>
     <View
       style={{
@@ -69,8 +70,8 @@ const renderItem = ({item}) => (
         <Image source={shopwrite} style={{height: 90, width: 80}} />
       </View>
       <View style={{}}>
-        <Text style={{fontSize: 18}}>Shoprite</Text>
-        <Text style={{fontSize: 12}}>7 july 2020</Text>
+        <Text style={{fontSize: 18}}>{item.order_number}</Text>
+        <Text style={{fontSize: 12}}>{item.order_date}</Text>
         <Text style={{fontSize: 12}}>14:25</Text>
       </View>
     </View>
@@ -108,19 +109,34 @@ const renderItem = ({item}) => (
   </View>
 );
 
-const UserProfile = ({getuserRecord, route}) => {
+const UserProfile = ({getuserRecord, route, getuserOrder}) => {
   let navigation = useNavigation();
   const [userdata, setuserdata] = useState([]);
+  const [order, setorder] = useState([]);
+  const [status, setorderstatus] = useState('all');
+
+  // console.log(`my status`, status);
 
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
       formdata.append('user_id', 1);
       const res = await getuserRecord(formdata);
-      console.log('fashindata,', res);
+      // console.log('fashindata,', res);
       setuserdata(res.data.data);
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('user_id', 1);
+      formdata.append('order_status', status);
+      const res = await getuserOrder(formdata);
+      // console.log('fashindata,', res);
+      setorder(res.data.data);
+    })();
+  }, [status]);
 
   const openDialScreen = () => {
     let number = '';
@@ -131,6 +147,7 @@ const UserProfile = ({getuserRecord, route}) => {
     }
     Linking.openURL(number);
   };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -306,7 +323,7 @@ const UserProfile = ({getuserRecord, route}) => {
               </View>
               <View style={{}}>
                 <Text style={{fontSize: 12, color: 'black', marginLeft: 10}}>
-                  Male
+                  {userdata.gender}
                 </Text>
               </View>
             </View>
@@ -318,7 +335,7 @@ const UserProfile = ({getuserRecord, route}) => {
               </View>
               <View style={{}}>
                 <Text style={{fontSize: 12, color: 'black', marginLeft: 10}}>
-                  21 july, 1992
+                  {userdata.date_of_birth}
                 </Text>
               </View>
             </View>
@@ -332,8 +349,7 @@ const UserProfile = ({getuserRecord, route}) => {
 
             <View style={{left: 5, marginRight: 30}}>
               <Text style={{fontSize: 12, color: 'black'}}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore.
+                {userdata.address}
               </Text>
             </View>
           </View>
@@ -364,14 +380,14 @@ const UserProfile = ({getuserRecord, route}) => {
               <Text style={{fontSize: 12, color: 'gray'}}>Phone:</Text>
               <Text
                 style={{fontSize: 12, color: colors.greenColor, marginLeft: 5}}>
-                0336-6432173
+                {userdata.phone_number}
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 12, color: 'gray'}}>Email:</Text>
               <Text
                 style={{fontSize: 12, color: colors.greenColor, marginLeft: 5}}>
-                helpdesk@psa.com
+                {userdata.email}
               </Text>
             </View>
           </View>
@@ -400,38 +416,78 @@ const UserProfile = ({getuserRecord, route}) => {
               borderBottomWidth: 2,
               borderBottomColor: colors.WebGLQuery,
             }}>
-            <Pressable
+            <TouchableOpacity
+              onPress={() => {
+                setorderstatus('all');
+              }}
               android_ripple={{
                 color: colors.black,
                 // borderless: false,
               }}>
-              <Text style={{fontSize: 12, color: colors.greenColor}}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color:
+                    status == 'all' ? colors.greenColor : colors.WebGLQuery,
+                }}>
                 posted orders
               </Text>
-            </Pressable>
-            <Pressable
-              android_ripple={{
-                color: colors.black,
-                borderless: false,
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setorderstatus('Completed');
               }}>
-              <Text style={{fontSize: 12, color: colors.WebGLQuery}}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color:
+                    status == 'Completed'
+                      ? colors.greenColor
+                      : colors.WebGLQuery,
+                }}>
                 Completed orders
               </Text>
-            </Pressable>
-            <Pressable
-              android_ripple={{
-                color: colors.black,
-                borderless: false,
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setorderstatus('Ongoing');
               }}>
-              <Text style={{color: colors.WebGLQuery}}>Ongoing orders</Text>
-            </Pressable>
+              <Text
+                style={{
+                  color:
+                    status == 'Ongoing' ? colors.greenColor : colors.WebGLQuery,
+                }}>
+                Ongoing orders
+              </Text>
+            </TouchableOpacity>
           </View>
+          {order && (
+            <FlatList
+              data={order}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          )}
+          {!order && (
+            <View
+              style={{
+                backgroundColor: colors.lightWhite,
+                height: 115,
+                borderColor: colors.WebGLQuery,
+                // width: 340,
+                // marginHorizontal: 5,
+                marginVertical: 20,
+                borderWidth: 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 5,
+              }}>
+              <Text style={{color: '#879196', fontSize: 12}}>
+                You currently have no orders
+              </Text>
+            </View>
+          )}
 
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
           <View>
             <TouchableOpacity
               onPress={() => {
@@ -444,7 +500,7 @@ const UserProfile = ({getuserRecord, route}) => {
                 height: 35,
                 marginHorizontal: 10,
                 justifyContent: 'space-around',
-                marginTop: 10,
+                // marginTop: 10,
                 backgroundColor: colors.greenColor,
               }}>
               <Text
@@ -468,7 +524,9 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getuserRecord})(UserProfile);
+export default connect(mapStateToProps, {getuserRecord, getuserOrder})(
+  UserProfile,
+);
 
 const styles1 = StyleSheet.create({
   tabs: {
