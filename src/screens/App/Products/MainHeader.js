@@ -81,6 +81,7 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
 
     (async () => {
       const mycatres = await getallcategory();
+      // console.log(`mycatres`, mycatres);
       var catarray = [];
       for (var i = 0; i < mycatres.data.data.length; i++) {
         catarray.push(mycatres.data.data[i].category_name);

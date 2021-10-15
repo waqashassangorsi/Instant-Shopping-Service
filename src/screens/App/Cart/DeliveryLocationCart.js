@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,8 @@ import Footer from '../../../components/Footer';
 import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
+import {connect} from 'react-redux';
+import {getcity, getlocation} from '../../../Redux/Action/Loginaction';
 
 const cities = [
   'Abuja',
@@ -42,8 +44,45 @@ const location = [
   'Dera Ghazi khan',
 ];
 
-const DeliveryLocationCart = () => {
+const DeliveryLocationCart = ({getcity, getlocation}) => {
   let navigation = useNavigation();
+  const [allcategory, setallcategory] = useState([]);
+  const [alllocation, setalllocation] = useState([]);
+  const [category, setcategory] = useState([]);
+  const [location, setlocation] = useState([]);
+  const [myselectedcat, setmyselectedcat] = useState();
+  const [myselectedcat1, setmyselectedcat1] = useState();
+  const [citykey, setcitykey] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const mycatres = await getcity();
+      console.log('mycatres,', myselectedcat1);
+
+      var catarray = [];
+      for (var i = 0; i < mycatres.data.data.cities.length; i++) {
+        catarray.push(mycatres.data.data.cities[i].city_name);
+      }
+      var catarray1 = [];
+      for (var i = 0; i < mycatres.data.data.location.length; i++) {
+        catarray1.push(mycatres.data.data.location[i].location);
+      }
+      setallcategory(mycatres.data.data.cities);
+      setalllocation(mycatres.data.data.location);
+      setcategory(catarray);
+      setlocation(catarray1);
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('city_id', myselectedcat1);
+
+      const res = await getlocation(formdata);
+      console.log(`fashiondata`, res);
+    })();
+  }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -229,7 +268,7 @@ const DeliveryLocationCart = () => {
                   </Text> */}
                 {/* <Image source={require('../../../assets/dropDown.png')} /> */}
                 <SelectDropdown
-                  defaultButtonText={'Abuja'}
+                  defaultButtonText={'City'}
                   buttonStyle={{
                     backgroundColor: 'white',
                     width: 130,
@@ -244,9 +283,10 @@ const DeliveryLocationCart = () => {
                   rowTextStyle={{
                     fontSize: 12,
                   }}
-                  data={cities}
+                  data={category}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
+                    setmyselectedcat(allcategory[index].city_id);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
@@ -286,7 +326,7 @@ const DeliveryLocationCart = () => {
                   <Image source={require('../../../assets/dropDown.png')} /> */}
 
                 <SelectDropdown
-                  defaultButtonText={'Wuse'}
+                  defaultButtonText={'Location'}
                   buttonStyle={{
                     backgroundColor: 'white',
                     width: 130,
@@ -304,6 +344,7 @@ const DeliveryLocationCart = () => {
                   data={location}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
+                    setmyselectedcat1(alllocation[index].location_id);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
@@ -407,4 +448,11 @@ const DeliveryLocationCart = () => {
   );
 };
 
-export default DeliveryLocationCart;
+const mapStateToProps = (state) => {
+  const {user, isLoggedIn} = state.auth;
+
+  return {user, isLoggedIn};
+};
+export default connect(mapStateToProps, {getcity, getlocation})(
+  DeliveryLocationCart,
+);

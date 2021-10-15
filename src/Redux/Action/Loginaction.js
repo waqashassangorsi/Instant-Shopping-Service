@@ -182,6 +182,15 @@ export const getallcategory = (data) => {
   };
 };
 
+export const getlocation = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.post(`${BASE_URL}get_location`, data);
+    console.log(res);
+    return res;
+  };
+};
+
 export const getallproducts = (data) => {
   console.log(data);
   return async (dispatch) => {
@@ -201,7 +210,7 @@ export const getsingleProduct = (data) => {
 };
 
 export const getuserRecord = (data) => {
-  console.log(data);
+  console.log('mydata', data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}get_user`, data);
     console.log(res);
@@ -232,6 +241,16 @@ export const getassignedOrder = (data) => {
   console.log(data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}get_assigned_order_detail`, data);
+
+    console.log(res);
+    return res;
+  };
+};
+
+export const not_assigned_order = (data) => {
+  console.log(data);
+  return async (dispatch) => {
+    const res = await axios.get(`${BASE_URL}not_assigned_order`, data);
 
     console.log(res);
     return res;

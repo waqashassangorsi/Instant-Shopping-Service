@@ -109,18 +109,18 @@ const renderItem = ({item}) => (
   </View>
 );
 
-const UserProfile = ({getuserRecord, route, getuserOrder}) => {
+const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
   let navigation = useNavigation();
   const [userdata, setuserdata] = useState([]);
   const [order, setorder] = useState([]);
   const [status, setorderstatus] = useState('all');
 
-  // console.log(`my status`, status);
+  // console.log(`myredu`, user);
 
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
-      formdata.append('user_id', 1);
+      formdata.append('user_id', user.user_id);
       const res = await getuserRecord(formdata);
       // console.log('fashindata,', res);
       setuserdata(res.data.data);
@@ -130,10 +130,10 @@ const UserProfile = ({getuserRecord, route, getuserOrder}) => {
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
-      formdata.append('user_id', 1);
+      formdata.append('user_id', user.user_id);
       formdata.append('order_status', status);
       const res = await getuserOrder(formdata);
-      // console.log('fashindata,', res);
+      console.log('fashindata,', res);
       setorder(res.data.data);
     })();
   }, [status]);
@@ -524,7 +524,7 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
-export default connect(mapStateToProps, {getuserRecord, getuserOrder})(
+export default connect(mapStateToProps, {getuserRecord, getuserOrder, user})(
   UserProfile,
 );
 

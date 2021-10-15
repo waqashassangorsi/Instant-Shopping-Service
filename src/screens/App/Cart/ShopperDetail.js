@@ -35,6 +35,7 @@ import {
   getuserRecord,
   getassignedOrder,
   acceptrejectOrder,
+  not_assigned_order,
 } from '../../../Redux/Action/Loginaction';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
@@ -58,20 +59,26 @@ const ShopperDetail = ({
   route,
   getassignedOrder,
   acceptrejectOrder,
+  not_assigned_order,
+  user,
 }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
   const [userdata, setuserdata] = useState([]);
   const [assignedorder, setassignedorder] = useState([]);
-  const [assignedorder1, setassignedorder1] = useState([]);
+
   const [accrejorder, setaccrejorder] = useState([]);
   const [orderid, setorderid] = useState('');
+  const [orderstatus, setorderstatus] = useState('');
+  const [buttonstatus, setbuttonstatus] = useState('');
 
   const [productdata, setproductdata] = useState([]);
+  const [updateordercompo, setupdateordercompo] = useState([]);
+
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
-      formdata.append('user_id', 1);
+      formdata.append('user_id', user.user_id);
       const res = await getuserRecord(formdata);
       // console.log('fashindata,', res);
       setuserdata(res.data.data);
@@ -81,26 +88,30 @@ const ShopperDetail = ({
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
-      formdata.append('user_id', 1);
-      const res = await getassignedOrder(formdata);
-      // console.log('fashindata,', res);
+      formdata.append('user_id', user.user_id);
+      const res = await not_assigned_order(formdata);
+      console.log('myfashindata,', res);
       setassignedorder(res.data.data);
-      setassignedorder1(res.data.data[0]);
     })();
-  }, []);
+  }, [updateordercompo]);
 
-  useEffect(() => {
-    (async () => {
-      const formdata = new FormData();
-      formdata.append('order_id', orderid);
-      // formdata.append('user_id', );
-      // formdata.append('order_status', orderid);
+  const accept_reject = async (orderid, status) => {
+    const formdata = new FormData();
 
-      const res = await acceptrejectOrder(formdata);
-      console.log('fashindata,', res);
-      // setaccrejorder(res.data.data);
-    })();
-  }, []);
+    formdata.append('order_id', orderid);
+    formdata.append('user_id', user.user_id);
+    formdata.append('order_status', status);
+
+    const res = await acceptrejectOrder(formdata);
+
+    if (res.data.status == true) {
+      setupdateordercompo(res.data.data.order_id);
+    } else {
+    }
+
+    console.log('fashindata,', res);
+    setaccrejorder(res.data.data);
+  };
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
@@ -150,7 +161,7 @@ const ShopperDetail = ({
               }}>
               <TouchableOpacity
                 onPress={() => {
-                  // setorderid('assignedorder');
+                  accept_reject(item.id, 'accept');
                 }}
                 style={{
                   width: 75,
@@ -171,7 +182,9 @@ const ShopperDetail = ({
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => {
+                  accept_reject(item.id, 'reject');
+                }}
                 style={{
                   width: 75,
                   height: 25,
@@ -421,7 +434,7 @@ const ShopperDetail = ({
               borderBottomWidth: 2,
               borderColor: colors.WebGLQuery,
             }}>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -437,9 +450,9 @@ const ShopperDetail = ({
                 <Text style={{fontSize: 12}}>{assignedorder1.order_date}</Text>
                 <Text style={{fontSize: 12}}>14:25</Text>
               </View>
-            </View>
+            </View> */}
 
-            <View style={{alignItems: 'center'}}>
+            {/* <View style={{alignItems: 'center'}}>
               <View style={{}}>
                 <Text
                   style={{
@@ -489,7 +502,7 @@ const ShopperDetail = ({
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
 
@@ -513,6 +526,8 @@ export default connect(mapStateToProps, {
   getuserRecord,
   getassignedOrder,
   acceptrejectOrder,
+  not_assigned_order,
+  user,
 })(ShopperDetail);
 const styles = StyleSheet.create({
   example: {

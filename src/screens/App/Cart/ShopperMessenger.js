@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -43,12 +43,8 @@ const DATA = [
   },
 ];
 
-
-
-
 const ShopperMessenger = () => {
-
-  const roomKey = "-MlyaqIzairVRteN2K7M";
+  const roomKey = '-MlyaqIzairVRteN2K7M';
   const [modalVisible, setModalVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [value, setValue] = useState();
@@ -59,41 +55,39 @@ const ShopperMessenger = () => {
   const roomRef = database().ref('rooms');
   const messagesRef = database().ref(`messages/${roomKey}`);
   const [messages, setMessages] = useState([]);
-  
-  const myid=20;
-  const myname="waqas";
-  const mydp="waqasdp";
-  const otherid=30;
-  const othername="bilal";
-  const otherdp="otherdp";
 
-  function addmsg(){
+  const myid = 20;
+  const myname = 'waqas';
+  const mydp = 'waqasdp';
+  const otherid = 30;
+  const othername = 'bilal';
+  const otherdp = 'otherdp';
 
+  function addmsg() {
     if (mymsg.length > 0) {
       messagesRef.push({
-          text: mymsg,
-          createdAt: Date.now(),
-          status: 'unread',
-          sendid: myid,
-          sendername: myname,
-          recvid: otherid,
-          recvrname: othername,
-          sndrdp: mydp,
-          recvrdp: otherdp,
+        text: mymsg,
+        createdAt: Date.now(),
+        status: 'unread',
+        sendid: myid,
+        sendername: myname,
+        recvid: otherid,
+        recvrname: othername,
+        sndrdp: mydp,
+        recvrdp: otherdp,
       });
       setmymsg('');
     }
-  
   }
 
   useEffect(() => {
     listenForMessages(messagesRef);
   }, []);
 
-  const listenForMessages = messagesRef => {
-    messagesRef.on('value', snapshot => {
+  const listenForMessages = (messagesRef) => {
+    messagesRef.on('value', (snapshot) => {
       let messagesFB = [];
-      snapshot.forEach(child => {
+      snapshot.forEach((child) => {
         messagesFB = [
           ...messagesFB,
           {
@@ -107,7 +101,6 @@ const ShopperMessenger = () => {
             status: child.val().status,
             sndrdp: child.val().sndrdp,
             recvrdp: child.val().recvrdp,
-            
           },
         ];
       });
@@ -116,32 +109,23 @@ const ShopperMessenger = () => {
     });
   };
 
-
-
-
-useEffect(() => {
-
-  
-
-roomRef.once('value')
-.then(snapshot => {
-  
-    snapshot.forEach(child => {
-      console.log("mysnapshots",child.key);
-      if((child.val().send_uid==myid && child.val().recv_uid==otherid) || (child.val().send_uid==otherid && child.val().recv_uid==myid)){
-        console.log("record exists");
-      }else{
-        const roomexist="no";
-      
-      }
-    
+  useEffect(() => {
+    roomRef.once('value').then((snapshot) => {
+      snapshot.forEach((child) => {
+        console.log('mysnapshots', child.key);
+        if (
+          (child.val().send_uid == myid && child.val().recv_uid == otherid) ||
+          (child.val().send_uid == otherid && child.val().recv_uid == myid)
+        ) {
+          console.log('record exists');
+        } else {
+          const roomexist = 'no';
+        }
+      });
     });
-    
-});
+  }, []);
 
-}, []);
-
-// if(roomexist=="no"){
+  // if(roomexist=="no"){
 
   // (async () => {
 
@@ -157,84 +141,99 @@ roomRef.once('value')
 
   // })();
 
-// }
+  // }
 
+  const renderItem = ({item, index}) => (
+    <ScrollView>
+      {item.sendid == myid && (
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Image
+            source={person1}
+            style={{
+              height: 50,
+              width: 50,
+              borderRadius: 50 / 2,
+              marginLeft: 10,
+            }}
+          />
+          <View
+            style={{
+              justifyContent: 'center',
 
-const renderItem = ({item,index}) => (
-  
-  <View>
-    {item.sendid==myid && (
-    <View style={{flexDirection: 'row', marginTop: 10}}>
-      <Image
-        source={person1}
-        style={{height: 50, width: 50, borderRadius: 50 / 2, marginLeft: 15}}
-      />
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginLeft: 10,
-          backgroundColor: colors.greenColor,
-          height: 36,
-          alignSelf: 'center',
-          borderRadius: 5,
-        }}>
-        <Text style={{color: 'white', fontSize: 12}}>{item.text}</Text>
-      </View>
-      <View style={{justifyContent: 'center', marginTop: 25, marginLeft: 5}}>
-        <Text style={{fontSize: 10}}>17:28</Text>
-      </View>
-    </View>
-    )}
-   
-    {item.recvid==myid && (
-    <View style={{flexDirection: 'row', marginTop: 10, alignSelf: 'flex-end'}}>
-      <View
-        style={{
-          justifyContent: 'center',
-          marginLeft: 5,
-          alignSelf: 'flex-end',
-        }}>
-        <Text style={{fontSize: 10}}>17:28</Text>
-      </View>
+              marginLeft: 10,
+              backgroundColor: colors.greenColor,
 
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginLeft: 10,
-          backgroundColor: colors.primary,
-          height: 80,
-          width: 200,
-          alignSelf: 'center',
-          borderRadius: 5,
-        }}>
-        <Text
-          style={{
-            color: colors.greenColor,
-            textAlign: 'center',
-            marginHorizontal: 8,
-            fontSize: 12,
-          }}>
-          {item.text}
-        </Text>
-      </View>
-      <Image
-        source={person1}
-        style={{
-          height: 50,
-          width: 50,
-          borderRadius: 50 / 2,
-          marginLeft: 15,
-          alignSelf: 'flex-end',
-        }}
-      />
-    </View>
-    )}
+              maxWidth: 200,
+              alignSelf: 'center',
+              borderRadius: 5,
+              padding: 10,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 12,
+                // textAlign: 'center',
+                // marginHorizontal: 8,
+              }}>
+              {item.text}
+            </Text>
+          </View>
+          <View
+            style={{justifyContent: 'center', marginTop: 25, marginLeft: 5}}>
+            <Text style={{fontSize: 10}}>17:28</Text>
+          </View>
+        </View>
+      )}
 
-  </View>
-);
+      {item.recvid == myid && (
+        <View
+          style={{flexDirection: 'row', marginTop: 10, alignSelf: 'flex-end'}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              marginLeft: 5,
+              alignSelf: 'flex-end',
+            }}>
+            <Text style={{fontSize: 10}}>17:28</Text>
+          </View>
 
+          <View
+            style={{
+              justifyContent: 'center',
+              // alignItems: 'center',
+              marginLeft: 10,
+              backgroundColor: colors.primary,
+              // height: 80,
+              maxWidth: 200,
+              alignSelf: 'center',
+              borderRadius: 5,
+              padding: 10,
+            }}>
+            <Text
+              style={{
+                color: colors.greenColor,
+
+                // marginHorizontal: 8,
+                fontSize: 12,
+                // marginLeft: 10,
+              }}>
+              {item.text}
+            </Text>
+          </View>
+          <Image
+            source={person1}
+            style={{
+              height: 50,
+              width: 50,
+              borderRadius: 50 / 2,
+              marginLeft: 15,
+              alignSelf: 'flex-end',
+            }}
+          />
+        </View>
+      )}
+    </ScrollView>
+  );
 
   const openCamera1 = async (index) => {
     // setLoader(true);
@@ -268,8 +267,6 @@ const renderItem = ({item,index}) => (
       }
     });
   };
-
- 
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -386,22 +383,29 @@ const renderItem = ({item,index}) => (
               <View
                 style={{
                   flexDirection: 'row',
-                  marginLeft: 10,
-                  justifyContent: 'center',
                   alignItems: 'center',
                 }}>
                 <TouchableOpacity onPress={() => setShow(!show)}>
-                  <Feather name="smile" size={20} color="#DADADA" />
+                  <Feather
+                    name="smile"
+                    size={20}
+                    color="#DADADA"
+                    style={{marginLeft: 10}}
+                  />
                 </TouchableOpacity>
 
                 <TextInput
                   placeholder="Write a message"
+                  multiline={true}
                   // onChange={onClick(emoji)}
                   onChangeText={(text) => setmymsg(text)}
                   value={mymsg}
                   style={{
                     color: '#DADADA',
-                    marginLeft: 20,
+                    marginLeft: 15,
+                    width: '60%',
+
+                    flexWrap: 'wrap',
                   }}
                 />
 
@@ -416,7 +420,7 @@ const renderItem = ({item,index}) => (
               <View
                 style={{
                   flexDirection: 'row',
-                  marginRight: 10,
+
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -442,43 +446,47 @@ const renderItem = ({item,index}) => (
               </View>
             </View>
           </View>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          {/* <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Text>{filePath}</Text>
           </View>
-          <Image source={{uri: fileName}} style={{width: 200, height: 200}} />
+          <Image source={{uri: fileName}} style={{width: 200, height: 200}} /> */}
           <View
             style={{
               backgroundColor: colors.greenColor,
               height: 36,
               // borderWidth: 2,
               justifyContent: 'center',
-              marginTop: 15,
+
               width: 100,
               alignSelf: 'flex-end',
               marginRight: 10,
               borderRadius: 5,
-              marginBottom: 40,
+              marginBottom: 30,
+              marginTop: 10,
             }}>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              <TouchableOpacity onPress={() => {
-               addmsg();
-              }}>
-              <Text style={{color: 'white', textAlign: 'center', fontSize: 12}}>
-                Send
-              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  addmsg();
+                }}>
+                <Text
+                  style={{color: 'white', textAlign: 'center', fontSize: 12}}>
+                  Send
+                </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-             addmsg();
-              }}>
-              <MaterialIcons
-                name="send"
-                size={15}
-                color="white"
-                style={{
-                  marginLeft: 5,
-                  alignSelf: 'center',
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  addmsg();
+                }}>
+                <MaterialIcons
+                  name="send"
+                  size={15}
+                  color="white"
+                  style={{
+                    marginLeft: 5,
+                    alignSelf: 'center',
+                  }}
+                />
               </TouchableOpacity>
             </View>
           </View>
