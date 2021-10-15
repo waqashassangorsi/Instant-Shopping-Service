@@ -1,4 +1,9 @@
-import {ADD_TO_CART, UPDATE_TOTAL_PRICE, APPLY_VOUCHER} from '../Action/types';
+import {
+  ADD_TO_CART,
+  UPDATE_TOTAL_PRICE,
+  APPLY_VOUCHER,
+  DELETE_FROM_CART,
+} from '../Action/types';
 
 const initialState = {
   userCart: [],
@@ -10,8 +15,15 @@ export const cartReducer = (state = initialState, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        userCart: action.addToCart,
-        totalPrice: action.totalPrice,
+        ...state.userCart.push(action.payload.data),
+        //userCart: [action.payload.data, ...state.addToCart],
+        totalPrice: state.totalPrice + action.payload.total,
+      };
+    case DELETE_FROM_CART:
+      return {
+        ...state,
+        userCart: {...state.userCart.splice(action.payload.id, 1)},
+        totalPrice: state.totalPrice - action.payload.total,
       };
     case UPDATE_TOTAL_PRICE:
       return {

@@ -5,6 +5,8 @@ import Footer from '../../../components/Footer';
 import colors from '../../../theme/colors';
 import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {deleteToCart} from '../../../Redux/Action/cart';
 
 // const images = [
 //   {id: 1, src: '../../../assets/miniDress.png', title: 'Mini Dress', description: 'Black',price:'$250.99'}
@@ -12,10 +14,12 @@ import {useNavigation} from '@react-navigation/native';
 
 const CreateCart = () => {
   let navigation = useNavigation();
+  const dispatch = useDispatch();
   const [count, setcount] = useState(5);
   const [count1, setcount1] = useState(5);
   const [count2, setcount2] = useState(5);
-
+  const cart_data = useSelector((state) => state.cart.userCart);
+  const total = useSelector((state) => state.cart.totalPrice);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -183,265 +187,102 @@ const CreateCart = () => {
               borderColor: colors.WebGLQuery,
               marginHorizontal: 10,
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#FAFAFA',
-                borderBottomWidth: 2,
-                borderColor: colors.WebGLQuery,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  padding: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/miniDress.png')}
-                  style={{width: 73, height: 73}}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{fontSize: 16}}>Mini Dress</Text>
-                  <Text style={{fontSize: 10}}>Black</Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: colors.gray,
-                      marginTop: 10,
-                    }}>
-                    $250.99
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  marginTop: 20,
-                }}>
-                <TouchableOpacity style={{left: 40}}>
-                  <Image
-                    source={require('../../../assets/cancel.png')}
-                    style={{width: 13, height: 13}}
-                    tintColor={colors.WebGLQuery}
-                  />
-                </TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 20,
-                    right: 25,
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setcount(count - 1);
-                    }}>
-                    <Text style={{fontSize: 20, color: colors.WebGLQuery}}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
+            {cart_data &&
+              cart_data.map(function (ok, i) {
+                return (
                   <View
+                    key={i}
                     style={{
-                      borderWidth: 1,
-                      margin: 15,
-                      paddingHorizontal: 5,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      backgroundColor: '#FAFAFA',
+                      borderBottomWidth: 2,
                       borderColor: colors.WebGLQuery,
-                      elevation: 1,
                     }}>
-                    <Text>{count}</Text>
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setcount(count + 1);
-                    }}>
-                    <Text
+                    <View
                       style={{
-                        fontSize: 20,
-                        color: colors.WebGLQuery,
+                        //   flex: 1,
+                        flexDirection: 'row',
+                        padding: 10,
                       }}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#FAFAFA',
-                borderBottomWidth: 2,
-                borderColor: colors.WebGLQuery,
-              }}>
-              <View
-                style={{
-                  //   flex: 1,
-                  flexDirection: 'row',
-                  padding: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/miniDress.png')}
-                  style={{width: 73, height: 73}}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{fontSize: 16}}>Mini Dress</Text>
-                  <Text style={{fontSize: 10}}>Black</Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: colors.gray,
-                      marginTop: 10,
-                    }}>
-                    $250.99
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  marginTop: 20,
-                }}>
-                <TouchableOpacity style={{left: 40}}>
-                  <Image
-                    source={require('../../../assets/cancel.png')}
-                    style={{width: 13, height: 13}}
-                    tintColor={colors.WebGLQuery}
-                  />
-                </TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 20,
-                    right: 25,
-                    // marginRight:20
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setcount1(count1 - 1);
-                    }}>
-                    <Text style={{fontSize: 20, color: colors.WebGLQuery}}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      margin: 15,
-                      paddingHorizontal: 5,
-                      borderColor: colors.WebGLQuery,
-                      elevation: 1,
-                    }}>
-                    <Text>{count1}</Text>
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setcount1(count1 + 1);
-                    }}>
-                    <Text
+                      <Image
+                        source={{uri: ok.img}}
+                        style={{width: 73, height: 73}}
+                      />
+                      <View style={{marginLeft: 10}}>
+                        <Text style={{fontSize: 16}}>{ok.desc}</Text>
+                        <Text style={{fontSize: 10}}>Black</Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: colors.gray,
+                            marginTop: 10,
+                          }}>
+                          {ok.price}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
                       style={{
-                        fontSize: 20,
-                        color: colors.WebGLQuery,
+                        flexDirection: 'row',
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        marginTop: 20,
                       }}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#FAFAFA',
-                borderBottomWidth: 2,
-                borderColor: colors.WebGLQuery,
-              }}>
-              <View
-                style={{
-                  //   flex: 1,
-                  flexDirection: 'row',
-                  padding: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/miniDress.png')}
-                  style={{width: 73, height: 73}}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{fontSize: 16}}>Mini Dress</Text>
-                  <Text style={{fontSize: 10}}>Black</Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: colors.gray,
-                      marginTop: 10,
-                    }}>
-                    $250.99
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  marginTop: 20,
-                }}>
-                <TouchableOpacity style={{left: 40}}>
-                  <Image
-                    source={require('../../../assets/cancel.png')}
-                    style={{width: 13, height: 13}}
-                    tintColor={colors.WebGLQuery}
-                  />
-                </TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 20,
-                    right: 25,
-                    // marginRight:20
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setcount2(count2 - 1);
-                    }}>
-                    <Text style={{fontSize: 20, color: colors.WebGLQuery}}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      margin: 15,
-                      paddingHorizontal: 5,
-                      borderColor: colors.WebGLQuery,
-                      elevation: 1,
-                    }}>
-                    <Text>{count2}</Text>
+                      <TouchableOpacity
+                        style={{left: 40}}
+                        onPress={() => dispatch(deleteToCart(i, ok))}>
+                        <Image
+                          source={require('../../../assets/cancel.png')}
+                          style={{width: 13, height: 13}}
+                          tintColor={colors.WebGLQuery}
+                        />
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginTop: 20,
+                          right: 25,
+                          // marginRight:20
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setcount1(count1 - 1);
+                          }}>
+                          <Text
+                            style={{fontSize: 20, color: colors.WebGLQuery}}>
+                            -
+                          </Text>
+                        </TouchableOpacity>
+                        <View
+                          style={{
+                            borderWidth: 1,
+                            margin: 15,
+                            paddingHorizontal: 5,
+                            borderColor: colors.WebGLQuery,
+                            elevation: 1,
+                          }}>
+                          <Text>{ok.qty}</Text>
+                        </View>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setcount1(count1 + 1);
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 20,
+                              color: colors.WebGLQuery,
+                            }}>
+                            +
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setcount2(count2 + 1);
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: colors.WebGLQuery,
-                      }}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
+                );
+              })}
 
             <View
               style={{
@@ -458,7 +299,7 @@ const CreateCart = () => {
                   color: colors.greenColor,
                   marginHorizontal: 10,
                 }}>
-                $6,274.75
+                ${total}
               </Text>
             </View>
           </View>
