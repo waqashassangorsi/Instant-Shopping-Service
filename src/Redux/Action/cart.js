@@ -5,6 +5,7 @@ import {
   UPDATE_TOTAL_PRICE,
   APPLY_VOUCHER,
   COMPETITION_USER,
+  DELETE_FROM_CART,
 } from './types';
 import {Alert} from 'react-native';
 export const addToCart = (data, totalPrice) => {
@@ -13,8 +14,29 @@ export const addToCart = (data, totalPrice) => {
       dispatch({
         type: ADD_TO_CART,
 
-        addToCart: data,
-        totalPrice: totalPrice,
+        payload: {
+          data: {
+            img: data.product_img,
+            price: data.price,
+            qty: totalPrice,
+            desc: data.product_description,
+          },
+          total: totalPrice * data.price,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const deleteToCart = (id, data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_FROM_CART,
+
+        payload: {id: id, total: data.qty * data.price},
       });
     } catch (err) {
       console.log(err);

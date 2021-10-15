@@ -8,8 +8,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import PopularFashion from './PopularFashion';
 import Footer from '../../../components/Footer';
 import MainHeader from '../Products/MainHeader';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {getsingleProduct} from '../../../Redux/Action/Loginaction';
+import {addToCart} from '../../../Redux/Action/cart';
 const sameShirt = [
   {
     id: 1,
@@ -89,9 +90,10 @@ const Similar_Product = [
 
 const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
   const from = route?.params?.from;
-  console.log(`from`, from);
-  const [productdata, setproductdata] = useState([]);
-
+  //console.log(`from`, from);
+  const dispatch = useDispatch();
+  const [productdata, setproductdata] = useState({});
+  const [qty, setqty] = useState(5);
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
@@ -282,7 +284,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
                 }}>
                 qty:
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setqty(qty - 1)}>
                 <Text style={{fontSize: 20, color: colors.gray}}>-</Text>
               </TouchableOpacity>
               <View
@@ -296,13 +298,14 @@ const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
                   justifyContent: 'center',
                   marginHorizontal: 10,
                 }}>
-                <Text style={{fontSize: 15}}>5</Text>
+                <Text style={{fontSize: 15}}>{qty}</Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setqty(qty + 1)}>
                 <Text style={{fontSize: 20, color: colors.gray}}>+</Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity
+              onPress={() => dispatch(addToCart(productdata, qty))}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',

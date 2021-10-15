@@ -172,7 +172,21 @@ const Product = ({
     requestPermissions: true,
   });
   //Push Notification Work End
+
+  const checktoken = async (fcmtoken) => {
+    const token = await AsyncStorage.getItem('token');
+    alert(token);
+    if (token !== fcmtoken) {
+      alert("Pushed");
+      await AsyncStorage.setItem('token', fcmtoken);
+    }
+  };
   useEffect(() => {
+    messaging()
+      .getToken()
+      .then((token) => {
+        checktoken(token);
+      });
     // Assume a message-notification contains a "type" property in the data payload of the screen to open
 
     messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -194,7 +208,7 @@ const Product = ({
         }
       });
   }, []);
-/*   useEffect(() => {
+  /*   useEffect(() => {
     // Get the device token
     messaging()
       .getToken()

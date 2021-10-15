@@ -29,7 +29,7 @@ import SignUpModal from '../../../components/SignUpModal';
 import SelectDropdown from 'react-native-select-dropdown';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {
   getcity,
   getallbrands,
@@ -70,6 +70,7 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
   const [allcategory, setallcategory] = useState([]);
   const [category, setcategory] = useState([]);
   const [myselectedcat, setmyselectedcat] = useState();
+  const cart_data = useSelector((state) => state.cart.userCart);
 
   const [brandsname, setbrandsname] = useState([]);
   useEffect(() => {
@@ -202,6 +203,22 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
                 size={15}
                 color={colors.greenColor}
               />
+              <View
+                style={{
+                  height: 18,
+                  width: 18,
+                  borderRadius: 18 / 2,
+                  position: 'absolute',
+                  top: -10,
+                  right: -5,
+                  backgroundColor: 'white',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  borderColor: 'green',
+                }}>
+                <Text>{cart_data.length}</Text>
+              </View>
             </TouchableOpacity>
           </View>
         }
