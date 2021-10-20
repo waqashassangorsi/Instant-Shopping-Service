@@ -14,7 +14,8 @@ import Footer from '../../../components/Footer';
 import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
+import {userAddress} from '../../../Redux/Action/cart';
 import {getcity, getlocation} from '../../../Redux/Action/Loginaction';
 
 const cities = [
@@ -46,18 +47,22 @@ const location = [
 
 const DeliveryLocationCart = ({getcity, getlocation}) => {
   let navigation = useNavigation();
+  const dispatch = useDispatch();
   const [allcategory, setallcategory] = useState([]);
   const [alllocation, setalllocation] = useState([]);
   const [category, setcategory] = useState([]);
   const [location, setlocation] = useState([]);
   const [myselectedcat, setmyselectedcat] = useState();
   const [myselectedcat1, setmyselectedcat1] = useState();
-  const [citykey, setcitykey] = useState();
+  const [myselectedcity, setmyselectedcity] = useState();
+  const [myselectedlocation, setmyselectedlocation] = useState();
+  const [address, setaddress] = useState();
+  const [landmark, setlandmark] = useState();
 
   useEffect(() => {
     (async () => {
       const mycatres = await getcity();
-      console.log('mycatres,', myselectedcat1);
+      // console.log('mycatres,', myselectedcat1);
 
       var catarray = [];
       for (var i = 0; i < mycatres.data.data.cities.length; i++) {
@@ -79,9 +84,20 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
       formdata.append('city_id', myselectedcat1);
 
       const res = await getlocation(formdata);
-      console.log(`fashiondata`, res);
+      // console.log(`fashiondata`, res);
     })();
   }, []);
+
+  const userAddressData = () => {
+    var user = {
+      city: myselectedcity,
+      location: myselectedlocation,
+      address: address,
+      landmark: landmark,
+    };
+    console.log('cartdataaddress', user);
+    dispatch(userAddress(user));
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -287,6 +303,7 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
                     setmyselectedcat(allcategory[index].city_id);
+                    setmyselectedcity(allcategory[index].city_name);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
@@ -345,6 +362,7 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
                     setmyselectedcat1(alllocation[index].location_id);
+                    setmyselectedlocation(alllocation[index].location);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
@@ -380,7 +398,9 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
                 borderColor: colors.WebGLQuery,
               }}
               multiline={true}
-              // onChangeText={onChangeNumber}
+              onChangeText={(e) => {
+                setaddress(e);
+              }}
               // value={number}
               placeholder="Enter delivery address"
               keyboardType="numbers-and-punctuation"
@@ -404,7 +424,9 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
                 fontSize: 12,
                 borderColor: colors.WebGLQuery,
               }}
-              // onChangeText={onChangeNumber}
+              onChangeText={(e) => {
+                setlandmark(e);
+              }}
               // value={number}
               placeholder="Enter a landmark to make delivery easier and faster"
               keyboardType="numbers-and-punctuation"
@@ -412,7 +434,7 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
           </View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('CreateCart');
+              userAddressData();
             }}
             style={{
               flex: 1,
@@ -450,7 +472,6 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
 
 const mapStateToProps = (state) => {
   const {user, isLoggedIn} = state.auth;
-
   return {user, isLoggedIn};
 };
 export default connect(mapStateToProps, {getcity, getlocation})(

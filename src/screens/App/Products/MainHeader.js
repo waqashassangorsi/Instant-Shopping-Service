@@ -72,6 +72,8 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
   const [myselectedcat, setmyselectedcat] = useState();
   const cart_data = useSelector((state) => state.cart.userCart);
 
+  console.log('cartdata', cart_data);
+
   const [brandsname, setbrandsname] = useState([]);
   useEffect(() => {
     // console.log('fashindata,', fashiondata);

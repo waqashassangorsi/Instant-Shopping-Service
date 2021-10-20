@@ -7,6 +7,7 @@ import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {deleteToCart} from '../../../Redux/Action/cart';
+import {OrderDetail} from '../../../components/OrderDetail';
 
 // const images = [
 //   {id: 1, src: '../../../assets/miniDress.png', title: 'Mini Dress', description: 'Black',price:'$250.99'}
@@ -18,6 +19,7 @@ const CreateCart = () => {
   const [count, setcount] = useState(5);
   const [count1, setcount1] = useState(5);
   const [count2, setcount2] = useState(5);
+  const [totalcount, settotalcount] = useState();
   const cart_data = useSelector((state) => state.cart.userCart);
   const total = useSelector((state) => state.cart.totalPrice);
   return (
@@ -211,7 +213,7 @@ const CreateCart = () => {
                         style={{width: 73, height: 73}}
                       />
                       <View style={{marginLeft: 10}}>
-                        <Text style={{fontSize: 16}}>{ok.desc}</Text>
+                        <Text style={{fontSize: 16}}>{ok.name}</Text>
                         <Text style={{fontSize: 10}}>Black</Text>
                         <Text
                           style={{
@@ -219,7 +221,7 @@ const CreateCart = () => {
                             color: colors.gray,
                             marginTop: 10,
                           }}>
-                          {ok.price}
+                          ${ok.price}
                         </Text>
                       </View>
                     </View>
@@ -230,7 +232,7 @@ const CreateCart = () => {
                         justifyContent: 'center',
                         marginTop: 20,
                       }}>
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         style={{left: 40}}
                         onPress={() => dispatch(deleteToCart(i, ok))}>
                         <Image
@@ -238,7 +240,7 @@ const CreateCart = () => {
                           style={{width: 13, height: 13}}
                           tintColor={colors.WebGLQuery}
                         />
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                       <View
                         style={{
                           flexDirection: 'row',

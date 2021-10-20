@@ -4,9 +4,12 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Footer from '../../../components/Footer';
 import colors from '../../../theme/colors';
 import MainHeader from '../Products/MainHeader';
+import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-
-const ConfirmationCart = () => {
+import {connect} from 'react-redux';
+const ConfirmationCart = ({userdetails}) => {
+  const cart_data = useSelector((state) => state.cart.userCart);
+  console.log('userdetails', userdetails);
   let navigation = useNavigation();
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -174,169 +177,68 @@ const ConfirmationCart = () => {
               borderWidth: 2,
               borderColor: colors.WebGLQuery,
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#FAFAFA',
-                borderBottomWidth: 2,
-                borderColor: colors.WebGLQuery,
-                padding: 10,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={require('../../../assets/miniDress.png')}
-                  style={{width: 73, height: 73}}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{fontSize: 16}}>Mini Dress</Text>
-                  <Text style={{fontSize: 10}}>Black</Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: 30,
-                    height: 30,
-                    borderColor: colors.WebGLQuery,
-                    backgroundColor: colors.white,
-                    elevation: 1,
-                    marginRight: 15,
-                  }}>
-                  <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-                </View>
-                <View>
-                  <Text
+            {cart_data &&
+              cart_data.map(function (ok, i) {
+                return (
+                  <View
+                    key={i}
                     style={{
-                      fontSize: 16,
-                      color: colors.gray,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      backgroundColor: '#FAFAFA',
+                      borderBottomWidth: 2,
+                      borderColor: colors.WebGLQuery,
+                      padding: 10,
                     }}>
-                    $250.99
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#FAFAFA',
-                borderBottomWidth: 2,
-                borderColor: colors.WebGLQuery,
-                padding: 10,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={require('../../../assets/miniDress.png')}
-                  style={{width: 73, height: 73}}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{fontSize: 16}}>Mini Dress</Text>
-                  <Text style={{fontSize: 10}}>Black</Text>
-                </View>
-              </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <Image
+                        source={{uri: ok.img}}
+                        style={{width: 73, height: 73}}
+                      />
+                      <View style={{marginLeft: 10}}>
+                        <Text style={{fontSize: 16}}>{ok.name}</Text>
+                        <Text style={{fontSize: 10}}>Black</Text>
+                      </View>
+                    </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: 30,
-                    height: 30,
-                    borderColor: colors.WebGLQuery,
-                    backgroundColor: colors.white,
-                    elevation: 1,
-                    marginRight: 15,
-                  }}>
-                  <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: colors.gray,
-                    }}>
-                    $250.99
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#FAFAFA',
-                borderBottomWidth: 2,
-                borderColor: colors.WebGLQuery,
-                padding: 10,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={require('../../../assets/miniDress.png')}
-                  style={{width: 73, height: 73}}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{fontSize: 16}}>Mini Dress</Text>
-                  <Text style={{fontSize: 10}}>Black</Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: 30,
-                    height: 30,
-                    borderColor: colors.WebGLQuery,
-                    backgroundColor: colors.white,
-                    elevation: 1,
-                    marginRight: 15,
-                  }}>
-                  <Text style={{textAlign: 'center', marginTop: 3}}>5</Text>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: colors.gray,
-                    }}>
-                    $250.99
-                  </Text>
-                </View>
-              </View>
-            </View>
-
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          width: 30,
+                          height: 30,
+                          borderColor: colors.WebGLQuery,
+                          backgroundColor: colors.white,
+                          elevation: 1,
+                          marginRight: 15,
+                        }}>
+                        <Text style={{textAlign: 'center', marginTop: 3}}>
+                          {ok.qty}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: colors.gray,
+                          }}>
+                          ${ok.price}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                );
+              })}
             <View
               style={{
                 flex: 1,
@@ -387,7 +289,7 @@ const ConfirmationCart = () => {
                     textTransform: 'capitalize',
                     marginTop: 8,
                   }}>
-                  abuja
+                  {userdetails.city}
                 </Text>
               </View>
               <View style={{marginLeft: 100}}>
@@ -405,7 +307,7 @@ const ConfirmationCart = () => {
                     textTransform: 'capitalize',
                     marginTop: 8,
                   }}>
-                  Wuse
+                  {userdetails.location}
                 </Text>
               </View>
             </View>
@@ -424,8 +326,7 @@ const ConfirmationCart = () => {
                   textTransform: 'capitalize',
                   marginTop: 8,
                 }}>
-                Lorem ipsum dolor sit amet, consectetu adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore.
+                {userdetails.address}
               </Text>
             </View>
             <View style={{marginTop: 10, marginVertical: 10}}>
@@ -443,7 +344,7 @@ const ConfirmationCart = () => {
                   textTransform: 'capitalize',
                   marginTop: 8,
                 }}>
-                Opposite the Dome
+                {userdetails.landmark}
               </Text>
             </View>
           </View>
@@ -487,4 +388,9 @@ const ConfirmationCart = () => {
   );
 };
 
-export default ConfirmationCart;
+const mapStateToProps = (state) => {
+  const userdetails = state.cart.userdetails;
+  console.log('reduxdatamynew', userdetails);
+  return {userdetails};
+};
+export default connect(mapStateToProps, {})(ConfirmationCart);

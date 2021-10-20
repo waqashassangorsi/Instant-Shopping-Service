@@ -122,7 +122,7 @@ const DrawerContent = ({
               <Icon name="message" color={colors.primary} size={20} />
             )}
           /> */}
-          <DrawerItem
+          {/* <DrawerItem
             style={styles.drawerItem}
             label="Winners"
             labelStyle={styles.labelStyle}
@@ -132,7 +132,7 @@ const DrawerContent = ({
             icon={({color, size}) => (
               <Icon name="cart" color={colors.primary} size={23} />
             )}
-          />
+          /> */}
 
           {/* <DrawerItem
             style={styles.drawerItem}

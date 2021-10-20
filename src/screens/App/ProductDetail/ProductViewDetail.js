@@ -53,47 +53,13 @@ const sameShirt = [
     img: require('../../../assets/gucciShirt.png'),
   },
 ];
-const Similar_Product = [
-  {
-    id: 1,
-    name: 'Gucci Shirt',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/gucciShirt.png'),
-  },
-  {
-    id: 2,
-    name: 'Mini dress',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/miniDress.png'),
-  },
-  {
-    id: 4,
-    name: 'denim trousers',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/denimTrousers.png'),
-  },
-  {
-    id: 5,
-    name: 'Spar',
-    rating: '4.5',
-    totalUser: '566',
-    price: '$250.99',
-    img: require('../../../assets/spar.png'),
-  },
-];
 
-const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
+const ProductViewDetail = ({navigation, route, getsingleProduct, usercart}) => {
   const from = route?.params?.from;
-  //console.log(`from`, from);
+  console.log(`myobject`, usercart);
   const dispatch = useDispatch();
   const [productdata, setproductdata] = useState({});
-  const [qty, setqty] = useState(5);
+  const [qty, setqty] = useState(1);
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
@@ -108,6 +74,21 @@ const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
       // setproductdata(res.data.data);
     })();
   }, []);
+
+  console.log(`myproduct123`, usercart);
+
+  const addCart = () => {
+    for (var i = 0; i < usercart.length; i++) {}
+    var productdatanew = {
+      price: productdata.price,
+      qty: qty,
+      from: from,
+      product_img: productdata.product_img,
+      product_name: productdata.product_name,
+    };
+    console.log('cartdatanew', productdatanew);
+    dispatch(addToCart(productdatanew, 123));
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -305,7 +286,10 @@ const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              onPress={() => dispatch(addToCart(productdata, qty))}
+              // onPress={() => dispatch(addToCart(productdata, qty))}
+              onPress={() => {
+                addCart();
+              }}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -376,7 +360,9 @@ const ProductViewDetail = ({navigation, route, getsingleProduct}) => {
 
 const mapStateToProps = (state) => {
   const {user, isLoggedIn} = state.auth;
+  const {usercart} = state.cart.userCart;
+  console.log(`myreduxdata`, state.cart.userCart);
 
-  return {user, isLoggedIn};
+  return {user, isLoggedIn, usercart};
 };
 export default connect(mapStateToProps, {getsingleProduct})(ProductViewDetail);

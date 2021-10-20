@@ -14,6 +14,7 @@ export const PACKAGES = 'PACKAGES';
 export const CHAIRTY_FUNDS = 'CHAIRTY_FUNDS';
 //=============CART============//
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const USER_DETAIL = 'USER_DETAIL';
 export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const UPDATE_TOTAL_PRICE = 'UPDATE_TOTAL_PRICE';
 export const APPLY_VOUCHER = 'APPLY_VOUCHER';

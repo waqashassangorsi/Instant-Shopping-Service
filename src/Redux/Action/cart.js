@@ -6,10 +6,13 @@ import {
   APPLY_VOUCHER,
   COMPETITION_USER,
   DELETE_FROM_CART,
+  USER_DETAIL,
 } from './types';
 import {Alert} from 'react-native';
+
 export const addToCart = (data, totalPrice) => {
   return async (dispatch) => {
+    console.log('reducfunctin', data);
     try {
       dispatch({
         type: ADD_TO_CART,
@@ -18,10 +21,30 @@ export const addToCart = (data, totalPrice) => {
           data: {
             img: data.product_img,
             price: data.price,
-            qty: totalPrice,
-            desc: data.product_description,
+            qty: data.qty,
+            productid: data.from,
+            name: data.product_name,
+            //desc: data.product_description,
           },
-          total: totalPrice * data.price,
+          total: totalPrice,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const userAddress = (data1, totalPrice) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_DETAIL,
+        data: {
+          city: data1.city,
+          location: data1.location,
+          address: data1.address,
+          landmark: data1.landmark,
         },
       });
     } catch (err) {
