@@ -54,9 +54,9 @@ const sameShirt = [
   },
 ];
 
-const ProductViewDetail = ({navigation, route, getsingleProduct, usercart}) => {
+const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const from = route?.params?.from;
-  console.log(`myobject`, usercart);
+  // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
   const [productdata, setproductdata] = useState({});
   const [qty, setqty] = useState(1);
@@ -75,10 +75,15 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, usercart}) => {
     })();
   }, []);
 
-  console.log(`myproduct123`, usercart);
+  // console.log(`myproduct123`, usercart);
 
   const addCart = () => {
-    for (var i = 0; i < usercart.length; i++) {}
+    for (var i = 0; i < userCart.length; i++) {
+      if (productid == tr) {
+      } else {
+      }
+      console.log(`myproduct123`, userCart);
+    }
     var productdatanew = {
       price: productdata.price,
       qty: qty,
@@ -98,7 +103,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, usercart}) => {
           <Image
             source={{uri: productdata.product_img}}
             resizeMode={'contain'}
-            style={{width: '70%', height: 300}}
+            style={{width: '100%', height: 300}}
           />
           <Image
             source={require('../../../assets/qrCode.png')}
@@ -360,9 +365,9 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, usercart}) => {
 
 const mapStateToProps = (state) => {
   const {user, isLoggedIn} = state.auth;
-  const {usercart} = state.cart.userCart;
-  console.log(`myreduxdata`, state.cart.userCart);
+  const userCart = state.cart.userCart;
+  console.log(`myreduxdata`, state);
 
-  return {user, isLoggedIn, usercart};
+  return {userCart};
 };
 export default connect(mapStateToProps, {getsingleProduct})(ProductViewDetail);
