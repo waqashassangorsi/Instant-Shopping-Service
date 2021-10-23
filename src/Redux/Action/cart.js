@@ -35,7 +35,7 @@ export const addToCart = (data, totalPrice) => {
   };
 };
 
-export const userAddress = (data1, totalPrice) => {
+export const userAddress = (data1) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -45,6 +45,8 @@ export const userAddress = (data1, totalPrice) => {
           location: data1.location,
           address: data1.address,
           landmark: data1.landmark,
+          myselectedcat: data1.myselectedcat,
+          myselectedcat1: data1.myselectedcat1,
         },
       });
     } catch (err) {

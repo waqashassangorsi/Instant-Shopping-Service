@@ -88,15 +88,29 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
     })();
   }, []);
 
-  const userAddressData = () => {
-    var user = {
+  // const userAddressData = () => {
+  //   var user = {
+  //     city: myselectedcity,
+  //     location: myselectedlocation,
+  //     address: address,
+  //     landmark: landmark,
+  //   };
+  //   console.log('cartdataaddress', user);
+  //   dispatch(userAddress(user));
+  // };
+
+  const onPressProceed = () => {
+    var addressDetails = {
+      myselectedcat,
+      myselectedcat1,
+      location,
       city: myselectedcity,
       location: myselectedlocation,
       address: address,
       landmark: landmark,
     };
-    console.log('cartdataaddress', user);
-    dispatch(userAddress(user));
+    console.log('userAddress', addressDetails);
+    dispatch(userAddress(addressDetails));
   };
 
   return (
@@ -451,6 +465,7 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              onPressProceed();
               navigation.navigate('ConfirmationCart');
             }}
             style={{
