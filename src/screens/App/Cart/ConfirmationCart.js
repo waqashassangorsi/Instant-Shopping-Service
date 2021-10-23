@@ -9,8 +9,19 @@ import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 const ConfirmationCart = ({userdetails}) => {
   const cart_data = useSelector((state) => state.cart.userCart);
-  console.log('userdetails', userdetails);
+  const totalAmount = useSelector((state) => state.cart.totalPrice);
+  const userAddress = userdetails;
   let navigation = useNavigation();
+
+  const onPressPlaceOrder = () => {
+    let obj = {
+      cart: cart_data,
+      totalAmount,
+      userAddress,
+    };
+    console.log('onPressPlaceOrder: ', obj);
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -363,7 +374,8 @@ const ConfirmationCart = ({userdetails}) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('CongratulationCart');
+              onPressPlaceOrder();
+              // navigation.navigate('CongratulationCart');
             }}
             style={{
               flex: 1,
