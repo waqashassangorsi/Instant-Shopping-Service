@@ -57,6 +57,7 @@ const sameShirt = [
 const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const total = useSelector((state) => state.cart.totalPrice);
   const from = route?.params?.from;
+  const [alreadyInCart, setAlreadyInCart] = useState(false);
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
   const [productdata, setproductdata] = useState({});
@@ -79,27 +80,38 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
 
   // console.log(`myproduct123`, usercart);
 
-  const addCart = () => {
+  const checkCart = () => {
     for (var i = 0; i < userCart?.length; i++) {
-      // if (productid == true) {
-      // } else {
-      // }
-      console.log(`myproduct123`, userCart);
+      if (userCart[i].name === productdata.product_name) {
+        console.log('Already added in cart!');
+        setAlreadyInCart(true);
+      }
     }
+
+    if (!alreadyInCart) {
+      console.log('adding item to cart');
+      addCart();
+    }
+  };
+
+  const addCart = () => {
     var productdatanew = {
       price: productdata.price,
       qty: qty,
       from: from,
       product_img: productdata.product_img,
       product_name: productdata.product_name,
+      product_id: productdata.productid,
     };
-    console.log('cartdatanew', productdatanew);
-    dispatch(
-      updateTotalPrice(total + productdatanew.price * productdatanew.qty),
-    );
-    dispatch(
-      addToCart(productdatanew, productdatanew.price * productdatanew.qty),
-    );
+    // console.log('cartdatanew', productdatanew);
+    if (!alreadyInCart) {
+      dispatch(
+        updateTotalPrice(total + productdatanew.price * productdatanew.qty),
+      );
+      dispatch(
+        addToCart(productdatanew, productdatanew.price * productdatanew.qty),
+      );
+    }
   };
 
   return (
@@ -300,7 +312,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
             <TouchableOpacity
               // onPress={() => dispatch(addToCart(productdata, qty))}
               onPress={() => {
-                addCart();
+                checkCart();
               }}
               style={{
                 flexDirection: 'row',
