@@ -9,6 +9,24 @@ import {
   SIGNUP_USER,
 } from './types';
 
+export const orderPlace = (data) => {
+  return async (dispatch) => {
+    console.log('dispatched: ', data);
+    const res = await axios.post(`${BASE_URL}place_order`, data);
+
+    if (res.data.status == true) {
+      dispatch({
+        type: LOGIN_USER,
+        userdata: res.data.data,
+        isLoggedIn: true,
+      });
+      return res;
+    } else {
+      return res;
+    }
+  };
+};
+
 export const loginaction = (data) => {
   return async (dispatch) => {
     console.log('inside dispathc', data);

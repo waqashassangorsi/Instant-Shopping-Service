@@ -7,19 +7,30 @@ import MainHeader from '../Products/MainHeader';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
+import {loginaction} from '../../../Redux/Action/Loginaction';
+
 const ConfirmationCart = ({userdetails}) => {
   const cart_data = useSelector((state) => state.cart.userCart);
   const totalAmount = useSelector((state) => state.cart.totalPrice);
   const userAddress = userdetails;
   let navigation = useNavigation();
 
-  const onPressPlaceOrder = () => {
+  const onPressPlaceOrder = async () => {
     let obj = {
       cart: cart_data,
       totalAmount,
       userAddress,
     };
     console.log('onPressPlaceOrder: ', obj);
+
+    const res = await loginaction(obj);
+    if (res.data.status) {
+      setLoading(false);
+      navigation.navigate('CongratulationCart');
+    } else {
+      alert(res.data.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -375,7 +386,6 @@ const ConfirmationCart = ({userdetails}) => {
           <TouchableOpacity
             onPress={() => {
               onPressPlaceOrder();
-              // navigation.navigate('CongratulationCart');
             }}
             style={{
               flex: 1,
