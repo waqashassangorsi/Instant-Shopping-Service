@@ -22,6 +22,7 @@ const CreateCart = () => {
   const [totalcount, settotalcount] = useState();
   const cart_data = useSelector((state) => state.cart.userCart);
   const total = useSelector((state) => state.cart.totalPrice);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />

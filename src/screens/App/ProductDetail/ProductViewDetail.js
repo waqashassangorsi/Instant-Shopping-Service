@@ -8,9 +8,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import PopularFashion from './PopularFashion';
 import Footer from '../../../components/Footer';
 import MainHeader from '../Products/MainHeader';
-import {connect, useDispatch} from 'react-redux';
+import {connect, useSelector, useDispatch} from 'react-redux';
 import {getsingleProduct} from '../../../Redux/Action/Loginaction';
-import {addToCart} from '../../../Redux/Action/cart';
+import {addToCart, updateTotalPrice} from '../../../Redux/Action/cart';
 const sameShirt = [
   {
     id: 1,
@@ -55,11 +55,13 @@ const sameShirt = [
 ];
 
 const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
+  const total = useSelector((state) => state.cart.totalPrice);
   const from = route?.params?.from;
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
   const [productdata, setproductdata] = useState({});
   const [qty, setqty] = useState(1);
+
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
@@ -78,10 +80,10 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   // console.log(`myproduct123`, usercart);
 
   const addCart = () => {
-    for (var i = 0; i < userCart.length; i++) {
-      if (productid == tr) {
-      } else {
-      }
+    for (var i = 0; i < userCart?.length; i++) {
+      // if (productid == true) {
+      // } else {
+      // }
       console.log(`myproduct123`, userCart);
     }
     var productdatanew = {
@@ -92,7 +94,12 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
       product_name: productdata.product_name,
     };
     console.log('cartdatanew', productdatanew);
-    dispatch(addToCart(productdatanew, 123));
+    dispatch(
+      updateTotalPrice(total + productdatanew.price * productdatanew.qty),
+    );
+    dispatch(
+      addToCart(productdatanew, productdatanew.price * productdatanew.qty),
+    );
   };
 
   return (
@@ -366,8 +373,8 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
 const mapStateToProps = (state) => {
   const {user, isLoggedIn} = state.auth;
   const userCart = state.cart.userCart;
-  console.log(`myreduxdata`, state);
 
+  console.log(`myreduxdata`, state);
   return {userCart};
 };
 export default connect(mapStateToProps, {getsingleProduct})(ProductViewDetail);
