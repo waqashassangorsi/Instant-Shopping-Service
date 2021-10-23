@@ -21,9 +21,10 @@ const ConfirmationCart = ({userdetails}) => {
       totalAmount,
       userAddress,
     };
-    console.log('onPressPlaceOrder: ', obj);
+    console.log('onPressPlaceOrder OBJECT: ', obj);
+    console.log('onPressPlaceOrder STRING: ', JSON.stringify(obj));
 
-    const res = await loginaction(obj);
+    const res = await loginaction(JSON.stringify(obj));
     if (res.data.status) {
       setLoading(false);
       navigation.navigate('CongratulationCart');
