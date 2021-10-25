@@ -170,15 +170,22 @@ const ShopperMessenger = ({}) => {
           <View
             style={{
               justifyContent: 'center',
-
               marginLeft: 10,
               backgroundColor: colors.greenColor,
-
               maxWidth: 200,
               alignSelf: 'center',
               borderRadius: 5,
               padding: 10,
+              backgroundColor: 'pink',
             }}>
+            {fileName ? (
+              <View>
+                <Image
+                  source={{uri: fileName.uri}}
+                  style={{width: 100, height: 100}}
+                />
+              </View>
+            ) : null}
             <Text
               style={{
                 color: 'white',
@@ -311,7 +318,7 @@ const ShopperMessenger = ({}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* <MainHeader /> */}
-      {fileName ? (
+      {/* {fileName ? (
         <View
           style={{
             flex: 1,
@@ -332,7 +339,7 @@ const ShopperMessenger = ({}) => {
           />
           <Text>This is the image</Text>
         </View>
-      ) : null}
+      ) : null} */}
       <View style={{flex: 1}}>
         <View
           style={{
@@ -509,7 +516,7 @@ const ShopperMessenger = ({}) => {
             </View>
           </View>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            {fileName ? (
+            {/* {fileName ? (
               <View>
                 <Text>{filePath}</Text>
                 <Image
@@ -517,7 +524,7 @@ const ShopperMessenger = ({}) => {
                   style={{width: 200, height: 200}}
                 />
               </View>
-            ) : null}
+            ) : null} */}
           </View>
           <View
             style={{
