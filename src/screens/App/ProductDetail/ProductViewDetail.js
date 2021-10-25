@@ -57,6 +57,7 @@ const sameShirt = [
 const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const total = useSelector((state) => state.cart.totalPrice);
   const from = route?.params?.from;
+  const [alreadyInCart, setAlreadyInCart] = useState(false);
 
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
@@ -92,6 +93,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
       try {
         var result = arrayNames.includes(productdata.product_name);
         if (result === true) {
+          setAlreadyInCart(true);
           console.log('Already in cart!');
         } else {
           arrayNames.push(productdata.product_name);
@@ -330,7 +332,9 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
                 backgroundColor: colors.greenColor,
               }}>
               <Ionicons name="basket-outline" size={15} color={colors.white} />
+
               <Text style={{fontSize: 12, color: colors.white, marginLeft: 10}}>
+                {/* {!alreadyInCart ? 'add to cart' : 'added'} */}
                 add to cart
               </Text>
             </TouchableOpacity>

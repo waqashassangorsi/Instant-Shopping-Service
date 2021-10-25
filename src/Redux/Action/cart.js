@@ -56,13 +56,14 @@ export const userAddress = (data1) => {
   };
 };
 
-export const deleteToCart = (id, data) => {
+export const deleteToCart = (cart, price) => {
+  console.log('deleteToCart: ', cart, price);
   return async (dispatch) => {
     try {
       dispatch({
-        type: DELETE_FROM_CART,
-
-        payload: {id: id, total: data.qty * data.price},
+        type: 'DELETE_FROM_CART',
+        addToCart: cart,
+        totalPrice: price,
       });
     } catch (err) {
       console.log(err);

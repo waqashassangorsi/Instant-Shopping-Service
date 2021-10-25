@@ -41,7 +41,7 @@ const CreateCart = () => {
     if (productsNow[idx].qty > 1) {
       productsNow[idx].qty -= 1;
       setcart_data(productsNow);
-      updateTotal();
+      updateTotal(productsNow);
     }
   };
 
@@ -50,24 +50,41 @@ const CreateCart = () => {
     var idx = productsNow.indexOf(ok);
     productsNow[idx].qty += 1;
     setcart_data(productsNow);
-    updateTotal();
+    updateTotal(productsNow);
   };
 
-  const updateTotal = () => {
+  const updateTotal = (productsNow) => {
     var totalPrice = 0;
-    for (var i = 0; i < cart_data?.length; i++) {
-      totalPrice += parseInt(cart_data[i].price * cart_data[i].qty);
+    for (var i = 0; i < productsNow?.length; i++) {
+      totalPrice += parseInt(productsNow[i].price * productsNow[i].qty);
     }
     setTotal(totalPrice);
-    updateCartNow();
+    updateCartNow(productsNow, totalPrice);
   };
 
-  const updateCartNow = () => {
-    let cart = cart_data;
-    let max = total;
-    console.log('TOTAL: ', total);
+  const updateCartNow = (productsNow, totalPrice) => {
+    let cart = productsNow;
+    let max = totalPrice;
 
     dispatch(updateCart(cart, max));
+  };
+
+  const onPressDelete = (ok) => {
+    const productsNow = [...cart_data];
+    var idx = productsNow.indexOf(ok);
+    productsNow.splice(idx, 1);
+    setcart_data(productsNow);
+
+    var totalPrice = 0;
+    for (var i = 0; i < productsNow?.length; i++) {
+      totalPrice += parseInt(productsNow[i].price * productsNow[i].qty);
+    }
+    setTotal(totalPrice);
+
+    let cart = productsNow;
+    let max = totalPrice;
+
+    dispatch(deleteToCart(cart, max));
   };
 
   const onPressProceed = () => {
@@ -284,15 +301,15 @@ const CreateCart = () => {
                         justifyContent: 'center',
                         marginTop: 20,
                       }}>
-                      {/* <TouchableOpacity
-                        style={{left: 40}}
-                        onPress={() => dispatch(deleteToCart(i, ok))}>
+                      <TouchableOpacity
+                        style={{left: 40, backgroundColor: 'yellow'}}
+                        onPress={() => onPressDelete(ok)}>
                         <Image
                           source={require('../../../assets/cancel.png')}
                           style={{width: 13, height: 13}}
                           tintColor={colors.WebGLQuery}
                         />
-                      </TouchableOpacity> */}
+                      </TouchableOpacity>
                       <View
                         style={{
                           flexDirection: 'row',
