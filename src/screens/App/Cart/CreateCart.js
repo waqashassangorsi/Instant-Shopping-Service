@@ -84,7 +84,7 @@ const CreateCart = () => {
     let cart = productsNow;
     let max = totalPrice;
 
-    dispatch(deleteToCart(cart, max));
+    dispatch(updateCart(cart, max));
   };
 
   const onPressProceed = () => {

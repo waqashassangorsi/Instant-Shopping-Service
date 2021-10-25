@@ -17,7 +17,6 @@ export const addToCart = (data, totalPrice) => {
     try {
       dispatch({
         type: ADD_TO_CART,
-
         payload: {
           data: {
             img: data.product_img,
@@ -61,7 +60,7 @@ export const deleteToCart = (cart, price) => {
   return async (dispatch) => {
     try {
       dispatch({
-        type: 'DELETE_FROM_CART',
+        type: DELETE_FROM_CART,
         addToCart: cart,
         totalPrice: price,
       });
@@ -176,7 +175,7 @@ export const updateCart = (cart, price) => {
   return async (dispatch) => {
     try {
       dispatch({
-        type: 'UPDATE_CART',
+        type: UPDATE_CART,
         addToCart: cart,
         totalPrice: price,
       });
