@@ -60,7 +60,6 @@ const ShopperMessenger = ({}) => {
   const messagesRef = database().ref(`messages/${roomKey}`);
   const [messages, setMessages] = useState([]);
 
-  const [image, setImage] = useState();
   const [base64, setBase64] = useState();
 
   const myid = 20;
@@ -305,7 +304,6 @@ const ShopperMessenger = ({}) => {
             console.log('ImgToBase64: ', base64String), setBase64(base64String);
           })
           .catch((err) => console.log('ImgToBase64 ERROR: ', err));
-        setImage(data);
       }
     });
   };
@@ -313,7 +311,7 @@ const ShopperMessenger = ({}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* <MainHeader /> */}
-      {base64 ? (
+      {fileName ? (
         <View
           style={{
             flex: 1,
@@ -330,7 +328,7 @@ const ShopperMessenger = ({}) => {
               borderWidth: 1,
               borderColor: 'red',
             }}
-            source={{uri: base64}}
+            source={{uri: fileName.uri}}
           />
           <Text>This is the image</Text>
         </View>
@@ -510,10 +508,17 @@ const ShopperMessenger = ({}) => {
               </View>
             </View>
           </View>
-          {/* <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Text>{filePath}</Text>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            {fileName ? (
+              <View>
+                <Text>{filePath}</Text>
+                <Image
+                  source={{uri: fileName.uri}}
+                  style={{width: 200, height: 200}}
+                />
+              </View>
+            ) : null}
           </View>
-          <Image source={{uri: fileName}} style={{width: 200, height: 200}} /> */}
           <View
             style={{
               backgroundColor: colors.greenColor,
