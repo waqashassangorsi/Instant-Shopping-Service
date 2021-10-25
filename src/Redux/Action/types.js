@@ -20,3 +20,4 @@ export const UPDATE_TOTAL_PRICE = 'UPDATE_TOTAL_PRICE';
 export const APPLY_VOUCHER = 'APPLY_VOUCHER';
 export const SAVE_CHARITY = 'SAVE_CHARITY';
 export const ALL_CATEG = 'ALL_CATEG';
+export const UPDATE_CART = 'UPDATE_CART';

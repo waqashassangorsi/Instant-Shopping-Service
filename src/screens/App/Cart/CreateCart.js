@@ -1,12 +1,17 @@
 // import { NavigationContainer } from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import Footer from '../../../components/Footer';
 import colors from '../../../theme/colors';
 import MainHeader from '../Products/MainHeader';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import {deleteToCart} from '../../../Redux/Action/cart';
+import {
+  deleteToCart,
+  updateTotalPrice,
+  addToCart,
+  updateCart,
+} from '../../../Redux/Action/cart';
 import {OrderDetail} from '../../../components/OrderDetail';
 
 // const images = [
@@ -20,8 +25,54 @@ const CreateCart = () => {
   const [count1, setcount1] = useState(5);
   const [count2, setcount2] = useState(5);
   const [totalcount, settotalcount] = useState();
-  const cart_data = useSelector((state) => state.cart.userCart);
-  const total = useSelector((state) => state.cart.totalPrice);
+  // const cart_data = useSelector((state) => state.cart.userCart);
+  // const total = useSelector((state) => state.cart.totalPrice);
+  const [cart_data, setcart_data] = useState(
+    useSelector((state) => state?.cart?.userCart),
+  );
+  const [total, setTotal] = useState(
+    useSelector((state) => state?.cart?.totalPrice),
+  );
+
+  const onPressMinus = (ok) => {
+    const productsNow = [...cart_data];
+    var idx = productsNow.indexOf(ok);
+
+    if (productsNow[idx].qty > 1) {
+      productsNow[idx].qty -= 1;
+      setcart_data(productsNow);
+      updateTotal();
+    }
+  };
+
+  const onPressPlus = (ok) => {
+    const productsNow = [...cart_data];
+    var idx = productsNow.indexOf(ok);
+    productsNow[idx].qty += 1;
+    setcart_data(productsNow);
+    updateTotal();
+  };
+
+  const updateTotal = () => {
+    var totalPrice = 0;
+    for (var i = 0; i < cart_data?.length; i++) {
+      totalPrice += parseInt(cart_data[i].price * cart_data[i].qty);
+    }
+    setTotal(totalPrice);
+    updateCartNow();
+  };
+
+  const updateCartNow = () => {
+    let cart = cart_data;
+    let max = total;
+    console.log('TOTAL: ', total);
+
+    dispatch(updateCart(cart, max));
+  };
+
+  const onPressProceed = () => {
+    navigation.navigate('DeliveryLocationCart');
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -252,6 +303,7 @@ const CreateCart = () => {
                         }}>
                         <TouchableOpacity
                           onPress={() => {
+                            onPressMinus(ok);
                             setcount1(count1 - 1);
                           }}>
                           <Text
@@ -271,6 +323,7 @@ const CreateCart = () => {
                         </View>
                         <TouchableOpacity
                           onPress={() => {
+                            onPressPlus(ok);
                             setcount1(count1 + 1);
                           }}>
                           <Text
@@ -322,7 +375,7 @@ const CreateCart = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('DeliveryLocationCart');
+              onPressProceed();
             }}
             style={{
               flex: 1,

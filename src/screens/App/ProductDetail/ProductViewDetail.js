@@ -81,6 +81,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   // console.log(`myproduct123`, usercart);
 
   const checkAlreadyAdded = async () => {
+    console.log('Cart: ', userCart);
     if (productdata.product_name && userCart) {
       var arrayNames = [];
       for (var i = 0; i < userCart?.length; i++) {

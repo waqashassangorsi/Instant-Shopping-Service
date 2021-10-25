@@ -7,7 +7,7 @@ import {
   COMPETITION_USER,
   DELETE_FROM_CART,
   USER_DETAIL,
-  ADD_ID,
+  UPDATE_CART,
 } from './types';
 import {Alert} from 'react-native';
 
@@ -69,6 +69,7 @@ export const deleteToCart = (id, data) => {
     }
   };
 };
+
 export const updateTotalPrice = (totalPrice) => {
   return async (dispatch) => {
     try {
@@ -84,6 +85,7 @@ export const updateTotalPrice = (totalPrice) => {
     }
   };
 };
+
 export const updateStatus = (data, token) => {
   return async (dispatch) => {
     try {
@@ -103,6 +105,7 @@ export const updateStatus = (data, token) => {
     }
   };
 };
+
 export const placeorder = (data, auth) => {
   return async (dispatch) => {
     const res = await axios.post(
@@ -129,6 +132,7 @@ export const placeorder = (data, auth) => {
     }
   };
 };
+
 export const applyCoupon = (data, totalPrice) => {
   return async (dispatch) => {
     const res = await axios.post(
@@ -151,6 +155,7 @@ export const applyCoupon = (data, totalPrice) => {
     }
   };
 };
+
 export const instantBuy = (data, instantTotal) => {
   return async (dispatch) => {
     try {
@@ -164,14 +169,15 @@ export const instantBuy = (data, instantTotal) => {
     }
   };
 };
-export const updateCart = () => {
+
+export const updateCart = (cart, price) => {
+  console.log('updateCart: ', cart, price);
   return async (dispatch) => {
     try {
       dispatch({
         type: 'UPDATE_CART',
-
-        addToCart: [],
-        totalPrice: 0,
+        addToCart: cart,
+        totalPrice: price,
       });
     } catch (err) {
       console.log(err);

@@ -248,6 +248,7 @@ const Cart = ({
     }
   };
   const handleIncrement = async (id, action) => {
+    console.log('handleIncrement: ', id, action);
     const res =
       userCart &&
       userCart.map((item) => {
@@ -569,7 +570,7 @@ const Cart = ({
                         fontWeight: 'bold',
                         marginTop: 5,
                       }}>
-                      {item.qty}
+                      {1}
                     </Text>
 
                     <TouchableOpacity
