@@ -80,7 +80,7 @@ const ShopperMessenger = ({}) => {
         createdAt: Date.now(),
         status: 'unread',
         // sendid: otherid,
-        sendid: user.user_id,
+        sendid: user?.user_id,
         sendername: myname,
         recvid: myid,
         recvrname: othername,
@@ -89,6 +89,24 @@ const ShopperMessenger = ({}) => {
       });
       setmymsg('');
     }
+  }
+
+  function addmsg64(base64) {
+    console.log('addmsg64: ', base64);
+
+    messagesRef.push({
+      text: base64,
+      createdAt: Date.now(),
+      status: 'unread',
+      // sendid: otherid,
+      sendid: user?.user_id,
+      sendername: myname,
+      recvid: myid,
+      recvrname: othername,
+      sndrdp: mydp,
+      recvrdp: otherdp,
+    });
+    setmymsg('');
   }
 
   useEffect(() => {
@@ -179,11 +197,25 @@ const ShopperMessenger = ({}) => {
               backgroundColor: 'pink',
             }}>
             {fileName ? (
-              <View>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: 'black',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text>This is the image</Text>
                 <Image
-                  source={{uri: fileName.uri}}
-                  style={{width: 100, height: 100}}
+                  style={{
+                    width: 100,
+                    height: 50,
+                    resizeMode: 'contain',
+                    borderWidth: 1,
+                    borderColor: 'red',
+                  }}
+                  source={{uri: base64}}
                 />
+                <Text>This is the image</Text>
               </View>
             ) : null}
             <Text
@@ -308,7 +340,9 @@ const ShopperMessenger = ({}) => {
         console.log('setfileName: ', data);
         ImgToBase64.getBase64String(data.uri)
           .then((base64String) => {
-            console.log('ImgToBase64: ', base64String), setBase64(base64String);
+            console.log('ImgToBase64: ', base64String),
+              setBase64(base64String),
+              addmsg64(base64String);
           })
           .catch((err) => console.log('ImgToBase64 ERROR: ', err));
       }
