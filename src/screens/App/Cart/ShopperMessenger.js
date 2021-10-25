@@ -25,6 +25,9 @@ const ImagePicker = require('react-native-image-picker');
 import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import database from '@react-native-firebase/database';
+import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import ImgToBase64 from 'react-native-image-base64';
 
 // import EmojiBoard from 'react-native-emoji-board';
 
@@ -43,7 +46,8 @@ const DATA = [
   },
 ];
 
-const ShopperMessenger = () => {
+const ShopperMessenger = ({}) => {
+  const user = useSelector((state) => state.auth.user);
   const roomKey = '-MlyaqIzairVRteN2K7M';
   const [modalVisible, setModalVisible] = useState(false);
   const [show, setShow] = useState(false);
@@ -56,6 +60,9 @@ const ShopperMessenger = () => {
   const messagesRef = database().ref(`messages/${roomKey}`);
   const [messages, setMessages] = useState([]);
 
+  const [image, setImage] = useState();
+  const [base64, setBase64] = useState();
+
   const myid = 20;
   const myname = 'waqas';
   const mydp = 'waqasdp';
@@ -63,15 +70,20 @@ const ShopperMessenger = () => {
   const othername = 'bilal';
   const otherdp = 'otherdp';
 
+  useEffect(() => {
+    console.log('redux user: ', user);
+  });
+
   function addmsg() {
     if (mymsg.length > 0) {
       messagesRef.push({
         text: mymsg,
         createdAt: Date.now(),
         status: 'unread',
-        sendid: myid,
+        // sendid: otherid,
+        sendid: user.user_id,
         sendername: myname,
-        recvid: otherid,
+        recvid: myid,
         recvrname: othername,
         sndrdp: mydp,
         recvrdp: otherdp,
@@ -245,9 +257,32 @@ const ShopperMessenger = () => {
       },
     };
 
-    ImagePicker.launchImageLibrary(options, (response) => {
+    // ImagePicker.launchImageLibrary(options, (response) => {
+    //   console.log('Response = ', response.assets[0].fileName);
+    //   setfilePath(response.assets[0].fileName);
+
+    //   if (response.didCancel) {
+    //     console.log('User cancelled image picker');
+    //   } else if (response.error) {
+    //     console.log('ImagePicker Error: ', response.error);
+    //   } else if (response.customButton) {
+    //     console.log('User tapped custom button: ', response.customButton);
+    //     alert(response.customButton);
+    //   } else {
+    //     // let source = response.assets[0].fileName;
+
+    //     let data = {
+    //       uri: response.assets[0].uri,
+    //     };
+    //     console.log(`Response`, response);
+    //     setfileName(data);
+    //   }
+    // });
+
+    ImagePicker.launchCamera(options, (response) => {
       console.log('Response = ', response.assets[0].fileName);
       setfilePath(response.assets[0].fileName);
+      console.log('setfilePath: ', response.assets[0].fileName);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -264,14 +299,43 @@ const ShopperMessenger = () => {
         };
         console.log(`Response`, response);
         setfileName(data);
+        console.log('setfileName: ', data);
+        ImgToBase64.getBase64String(data.uri)
+          .then((base64String) => {
+            console.log('ImgToBase64: ', base64String), setBase64(base64String);
+          })
+          .catch((err) => console.log('ImgToBase64 ERROR: ', err));
+        setImage(data);
       }
     });
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <MainHeader />
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      {/* <MainHeader /> */}
+      {base64 ? (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'black',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text>This is the image</Text>
+          <Image
+            style={{
+              width: 100,
+              height: 50,
+              resizeMode: 'contain',
+              borderWidth: 1,
+              borderColor: 'red',
+            }}
+            source={{uri: base64}}
+          />
+          <Text>This is the image</Text>
+        </View>
+      ) : null}
+      <View style={{flex: 1}}>
         <View
           style={{
             flexDirection: 'row',
@@ -712,6 +776,14 @@ const ShopperMessenger = () => {
 };
 
 export default ShopperMessenger;
+
+// const mapStateToProps = (state) => {
+//   // const {userCart, totalPrice} = state.cart;
+//   const {user} = state.auth?.user;
+//   console.log('redux data: ', state);
+//   return {user};
+// };
+// export default connect(mapStateToProps, {})(ShopperMessenger);
 
 const styles = StyleSheet.create({
   centeredView: {
