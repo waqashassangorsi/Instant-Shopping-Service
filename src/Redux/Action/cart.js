@@ -7,6 +7,7 @@ import {
   COMPETITION_USER,
   DELETE_FROM_CART,
   USER_DETAIL,
+  ADD_ID,
 } from './types';
 import {Alert} from 'react-native';
 

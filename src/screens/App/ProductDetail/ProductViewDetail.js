@@ -57,7 +57,7 @@ const sameShirt = [
 const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const total = useSelector((state) => state.cart.totalPrice);
   const from = route?.params?.from;
-  const [alreadyInCart, setAlreadyInCart] = useState(false);
+
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
   const [productdata, setproductdata] = useState({});
@@ -80,17 +80,25 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
 
   // console.log(`myproduct123`, usercart);
 
-  const checkCart = () => {
-    for (var i = 0; i < userCart?.length; i++) {
-      if (userCart[i].name === productdata.product_name) {
-        console.log('Already added in cart!');
-        setAlreadyInCart(true);
+  const checkAlreadyAdded = async () => {
+    if (productdata.product_name && userCart) {
+      var arrayNames = [];
+      for (var i = 0; i < userCart?.length; i++) {
+        arrayNames.push(userCart[i].name);
       }
-    }
+      // console.log('arrayNames: ', arrayNames);
 
-    if (!alreadyInCart) {
-      console.log('adding item to cart');
-      addCart();
+      try {
+        var result = arrayNames.includes(productdata.product_name);
+        if (result === true) {
+          console.log('Already in cart!');
+        } else {
+          arrayNames.push(productdata.product_name);
+          addCart();
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -104,14 +112,13 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
       product_id: productdata.productid,
     };
     // console.log('cartdatanew', productdatanew);
-    if (!alreadyInCart) {
-      dispatch(
-        updateTotalPrice(total + productdatanew.price * productdatanew.qty),
-      );
-      dispatch(
-        addToCart(productdatanew, productdatanew.price * productdatanew.qty),
-      );
-    }
+
+    dispatch(
+      updateTotalPrice(total + productdatanew.price * productdatanew.qty),
+    );
+    dispatch(
+      addToCart(productdatanew, productdatanew.price * productdatanew.qty),
+    );
   };
 
   return (
@@ -312,7 +319,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
             <TouchableOpacity
               // onPress={() => dispatch(addToCart(productdata, qty))}
               onPress={() => {
-                checkCart();
+                checkAlreadyAdded();
               }}
               style={{
                 flexDirection: 'row',
