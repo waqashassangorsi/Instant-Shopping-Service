@@ -27,7 +27,7 @@ import Footer from '../../../components/Footer';
 import database from '@react-native-firebase/database';
 import {connect} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
-// import ImgToBase64 from 'react-native-image-base64';
+import ImgToBase64 from 'react-native-image-base64';
 import base64 from 'react-native-base64';
 
 // import EmojiBoard from 'react-native-emoji-board';
@@ -244,7 +244,7 @@ const ShopperMessenger = ({}) => {
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: 'black',
+                  // backgroundColor: 'black',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -254,21 +254,18 @@ const ShopperMessenger = ({}) => {
                     height: 100,
                     resizeMode: 'contain',
                     borderWidth: 1,
-                    borderColor: 'red',
+                    // borderColor: 'red',
                   }}
-                  source={{uri: item.text}}
+                  // source={{
+                  //   uri:
+                  //     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                  // }}
+                  source={{uri: `data:image/jpg;base64,${item.text}`}}
                 />
+                {/* <View style={{backgroundColor: 'pink'}}>
+                  <Text>{`data:image/png;base64,${item.text}`}</Text>
+                </View> */}
               </View>
-
-              {/* <Text
-                style={{
-                  color: colors.greenColor,
-                  // marginHorizontal: 8,
-                  fontSize: 12,
-                  // marginLeft: 10,
-                }}>
-                {item.text}
-              </Text> */}
             </View>
           ) : (
             <View
@@ -368,15 +365,14 @@ const ShopperMessenger = ({}) => {
         // console.log('encodedString: ', encodedString);
         var decodedString = base64.decode(encodedString);
         // console.log('decodedString: ', decodedString);
-        addmsg64(encodedString, decodedString);
+        // addmsg64(encodedString, decodedString);
 
-        // ImgToBase64.getBase64String(data.uri)
-        //   .then((base64String) => {
-        //     console.log('ImgToBase64: ', base64String),
-        //       setBase64(base64String),
-        //       addmsg64(base64String);
-        //   })
-        //   .catch((err) => console.log('ImgToBase64 ERROR: ', err));
+        ImgToBase64.getBase64String(data.uri)
+          .then((base64String) => {
+            console.log('ImgToBase64: ', base64String),
+              addmsg64(base64String, decodedString);
+          })
+          .catch((err) => console.log('ImgToBase64 ERROR: ', err));
       }
     });
   };
