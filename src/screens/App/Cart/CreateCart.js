@@ -56,8 +56,9 @@ const CreateCart = () => {
   const updateTotal = (productsNow) => {
     var totalPrice = 0;
     for (var i = 0; i < productsNow?.length; i++) {
-      totalPrice += parseInt(productsNow[i].price * productsNow[i].qty);
+      totalPrice += parseFloat(productsNow[i].price * productsNow[i].qty);
     }
+
     setTotal(totalPrice);
     updateCartNow(productsNow, totalPrice);
   };
@@ -302,7 +303,7 @@ const CreateCart = () => {
                         marginTop: 20,
                       }}>
                       <TouchableOpacity
-                        style={{left: 40, backgroundColor: 'yellow'}}
+                        style={{left: 40}}
                         onPress={() => onPressDelete(ok)}>
                         <Image
                           source={require('../../../assets/cancel.png')}
@@ -372,11 +373,12 @@ const CreateCart = () => {
                   color: colors.greenColor,
                   marginHorizontal: 10,
                 }}>
-                ${total}
+                ${total.toFixed(2)}
               </Text>
             </View>
           </View>
           <TouchableOpacity
+            onPress={() => navigation.navigate('Products')}
             style={{
               flex: 1,
               borderWidth: 2,

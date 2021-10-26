@@ -447,9 +447,10 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => {
-              userAddressData();
-            }}
+            // onPress={() => {
+            //   userAddressData();
+            // }}
+            onPress={() => navigation.navigate('CreateCart')}
             style={{
               flex: 1,
               borderWidth: 2,

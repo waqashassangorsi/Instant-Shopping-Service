@@ -175,9 +175,9 @@ const Product = ({
 
   const checktoken = async (fcmtoken) => {
     const token = await AsyncStorage.getItem('token');
-    alert(token);
+    // alert(token);
     if (token !== fcmtoken) {
-      alert("Pushed");
+      alert('Pushed');
       await AsyncStorage.setItem('token', fcmtoken);
     }
   };

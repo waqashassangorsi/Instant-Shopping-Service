@@ -35,7 +35,7 @@ const CongratulationCart = () => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('OrderPage');
+            navigation.navigate('Products');
           }}
           style={{
             flex: 1,

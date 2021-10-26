@@ -69,8 +69,6 @@ const ShopperMessenger = (props) => {
   const othername = 'bilal';
   const otherdp = 'otherdp';
 
-  console.log('shoppermessenger userData: ', userData);
-
   useEffect(() => {
     console.log('redux user: ', user);
     console.log('shoppermessenger userData: ', userData);
@@ -87,10 +85,10 @@ const ShopperMessenger = (props) => {
         // sendid: otherid,
         sendid: user?.user_id,
         sendername: user?.user_nicename,
-        recvid: userData?.id ? userData?.id : myid,
+        recvid: userData?.id,
         recvrname: userData.name,
         sndrdp: mydp,
-        recvrdp: otherdp,
+        recvrdp: userData?.dp,
       });
       setmymsg('');
     }
@@ -111,10 +109,10 @@ const ShopperMessenger = (props) => {
       // sendid: otherid,
       sendid: user?.user_id,
       sendername: user?.user_nicename,
-      recvid: userData?.id ? userData?.id : myid,
+      recvid: userData?.id,
       recvrname: userData.name,
       sndrdp: mydp,
-      recvrdp: otherdp,
+      recvrdp: userData?.dp,
     });
     setmymsg('');
   }
@@ -191,7 +189,7 @@ const ShopperMessenger = (props) => {
       {item.sendid == myid && (
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <Image
-            source={person1}
+            source={{uri: userData.dp}}
             style={{
               height: 50,
               width: 50,
@@ -199,7 +197,8 @@ const ShopperMessenger = (props) => {
               marginLeft: 10,
             }}
           />
-          <View
+
+          {/* <View
             style={{
               justifyContent: 'center',
               marginLeft: 10,
@@ -218,10 +217,74 @@ const ShopperMessenger = (props) => {
               }}>
               {item.b64 ? 'image' : item.text}
             </Text>
-          </View>
+          </View> */}
+
+          {item.b64 ? (
+            <View
+              style={{
+                justifyContent: 'center',
+                marginLeft: 10,
+                backgroundColor: colors.greenColor,
+                maxWidth: 200,
+                alignSelf: 'center',
+                borderRadius: 5,
+                padding: 10,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  // backgroundColor: 'black',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={{
+                    width: 100,
+                    height: 100,
+                    resizeMode: 'contain',
+                    borderWidth: 1,
+                    // borderColor: 'red',
+                  }}
+                  // source={{
+                  //   uri:
+                  //     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                  // }}
+                  source={{uri: `data:image/jpg;base64,${item.text}`}}
+                />
+                {/* <View style={{backgroundColor: 'pink'}}>
+                  <Text>{`data:image/png;base64,${item.text}`}</Text>
+                </View> */}
+              </View>
+            </View>
+          ) : (
+            <View
+              style={{
+                justifyContent: 'center',
+                marginLeft: 10,
+                backgroundColor: colors.greenColor,
+                maxWidth: 200,
+                alignSelf: 'center',
+                borderRadius: 5,
+                padding: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 12,
+                }}>
+                {item.text}
+              </Text>
+            </View>
+          )}
+
           <View
-            style={{justifyContent: 'center', marginTop: 25, marginLeft: 5}}>
-            <Text style={{fontSize: 10}}>item.t</Text>
+            style={{
+              justifyContent: 'center',
+              marginTop: 25,
+              marginLeft: 5,
+              // backgroundColor: 'black',
+            }}>
+            <Text style={{fontSize: 10}}>{item.hour + ':' + item.minutes}</Text>
           </View>
         </View>
       )}
@@ -439,7 +502,11 @@ const ShopperMessenger = (props) => {
               tintColor={colors.WebGLQuery}
             />
           </View>
-          <View style={{flex: 1, justifyContent: 'center'}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+            }}>
             <Text
               style={{
                 color: colors.WebGLQuery,
@@ -579,9 +646,10 @@ const ShopperMessenger = (props) => {
               <View
                 style={{
                   flexDirection: 'row',
-
+                  // backgroundColor: 'black',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  right: 20,
                 }}>
                 <Text
                   style={{

@@ -300,7 +300,12 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
                 }}>
                 qty:
               </Text>
-              <TouchableOpacity onPress={() => setqty(qty - 1)}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (qty != 1) {
+                    setqty(qty - 1);
+                  }
+                }}>
                 <Text style={{fontSize: 20, color: colors.gray}}>-</Text>
               </TouchableOpacity>
               <View
@@ -323,7 +328,9 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
             <TouchableOpacity
               // onPress={() => dispatch(addToCart(productdata, qty))}
               onPress={() => {
-                user ? checkAlreadyAdded() : alert('User must be logged in!');
+                user
+                  ? checkAlreadyAdded()
+                  : alert('Login to add item to cart.');
               }}
               style={{
                 flexDirection: 'row',

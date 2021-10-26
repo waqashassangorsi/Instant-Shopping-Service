@@ -280,7 +280,7 @@ const ConfirmationCart = ({userdetails}) => {
                   color: colors.greenColor,
                   marginHorizontal: 10,
                 }}>
-                {totalAmount}
+                ${totalAmount.toFixed(2)}
               </Text>
             </View>
           </View>
@@ -376,6 +376,7 @@ const ConfirmationCart = ({userdetails}) => {
           </View>
 
           <TouchableOpacity
+            onPress={() => navigation.navigate('Products')}
             style={{
               flex: 1,
               borderWidth: 2,

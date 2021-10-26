@@ -73,6 +73,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
   }, []);
 
   const onPressMessenger = () => {
+    console.log('orderpage userdata: ', userdata);
     if (userdata.length != 0) {
       navigation.navigate('ShopperMessenger', {
         userdata: userdata,

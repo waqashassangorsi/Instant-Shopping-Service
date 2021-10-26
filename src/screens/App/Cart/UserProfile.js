@@ -148,6 +148,15 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
     Linking.openURL(number);
   };
 
+  const onPressMessenger = () => {
+    console.log('userprofile userdata: ', userdata);
+    if (userdata.length != 0) {
+      navigation.navigate('ShopperMessenger', {
+        userdata: userdata,
+      });
+    }
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MainHeader />
@@ -222,19 +231,14 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
                 marginTop: 10,
               }}>
               <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ShopperMessenger');
-                }}
+                onPress={() => onPressMessenger()}
                 style={{
                   height: 36,
                   width: 100,
-
                   backgroundColor: 'white',
                   borderRadius: 2,
                   flexDirection: 'row',
-
                   justifyContent: 'center',
-
                   alignItems: 'center',
                 }}>
                 <Text
