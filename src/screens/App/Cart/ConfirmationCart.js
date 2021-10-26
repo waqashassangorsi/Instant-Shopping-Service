@@ -23,16 +23,22 @@ const ConfirmationCart = ({userdetails}) => {
       userAddress,
       user,
     };
-    console.log('onPressPlaceOrder OBJECT: ', obj);
-    console.log('onPressPlaceOrder STRING: ', JSON.stringify(obj));
 
-    navigation.navigate('CongratulationCart');
+    // console.log('onPressPlaceOrder OBJECT: ', obj);
+    // console.log('onPressPlaceOrder STRING: ', JSON.stringify(obj));
+
+    // navigation.navigate('CongratulationCart');
+
+    // const res = await orderPlace(obj);
 
     const res = await orderPlace(JSON.stringify(obj));
     if (res.data.status) {
       setLoading(false);
+      navigation.navigate('CongratulationCart');
     } else {
+      navigation.navigate('CongratulationCart');
       alert(res.data.message);
+      console.log(res);
       setLoading(false);
     }
   };

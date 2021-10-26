@@ -565,7 +565,7 @@ const ShopperMessenger = (props) => {
             <Text style={{fontSize: 10}}>Update Progress</Text>
           </TouchableOpacity>
         </View>
-        <View style={{padding: 10, height: 800}}>
+        <View style={{padding: 10, height: 600}}>
           <View
             style={{
               justifyContent: 'center',
@@ -591,90 +591,91 @@ const ShopperMessenger = (props) => {
             />
           </ScrollView>
 
-          <View
-            style={{
-              backgroundColor: colors.lightWhite,
-              height: 45,
-              borderColor: colors.WebGLQuery,
-              marginTop: 40,
-              marginHorizontal: 10,
-              borderWidth: 2,
-              justifyContent: 'center',
-            }}>
+          <View style={{bottom: 0, position: 'absolute'}}>
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                backgroundColor: colors.lightWhite,
+                height: 45,
+                borderColor: colors.WebGLQuery,
+                marginTop: 40,
+                marginHorizontal: 10,
+                borderWidth: 2,
+                justifyContent: 'center',
               }}>
               <View
                 style={{
                   flexDirection: 'row',
-                  alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}>
-                <TouchableOpacity onPress={() => setShow(!show)}>
-                  <Feather
-                    name="smile"
-                    size={20}
-                    color="#DADADA"
-                    style={{marginLeft: 10}}
-                  />
-                </TouchableOpacity>
-
-                <TextInput
-                  placeholder="Write a message"
-                  multiline={true}
-                  // onChange={onClick(emoji)}
-                  onChangeText={(text) => setmymsg(text)}
-                  value={mymsg}
+                <View
                   style={{
-                    color: '#DADADA',
-                    marginLeft: 15,
-                    width: '60%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity onPress={() => setShow(!show)}>
+                    <Feather
+                      name="smile"
+                      size={20}
+                      color="#DADADA"
+                      style={{marginLeft: 10}}
+                    />
+                  </TouchableOpacity>
 
-                    flexWrap: 'wrap',
-                  }}
-                />
+                  <TextInput
+                    placeholder="Write a message"
+                    multiline={true}
+                    // onChange={onClick(emoji)}
+                    onChangeText={(text) => setmymsg(text)}
+                    value={mymsg}
+                    style={{
+                      color: '#DADADA',
+                      marginLeft: 15,
+                      width: '60%',
 
-                {/* <EmojiBoard
+                      flexWrap: 'wrap',
+                    }}
+                  />
+
+                  {/* <EmojiBoard
               showBoard={show}
               onClick={onClick}
               tabBarPosition={'bottom'}
               onRemove={hideBoard}
             /> */}
-              </View>
+                </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // backgroundColor: 'black',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  right: 20,
-                }}>
-                <Text
+                <View
                   style={{
-                    color: '#DADADA',
-                    textAlign: 'center',
-                    marginRight: 5,
+                    flexDirection: 'row',
+                    // backgroundColor: 'black',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    right: 20,
                   }}>
-                  Attach media
-                </Text>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => {
-                    openCamera1(0);
-                  }}>
-                  <MaterialCommunityIcons
-                    name="attachment"
-                    size={20}
-                    color="#DADADA"
-                  />
-                </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: '#DADADA',
+                      textAlign: 'center',
+                      marginRight: 5,
+                    }}>
+                    Attach media
+                  </Text>
+                  <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                      openCamera1(0);
+                    }}>
+                    <MaterialCommunityIcons
+                      name="attachment"
+                      size={20}
+                      color="#DADADA"
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            {/* {fileName ? (
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              {/* {fileName ? (
               <View>
                 <Text>{filePath}</Text>
                 <Image
@@ -683,45 +684,46 @@ const ShopperMessenger = (props) => {
                 />
               </View>
             ) : null} */}
-          </View>
-          <View
-            style={{
-              backgroundColor: colors.greenColor,
-              height: 36,
-              // borderWidth: 2,
-              justifyContent: 'center',
+            </View>
+            <View
+              style={{
+                backgroundColor: colors.greenColor,
+                height: 36,
+                // borderWidth: 2,
+                justifyContent: 'center',
 
-              width: 100,
-              alignSelf: 'flex-end',
-              marginRight: 10,
-              borderRadius: 5,
-              marginBottom: 30,
-              marginTop: 10,
-            }}>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              <TouchableOpacity
-                onPress={() => {
-                  addmsg();
-                }}>
-                <Text
-                  style={{color: 'white', textAlign: 'center', fontSize: 12}}>
-                  Send
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  addmsg();
-                }}>
-                <MaterialIcons
-                  name="send"
-                  size={15}
-                  color="white"
-                  style={{
-                    marginLeft: 5,
-                    alignSelf: 'center',
-                  }}
-                />
-              </TouchableOpacity>
+                width: 100,
+                alignSelf: 'flex-end',
+                marginRight: 10,
+                borderRadius: 5,
+                marginBottom: 30,
+                marginTop: 10,
+              }}>
+              <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    addmsg();
+                  }}>
+                  <Text
+                    style={{color: 'white', textAlign: 'center', fontSize: 12}}>
+                    Send
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    addmsg();
+                  }}>
+                  <MaterialIcons
+                    name="send"
+                    size={15}
+                    color="white"
+                    style={{
+                      marginLeft: 5,
+                      alignSelf: 'center',
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           <View style={styles.centeredView}>
