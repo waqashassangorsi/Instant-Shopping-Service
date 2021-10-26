@@ -379,7 +379,7 @@ const ShopperMessenger = ({}) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {/* <MainHeader /> */}
+      <MainHeader />
       {/* {fileName ? (
         <View
           style={{

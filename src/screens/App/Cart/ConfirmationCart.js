@@ -12,6 +12,7 @@ import {loginaction} from '../../../Redux/Action/Loginaction';
 const ConfirmationCart = ({userdetails}) => {
   const cart_data = useSelector((state) => state.cart.userCart);
   const totalAmount = useSelector((state) => state.cart.totalPrice);
+  const user = useSelector((state) => state.auth?.user);
   const userAddress = userdetails;
   let navigation = useNavigation();
 
@@ -20,6 +21,7 @@ const ConfirmationCart = ({userdetails}) => {
       cart: cart_data,
       totalAmount,
       userAddress,
+      user,
     };
     console.log('onPressPlaceOrder OBJECT: ', obj);
     console.log('onPressPlaceOrder STRING: ', JSON.stringify(obj));
@@ -278,7 +280,7 @@ const ConfirmationCart = ({userdetails}) => {
                   color: colors.greenColor,
                   marginHorizontal: 10,
                 }}>
-                $6,274.75
+                {totalAmount}
               </Text>
             </View>
           </View>

@@ -58,6 +58,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const total = useSelector((state) => state.cart.totalPrice);
   const from = route?.params?.from;
   const [alreadyInCart, setAlreadyInCart] = useState(false);
+  const user = useSelector((state) => state.auth?.user);
 
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
@@ -322,7 +323,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
             <TouchableOpacity
               // onPress={() => dispatch(addToCart(productdata, qty))}
               onPress={() => {
-                checkAlreadyAdded();
+                user ? checkAlreadyAdded() : alert('User must be logged in!');
               }}
               style={{
                 flexDirection: 'row',

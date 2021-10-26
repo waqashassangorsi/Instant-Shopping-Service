@@ -63,7 +63,7 @@ const DATA = [
   {id: 12, name: 'amazon'},
 ];
 
-const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
+const MainHeader = ({getcity, getallbrands, getallcategory}) => {
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [listcity, setlistcity] = useState([]);
@@ -71,6 +71,9 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
   const [category, setcategory] = useState([]);
   const [myselectedcat, setmyselectedcat] = useState();
   const cart_data = useSelector((state) => state.cart.userCart);
+  const user = useSelector((state) => state.auth?.user);
+
+  console.log('mainheader USER: ', user);
 
   console.log('cartdata', cart_data);
 
@@ -186,42 +189,44 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
                 />
               </TouchableOpacity>
             )}
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('CreateCart');
-              }}
-              style={{
-                borderWidth: 1,
-                borderColor: colors.greenColor,
-                width: 26,
-                height: 26,
-                borderRadius: 26 / 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginHorizontal: 5,
-              }}>
-              <Ionicons
-                name="basket-outline"
-                size={15}
-                color={colors.greenColor}
-              />
-              <View
+            {user ? (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('CreateCart');
+                }}
                 style={{
-                  height: 18,
-                  width: 18,
-                  borderRadius: 18 / 2,
-                  position: 'absolute',
-                  top: -10,
-                  right: -5,
-                  backgroundColor: 'white',
-                  justifyContent: 'center',
-                  alignItems: 'center',
                   borderWidth: 1,
-                  borderColor: 'green',
+                  borderColor: colors.greenColor,
+                  width: 26,
+                  height: 26,
+                  borderRadius: 26 / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginHorizontal: 5,
                 }}>
-                <Text>{cart_data.length}</Text>
-              </View>
-            </TouchableOpacity>
+                <Ionicons
+                  name="basket-outline"
+                  size={15}
+                  color={colors.greenColor}
+                />
+                <View
+                  style={{
+                    height: 18,
+                    width: 18,
+                    borderRadius: 18 / 2,
+                    position: 'absolute',
+                    top: -10,
+                    right: -5,
+                    backgroundColor: 'white',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderColor: 'green',
+                  }}>
+                  <Text>{cart_data.length}</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
           </View>
         }
       />
@@ -371,9 +376,9 @@ const MainHeader = ({user, getcity, getallbrands, getallcategory}) => {
 };
 
 const mapStateToProps = (state) => {
-  const {user, isLoggedIn} = state.auth;
-
-  return {user, isLoggedIn};
+  // const {user} = state.auth?.user;
+  // console.log('mainheader redux data: ', state);
+  // return {user};
 };
 export default connect(mapStateToProps, {
   getcity,
