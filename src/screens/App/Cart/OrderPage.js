@@ -72,6 +72,14 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
     })();
   }, []);
 
+  const onPressMessenger = () => {
+    if (userdata.length != 0) {
+      navigation.navigate('ShopperMessenger', {
+        userdata: userdata,
+      });
+    }
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* <Loading visible={loading} /> */}
@@ -200,9 +208,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 marginTop: 10,
               }}>
               <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ShopperMessenger');
-                }}
+                onPress={() => onPressMessenger()}
                 style={{
                   height: 36,
                   width: 100,

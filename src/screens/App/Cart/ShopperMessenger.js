@@ -47,7 +47,7 @@ const DATA = [
   },
 ];
 
-const ShopperMessenger = ({}) => {
+const ShopperMessenger = (props) => {
   const user = useSelector((state) => state.auth.user);
   const roomKey = '-MlyaqIzairVRteN2K7M';
   const [modalVisible, setModalVisible] = useState(false);
@@ -60,6 +60,7 @@ const ShopperMessenger = ({}) => {
   const roomRef = database().ref('rooms');
   const messagesRef = database().ref(`messages/${roomKey}`);
   const [messages, setMessages] = useState([]);
+  const [userData, setUserData] = useState(props?.route?.params?.userdata);
 
   const myid = 20;
   const myname = 'waqas';
@@ -69,7 +70,8 @@ const ShopperMessenger = ({}) => {
   const otherdp = 'otherdp';
 
   useEffect(() => {
-    console.log('redux user: ', user);
+    // console.log('redux user: ', user);
+    // console.log('shoppermessenger userData: ', userData);
   });
 
   function addmsg() {
@@ -83,8 +85,8 @@ const ShopperMessenger = ({}) => {
         // sendid: otherid,
         sendid: user?.user_id,
         sendername: user?.user_nicename,
-        recvid: myid,
-        recvrname: othername,
+        recvid: userData?.id ? userData?.id : myid,
+        recvrname: userData.name,
         sndrdp: mydp,
         recvrdp: otherdp,
       });
@@ -107,8 +109,8 @@ const ShopperMessenger = ({}) => {
       // sendid: otherid,
       sendid: user?.user_id,
       sendername: user?.user_nicename,
-      recvid: myid,
-      recvrname: othername,
+      recvid: userData?.id ? userData?.id : myid,
+      recvrname: userData.name,
       sndrdp: mydp,
       recvrdp: otherdp,
     });
@@ -183,7 +185,7 @@ const ShopperMessenger = ({}) => {
   // }
 
   const renderItem = ({item, index}) => (
-    <ScrollView>
+    <View style={{backgroundColor: 'black'}}>
       {item.sendid == myid && (
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <Image
@@ -310,7 +312,7 @@ const ShopperMessenger = ({}) => {
           />
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 
   const openCamera1 = async (index) => {
@@ -464,7 +466,9 @@ const ShopperMessenger = ({}) => {
               }}
             />
             <View style={{marginLeft: 10}}>
-              <Text style={{fontSize: 16, color: 'white'}}>Chris Rowling</Text>
+              <Text style={{fontSize: 16, color: 'white'}}>
+                {userData?.name}
+              </Text>
               <Text style={{color: 'white', fontSize: 10}}>
                 Last seen 10mins ago
               </Text>
