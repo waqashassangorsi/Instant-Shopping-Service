@@ -29,7 +29,7 @@ import {connect} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
 import ImgToBase64 from 'react-native-image-base64';
 import base64 from 'react-native-base64';
-
+import moment from 'moment';
 // import EmojiBoard from 'react-native-emoji-board';
 
 const DATA = [
@@ -77,10 +77,12 @@ const ShopperMessenger = ({}) => {
       messagesRef.push({
         text: mymsg,
         createdAt: Date.now(),
+        hour: parseInt(moment().format('HH')),
+        minutes: parseInt(moment().format('mm')),
         status: 'unread',
         // sendid: otherid,
         sendid: user?.user_id,
-        sendername: myname,
+        sendername: user?.user_nicename,
         recvid: myid,
         recvrname: othername,
         sndrdp: mydp,
@@ -99,10 +101,12 @@ const ShopperMessenger = ({}) => {
       text: encodedString,
       b64: true,
       createdAt: Date.now(),
+      hour: parseInt(moment().format('HH')),
+      minutes: parseInt(moment().format('mm')),
       status: 'unread',
-      sendid: otherid,
-      // sendid: user?.user_id,
-      sendername: myname,
+      // sendid: otherid,
+      sendid: user?.user_id,
+      sendername: user?.user_nicename,
       recvid: myid,
       recvrname: othername,
       sndrdp: mydp,
@@ -127,6 +131,8 @@ const ShopperMessenger = ({}) => {
             decoded: child.val().decoded,
             b64: child.val().b64,
             createdAt: child.val().createdAt,
+            hour: child.val().hour,
+            minutes: child.val().minutes,
             recvid: child.val().recvid,
             sendid: child.val().sendid,
             sendername: child.val().sendername,
@@ -211,7 +217,7 @@ const ShopperMessenger = ({}) => {
           </View>
           <View
             style={{justifyContent: 'center', marginTop: 25, marginLeft: 5}}>
-            <Text style={{fontSize: 10}}>17:28</Text>
+            <Text style={{fontSize: 10}}>item.t</Text>
           </View>
         </View>
       )}
@@ -225,7 +231,7 @@ const ShopperMessenger = ({}) => {
               marginLeft: 5,
               alignSelf: 'flex-end',
             }}>
-            <Text style={{fontSize: 10}}>17:28</Text>
+            <Text style={{fontSize: 10}}>{item.hour + ':' + item.minutes}</Text>
           </View>
 
           {item.b64 ? (
