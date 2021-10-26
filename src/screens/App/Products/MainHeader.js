@@ -223,7 +223,7 @@ const MainHeader = ({getcity, getallbrands, getallcategory}) => {
                     borderWidth: 1,
                     borderColor: 'green',
                   }}>
-                  <Text>{cart_data.length}</Text>
+                  <Text>{cart_data?.length}</Text>
                 </View>
               </TouchableOpacity>
             ) : null}

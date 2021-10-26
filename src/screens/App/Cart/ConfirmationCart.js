@@ -7,7 +7,7 @@ import MainHeader from '../Products/MainHeader';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {loginaction} from '../../../Redux/Action/Loginaction';
+import {orderPlace} from '../../../Redux/Action/Loginaction';
 
 const ConfirmationCart = ({userdetails}) => {
   const cart_data = useSelector((state) => state.cart.userCart);
@@ -28,7 +28,7 @@ const ConfirmationCart = ({userdetails}) => {
 
     navigation.navigate('CongratulationCart');
 
-    const res = await loginaction(JSON.stringify(obj));
+    const res = await orderPlace(JSON.stringify(obj));
     if (res.data.status) {
       setLoading(false);
     } else {

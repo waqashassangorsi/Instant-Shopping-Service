@@ -69,9 +69,11 @@ const ShopperMessenger = (props) => {
   const othername = 'bilal';
   const otherdp = 'otherdp';
 
+  console.log('shoppermessenger userData: ', userData);
+
   useEffect(() => {
-    // console.log('redux user: ', user);
-    // console.log('shoppermessenger userData: ', userData);
+    console.log('redux user: ', user);
+    console.log('shoppermessenger userData: ', userData);
   });
 
   function addmsg() {
@@ -185,7 +187,7 @@ const ShopperMessenger = (props) => {
   // }
 
   const renderItem = ({item, index}) => (
-    <View style={{backgroundColor: 'black'}}>
+    <View>
       {item.sendid == myid && (
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <Image
@@ -226,7 +228,11 @@ const ShopperMessenger = (props) => {
 
       {item.recvid == myid && (
         <View
-          style={{flexDirection: 'row', marginTop: 10, alignSelf: 'flex-end'}}>
+          style={{
+            flexDirection: 'row',
+            marginTop: 10,
+            alignSelf: 'flex-end',
+          }}>
           <View
             style={{
               justifyContent: 'center',
@@ -386,7 +392,10 @@ const ShopperMessenger = (props) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1}}
+      showsVerticalScrollIndicator={false}
+      nestedScrollEnabled={true}>
       <MainHeader />
       {/* {fileName ? (
         <View
@@ -489,7 +498,7 @@ const ShopperMessenger = (props) => {
             <Text style={{fontSize: 10}}>Update Progress</Text>
           </TouchableOpacity>
         </View>
-        <View style={{padding: 10}}>
+        <View style={{padding: 10, height: 800}}>
           <View
             style={{
               justifyContent: 'center',
@@ -504,11 +513,17 @@ const ShopperMessenger = (props) => {
             <Text style={{color: 'white', fontSize: 10}}>Thursday</Text>
           </View>
 
-          <FlatList
-            data={messages}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
+          <ScrollView
+            // style={{backgroundColor: 'red'}}
+            contentContainerStyle={{flexGrow: 1}}
+            nestedScrollEnabled={true}>
+            <FlatList
+              data={messages}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </ScrollView>
+
           <View
             style={{
               backgroundColor: colors.lightWhite,
@@ -520,7 +535,10 @@ const ShopperMessenger = (props) => {
               justifyContent: 'center',
             }}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
