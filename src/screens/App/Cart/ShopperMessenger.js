@@ -27,7 +27,8 @@ import Footer from '../../../components/Footer';
 import database from '@react-native-firebase/database';
 import {connect} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
-import ImgToBase64 from 'react-native-image-base64';
+// import ImgToBase64 from 'react-native-image-base64';
+import base64 from 'react-native-base64';
 
 // import EmojiBoard from 'react-native-emoji-board';
 
@@ -60,8 +61,6 @@ const ShopperMessenger = ({}) => {
   const messagesRef = database().ref(`messages/${roomKey}`);
   const [messages, setMessages] = useState([]);
 
-  const [base64, setBase64] = useState();
-
   const myid = 20;
   const myname = 'waqas';
   const mydp = 'waqasdp';
@@ -91,15 +90,18 @@ const ShopperMessenger = ({}) => {
     }
   }
 
-  function addmsg64(base64) {
-    console.log('addmsg64: ', base64);
+  function addmsg64(encodedString, decodedString) {
+    console.log('addmsg64 encodedString: ', encodedString);
+    console.log('addmsg64 decodedString: ', decodedString);
 
     messagesRef.push({
-      text: base64,
+      decoded: decodedString,
+      text: encodedString,
+      b64: true,
       createdAt: Date.now(),
       status: 'unread',
-      // sendid: otherid,
-      sendid: user?.user_id,
+      sendid: otherid,
+      // sendid: user?.user_id,
       sendername: myname,
       recvid: myid,
       recvrname: othername,
@@ -122,6 +124,8 @@ const ShopperMessenger = ({}) => {
           {
             _id: child.key,
             text: child.val().text,
+            decoded: child.val().decoded,
+            b64: child.val().b64,
             createdAt: child.val().createdAt,
             recvid: child.val().recvid,
             sendid: child.val().sendid,
@@ -194,30 +198,7 @@ const ShopperMessenger = ({}) => {
               alignSelf: 'center',
               borderRadius: 5,
               padding: 10,
-              backgroundColor: 'pink',
             }}>
-            {fileName ? (
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: 'black',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text>This is the image</Text>
-                <Image
-                  style={{
-                    width: 100,
-                    height: 50,
-                    resizeMode: 'contain',
-                    borderWidth: 1,
-                    borderColor: 'red',
-                  }}
-                  source={{uri: base64}}
-                />
-                <Text>This is the image</Text>
-              </View>
-            ) : null}
             <Text
               style={{
                 color: 'white',
@@ -225,7 +206,7 @@ const ShopperMessenger = ({}) => {
                 // textAlign: 'center',
                 // marginHorizontal: 8,
               }}>
-              {item.text}
+              {item.b64 ? 'image' : item.text}
             </Text>
           </View>
           <View
@@ -247,29 +228,73 @@ const ShopperMessenger = ({}) => {
             <Text style={{fontSize: 10}}>17:28</Text>
           </View>
 
-          <View
-            style={{
-              justifyContent: 'center',
-              // alignItems: 'center',
-              marginLeft: 10,
-              backgroundColor: colors.primary,
-              // height: 80,
-              maxWidth: 200,
-              alignSelf: 'center',
-              borderRadius: 5,
-              padding: 10,
-            }}>
-            <Text
+          {item.b64 ? (
+            <View
               style={{
-                color: colors.greenColor,
-
-                // marginHorizontal: 8,
-                fontSize: 12,
-                // marginLeft: 10,
+                justifyContent: 'center',
+                // alignItems: 'center',
+                marginLeft: 10,
+                backgroundColor: colors.primary,
+                // height: 80,
+                maxWidth: 200,
+                alignSelf: 'center',
+                borderRadius: 5,
+                padding: 10,
               }}>
-              {item.text}
-            </Text>
-          </View>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: 'black',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={{
+                    width: 100,
+                    height: 100,
+                    resizeMode: 'contain',
+                    borderWidth: 1,
+                    borderColor: 'red',
+                  }}
+                  source={{uri: item.text}}
+                />
+              </View>
+
+              {/* <Text
+                style={{
+                  color: colors.greenColor,
+                  // marginHorizontal: 8,
+                  fontSize: 12,
+                  // marginLeft: 10,
+                }}>
+                {item.text}
+              </Text> */}
+            </View>
+          ) : (
+            <View
+              style={{
+                justifyContent: 'center',
+                // alignItems: 'center',
+                marginLeft: 10,
+                backgroundColor: colors.primary,
+                // height: 80,
+                maxWidth: 200,
+                alignSelf: 'center',
+                borderRadius: 5,
+                padding: 10,
+              }}>
+              <Text
+                style={{
+                  color: colors.greenColor,
+                  // marginHorizontal: 8,
+                  fontSize: 12,
+                  // marginLeft: 10,
+                }}>
+                {item.text}
+              </Text>
+            </View>
+          )}
+
           <Image
             source={person1}
             style={{
@@ -338,13 +363,20 @@ const ShopperMessenger = ({}) => {
         console.log(`Response`, response);
         setfileName(data);
         console.log('setfileName: ', data);
-        ImgToBase64.getBase64String(data.uri)
-          .then((base64String) => {
-            console.log('ImgToBase64: ', base64String),
-              setBase64(base64String),
-              addmsg64(base64String);
-          })
-          .catch((err) => console.log('ImgToBase64 ERROR: ', err));
+
+        var encodedString = base64.encode(data.uri);
+        // console.log('encodedString: ', encodedString);
+        var decodedString = base64.decode(encodedString);
+        // console.log('decodedString: ', decodedString);
+        addmsg64(encodedString, decodedString);
+
+        // ImgToBase64.getBase64String(data.uri)
+        //   .then((base64String) => {
+        //     console.log('ImgToBase64: ', base64String),
+        //       setBase64(base64String),
+        //       addmsg64(base64String);
+        //   })
+        //   .catch((err) => console.log('ImgToBase64 ERROR: ', err));
       }
     });
   };
