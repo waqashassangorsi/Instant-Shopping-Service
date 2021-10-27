@@ -29,6 +29,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {Settings, LoginManager, Profile} from 'react-native-fbsdk-next';
+import {getUniqueId, getManufacturer} from 'react-native-device-info';
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -150,14 +151,18 @@ const SignUpModal = ({
     } else {
       // Keyboard.dismiss();
       // setLoading(true);
+      var uniqueId = getUniqueId();
+
       const formdata = new FormData();
       formdata.append('email', email);
       formdata.append('password', pass);
+      formdata.append('uniqueId', uniqueId);
 
       console.log('formdata', formdata);
 
       const res = await loginaction(formdata);
 
+      console.log('RESPONSE LOGIN: ', res);
       if (res.data.status == true) {
         setreload(true);
         handleChange(false);

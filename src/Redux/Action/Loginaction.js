@@ -42,6 +42,7 @@ export const orderPlace = async (data) => {
 };
 
 export const loginaction = (data) => {
+  console.log('loginaction: ', data);
   return async (dispatch) => {
     console.log('inside dispathc', data);
     const res = await axios.post(`${BASE_URL}login_user`, data);
