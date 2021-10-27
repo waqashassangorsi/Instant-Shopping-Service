@@ -19,6 +19,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Divider} from 'react-native-paper';
 import {connect} from 'react-redux';
 import {getuserRecord, getuserOrder} from '../../../Redux/Action/Loginaction';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
 
 import {
   primary,
@@ -114,16 +116,26 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
   const [userdata, setuserdata] = useState([]);
   const [order, setorder] = useState([]);
   const [status, setorderstatus] = useState('all');
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
 
   // console.log(`myredu`, user);
 
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
+
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     (async () => {
       const formdata = new FormData();
       formdata.append('user_id', user.user_id);
       const res = await getuserRecord(formdata);
       // console.log('fashindata,', res);
       setuserdata(res.data.data);
+      setLoading(false);
+      toggleModal();
     })();
   }, []);
 
@@ -159,6 +171,21 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <MainHeader />
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <View
