@@ -63,20 +63,20 @@ const DATA = [
   {id: 12, name: 'amazon'},
 ];
 
-const MainHeader = ({getcity, getallbrands, getallcategory}) => {
+const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [listcity, setlistcity] = useState([]);
   const [allcategory, setallcategory] = useState([]);
   const [category, setcategory] = useState([]);
   const [myselectedcat, setmyselectedcat] = useState();
-  const cart_data = useSelector((state) => state.cart.userCart);
+  const [cart_data, setcart_data] = useState(
+    useSelector((state) => state?.cart?.userCart),
+  );
+  // const cart_data = useSelector((state) => state.cart.userCart);
   const user = useSelector((state) => state.auth?.user);
 
-  console.log('mainheader USER: ', user);
-
-  console.log('cartdata', cart_data);
-
+  console.log('mainheader mainheader: ', cart);
   const [brandsname, setbrandsname] = useState([]);
   useEffect(() => {
     // console.log('fashindata,', fashiondata);
@@ -102,6 +102,8 @@ const MainHeader = ({getcity, getallbrands, getallcategory}) => {
       setModalVisible(false);
     }
   }
+
+  console.log('mainheader cart: ', cart);
 
   // console.log("myallcategory",allcategory);
 
@@ -223,7 +225,8 @@ const MainHeader = ({getcity, getallbrands, getallcategory}) => {
                     borderWidth: 1,
                     borderColor: 'green',
                   }}>
-                  <Text>{cart_data?.length}</Text>
+                  {/* <Text>{cart_data?.length}</Text> */}
+                  <Text>{cart?.length}</Text>
                 </View>
               </TouchableOpacity>
             ) : null}
@@ -376,9 +379,10 @@ const MainHeader = ({getcity, getallbrands, getallcategory}) => {
 };
 
 const mapStateToProps = (state) => {
-  // const {user} = state.auth?.user;
-  // console.log('mainheader redux data: ', state);
-  // return {user};
+  const cart = state.cart.userCart;
+  console.log('mainheader usercart: ', cart);
+
+  return {cart};
 };
 export default connect(mapStateToProps, {
   getcity,

@@ -10,7 +10,11 @@ import Footer from '../../../components/Footer';
 import MainHeader from '../Products/MainHeader';
 import {connect, useSelector, useDispatch} from 'react-redux';
 import {getsingleProduct} from '../../../Redux/Action/Loginaction';
-import {addToCart, updateTotalPrice} from '../../../Redux/Action/cart';
+import {
+  addToCart,
+  updateTotalPrice,
+  updateCart,
+} from '../../../Redux/Action/cart';
 const sameShirt = [
   {
     id: 1,
@@ -59,6 +63,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const from = route?.params?.from;
   const [alreadyInCart, setAlreadyInCart] = useState(false);
   const user = useSelector((state) => state.auth?.user);
+  const cart_data = useState(useSelector((state) => state?.cart?.userCart));
 
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
@@ -123,6 +128,9 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
     dispatch(
       addToCart(productdatanew, productdatanew.price * productdatanew.qty),
     );
+    console.log('productviewdetail: ', cart_data[0]);
+
+    // dispatch(updateCart(cart_data[0], totalPrice));
   };
 
   return (
