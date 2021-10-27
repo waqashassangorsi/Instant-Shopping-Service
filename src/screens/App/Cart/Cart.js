@@ -908,6 +908,7 @@ const Cart = ({
     </View>
   );
 };
+
 const mapStateToProps = (state) => {
   const {userCart, totalPrice} = state.cart;
   const {user, charityId} = state.auth;
@@ -924,6 +925,7 @@ const mapStateToProps = (state) => {
     balance,
   };
 };
+
 export default connect(mapStateToProps, {
   addToCart,
   updateTotalPrice,

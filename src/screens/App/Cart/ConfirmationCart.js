@@ -8,6 +8,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {orderPlace} from '../../../Redux/Action/Loginaction';
+import {updateCart} from '../../../Redux/Action/cart';
 
 const ConfirmationCart = ({userdetails}) => {
   const cart_data = useSelector((state) => state.cart.userCart);
@@ -15,6 +16,7 @@ const ConfirmationCart = ({userdetails}) => {
   const user = useSelector((state) => state.auth?.user);
   const userAddress = userdetails;
   let navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const onPressPlaceOrder = async () => {
     let obj = {
@@ -32,15 +34,24 @@ const ConfirmationCart = ({userdetails}) => {
     // const res = await orderPlace(obj);
 
     const res = await orderPlace(JSON.stringify(obj));
+    console.log('RESPONSE confirmationcart orderplace: ', res);
+
     if (res.data.status) {
       setLoading(false);
+      updateCartNow([], 0);
       navigation.navigate('CongratulationCart');
     } else {
-      navigation.navigate('CongratulationCart');
       alert(res.data.message);
       console.log(res);
       setLoading(false);
     }
+  };
+
+  const updateCartNow = (productsNow, totalPrice) => {
+    let cart = productsNow;
+    let max = totalPrice;
+
+    dispatch(updateCart(cart, max));
   };
 
   return (
