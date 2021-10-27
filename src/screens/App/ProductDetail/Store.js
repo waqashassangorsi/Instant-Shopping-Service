@@ -17,9 +17,19 @@ import {connect} from 'react-redux';
 import {getallbrands, latLong} from '../../../Redux/Action/Loginaction';
 import Geolocation from 'react-native-geolocation-service';
 
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
+
 const Store = ({getallbrands, latLong}) => {
   const [storedata, setstoredata] = useState([]);
   const [userloc, setuserloc] = useState([]);
+
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
 
   Geolocation.getCurrentPosition(
     (position) => {
@@ -50,10 +60,14 @@ const Store = ({getallbrands, latLong}) => {
   // alert('hi');
 
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     // console.log('fashindata,', fashiondata);
     (async () => {
       const res = await getallbrands();
       setstoredata(res.data.data);
+      setLoading(false);
+      toggleModal();
     })();
   }, []);
 
@@ -70,6 +84,21 @@ const Store = ({getallbrands, latLong}) => {
 
   return (
     <View style={{flex: 1}}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <View style={{backgroundColor: 'red'}}>
         <Image
           source={require('../../../assets/pro.jpg')}

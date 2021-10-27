@@ -3,13 +3,26 @@ import {View, Image, Text, Pressable, ScrollView, FlatList} from 'react-native';
 import colors from '../../../theme/colors';
 import {connect} from 'react-redux';
 import {getallcategory} from '../../../Redux/Action/Loginaction';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
 const TopPerformingCategories = ({getallcategory}) => {
   const [category, setcategory] = useState([]);
+
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
+
     // console.log('fashindata,', fashiondata);
     (async () => {
       const res = await getallcategory();
       setcategory(res.data.data);
+      setLoading(false);
+      toggleModal();
     })();
   }, []);
   return (
@@ -20,6 +33,21 @@ const TopPerformingCategories = ({getallcategory}) => {
         padding: 10,
         backgroundColor: colors.WebGLQuery,
       }}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <View
         style={{
           flexDirection: 'row',

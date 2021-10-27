@@ -6,19 +6,47 @@ import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import {connect} from 'react-redux';
 import {getallbrands} from '../../../Redux/Action/Loginaction';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
 
 const PopularFashion = ({getallbrands}) => {
   const [fashiondata, setfashiondata] = useState([]);
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
+
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     // console.log('fashindata,', fashiondata);
     (async () => {
       const res = await getallbrands();
       setfashiondata(res.data.data);
+      setLoading(false);
+      toggleModal();
     })();
   }, []);
 
   return (
     <View style={{flex: 1, padding: 10}}>
+      {/* {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              // backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null} */}
       <View
         style={{
           flexDirection: 'row',

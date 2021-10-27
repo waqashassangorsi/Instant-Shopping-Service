@@ -29,7 +29,9 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {Settings, LoginManager, Profile} from 'react-native-fbsdk-next';
-import {getUniqueId, getManufacturer} from 'react-native-device-info';
+import {getUniqueId} from 'react-native-device-info';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -52,11 +54,18 @@ const SignUpModal = ({
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [reload, setreload] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [email1, setEmail1] = useState('');
   const [pass1, setPass1] = useState('');
   const [username, setUsername] = useState('');
   const [cnf, setCnf] = useState('');
+
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
 
   const signInG = async () => {
     try {
@@ -150,7 +159,8 @@ const SignUpModal = ({
       alert('kindly enter password ');
     } else {
       // Keyboard.dismiss();
-      // setLoading(true);
+      toggleModal();
+      setLoading(true);
       var uniqueId = getUniqueId();
 
       const formdata = new FormData();
@@ -167,10 +177,12 @@ const SignUpModal = ({
         setreload(true);
         handleChange(false);
         // await savePass(pass);
-        // setLoading(false);
+        setLoading(false);
+        toggleModal();
       } else {
         alert(res.data.message);
-        // setLoading(false);
+        setLoading(false);
+        toggleModal();
       }
     }
   };
@@ -224,6 +236,21 @@ const SignUpModal = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <Modal
         animationType="slide"
         transparent={true}
@@ -687,6 +714,7 @@ const mapStateToProps = (state) => {
 
   return {user, isLoggedIn};
 };
+
 export default connect(mapStateToProps, {
   loginaction,
   signupaction,

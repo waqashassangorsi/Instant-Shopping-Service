@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Footer from '../../../components/Footer';
@@ -9,6 +9,8 @@ import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {orderPlace} from '../../../Redux/Action/Loginaction';
 import {updateCart} from '../../../Redux/Action/cart';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
 
 const ConfirmationCart = ({userdetails}) => {
   const cart_data = useSelector((state) => state.cart.userCart);
@@ -17,7 +19,12 @@ const ConfirmationCart = ({userdetails}) => {
   const userAddress = userdetails;
   let navigation = useNavigation();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
 
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
   const onPressPlaceOrder = async () => {
     let obj = {
       cart: cart_data,
@@ -32,18 +39,22 @@ const ConfirmationCart = ({userdetails}) => {
     // navigation.navigate('CongratulationCart');
 
     // const res = await orderPlace(obj);
+    toggleModal();
+    setLoading(true);
 
     const res = await orderPlace(JSON.stringify(obj));
     console.log('RESPONSE confirmationcart orderplace: ', res);
 
     if (res.data.status) {
       setLoading(false);
+      toggleModal();
       updateCartNow([], 0);
       navigation.navigate('CongratulationCart');
     } else {
       alert(res.data.message);
       console.log(res);
       setLoading(false);
+      toggleModal();
     }
   };
 
@@ -56,6 +67,21 @@ const ConfirmationCart = ({userdetails}) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <MainHeader />
       <View style={{flex: 1, backgroundColor: colors.white}}>
         <View

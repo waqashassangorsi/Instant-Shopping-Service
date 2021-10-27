@@ -373,7 +373,7 @@ const CreateCart = () => {
                   color: colors.greenColor,
                   marginHorizontal: 10,
                 }}>
-                ${total.toFixed(2)}
+                ${total?.toFixed(2)}
               </Text>
             </View>
           </View>

@@ -8,18 +8,47 @@ import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {getallproducts} from '../../../Redux/Action/Loginaction';
 
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
+
 const BestSellProduct = ({getallproducts}) => {
   const [productdata, setproductdata] = useState([]);
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
+
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     (async () => {
       const res = await getallproducts();
       // console.log('fashindata,', res);
       setproductdata(res.data.data);
+      setLoading(false);
+      toggleModal();
     })();
   }, []);
   let navigation = useNavigation();
   return (
     <View style={{flex: 1, padding: 10}}>
+      {/* {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              // backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null} */}
       <View
         style={{
           flexDirection: 'row',

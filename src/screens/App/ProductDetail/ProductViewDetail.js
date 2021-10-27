@@ -15,6 +15,10 @@ import {
   updateTotalPrice,
   updateCart,
 } from '../../../Redux/Action/cart';
+
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
+
 const sameShirt = [
   {
     id: 1,
@@ -70,7 +74,16 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
   const [productdata, setproductdata] = useState({});
   const [qty, setqty] = useState(1);
 
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
+
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     (async () => {
       const formdata = new FormData();
       formdata.append('post_id', from);
@@ -79,6 +92,8 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
       // console.log('fashindata,', res);
       if (res.data.status == true) {
         setproductdata(res.data.data[0]);
+        setLoading(false);
+        toggleModal();
       } else {
       }
       // setproductdata(res.data.data);
@@ -135,6 +150,21 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <MainHeader />
       <View style={{flex: 1, padding: 20}}>
         <View style={{flex: 1, justifyContent: 'center'}}>
