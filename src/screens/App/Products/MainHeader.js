@@ -14,6 +14,7 @@ import {
   Platform,
   Linking,
   Pressable,
+  AppState,
 } from 'react-native';
 import {Header, Badge} from 'react-native-elements';
 
@@ -35,6 +36,9 @@ import {
   getallbrands,
   getallcategory,
 } from '../../../Redux/Action/Loginaction';
+
+import database from '@react-native-firebase/database';
+import messaging from '@react-native-firebase/messaging';
 
 const categories = [
   'Shop by store',
@@ -64,6 +68,25 @@ const DATA = [
 ];
 
 const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  }, []);
+  const _handleAppStateChange = (nextAppState) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('AppState: App has come to the foreground!');
+    }
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+  };
+
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [listcity, setlistcity] = useState([]);
