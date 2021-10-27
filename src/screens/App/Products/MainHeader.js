@@ -70,12 +70,7 @@ const DATA = [
 const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  useEffect(() => {
-    AppState.addEventListener('change', _handleAppStateChange);
-    return () => {
-      AppState.removeEventListener('change', _handleAppStateChange);
-    };
-  }, []);
+
   const _handleAppStateChange = (nextAppState) => {
     if (
       appState.current.match(/inactive|background/) &&
@@ -86,6 +81,50 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
     appState.current = nextAppState;
     setAppStateVisible(appState.current);
   };
+
+  useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  }, []);
+
+  const myonlinereference = database().ref(`/online/` + user?.id);
+  myonlinereference.transaction((userexists) => {
+    if (userexists === null) {
+      myonlinereference
+        .set({
+          onlinestatus: 'Online',
+          lastonline: new Date().getTime(),
+        })
+        .then(() => console.log(''));
+    } else {
+      console.log('helog', 'record exits');
+    }
+  });
+  // Remove the node whenever the client disconnects
+  myonlinereference
+    .onDisconnect()
+    .update({
+      onlinestatus: 'Offline',
+      lastonline: new Date().getTime(),
+    })
+    .then(() => console.log(''));
+  if (appStateVisible == 'background') {
+    myonlinereference
+      .update({
+        onlinestatus: 'Offline',
+        lastonline: new Date().getTime(),
+      })
+      .then(() => console.log(''));
+  } else if (appStateVisible == 'active') {
+    myonlinereference
+      .update({
+        onlinestatus: 'Online',
+        lastonline: new Date().getTime(),
+      })
+      .then(() => console.log(''));
+  }
 
   let navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
