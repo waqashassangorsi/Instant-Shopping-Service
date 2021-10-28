@@ -49,8 +49,12 @@ const ProductsDetails = () => {
 
       parsedData = JSON.parse(remoteMessage?.data?.data);
 
-      if (parsedData.from == 2) {
+      if (parsedData.from == 1) {
         navigation.navigate('ShopperDetail');
+      }
+      if (parsedData.from == 2) {
+        // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
+        navigation.navigate('OrderPage', parsedData.order_id);
       }
     });
     messaging().onMessage(async (remoteMessage) => {
@@ -61,8 +65,12 @@ const ProductsDetails = () => {
 
       parsedData = JSON.parse(remoteMessage?.data?.data);
 
-      if (parsedData.from == 2) {
+      if (parsedData.from == 1) {
         navigation.navigate('ShopperDetail');
+      }
+      if (parsedData.from == 2) {
+        // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
+        navigation.navigate('OrderPage', parsedData.order_id);
       }
     });
     messaging()
@@ -76,8 +84,12 @@ const ProductsDetails = () => {
 
           parsedData = JSON.parse(remoteMessage?.data?.data);
 
-          if (parsedData.from == 2) {
+          if (parsedData.from == 1) {
             navigation.navigate('ShopperDetail');
+          }
+          if (parsedData.from == 2) {
+            // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
+            navigation.navigate(' ', parsedData.order_id);
           }
         }
 

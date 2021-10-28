@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  FlatList,
 } from 'react-native';
 import colors from '../../../theme/colors';
 import {Loading} from '../ProductDetail/Loading';
@@ -54,13 +55,20 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
   useEffect(() => {
     (async () => {
       const formdata = new FormData();
-      formdata.append('order_id', 31);
+      formdata.append('order_id', 53);
       const res = await getorderDetail(formdata);
+      console.log('RESPONSE orderpage: ', res);
       console.log('fashindata,', res);
       setorder(res.data.data.order_detail[0]);
-      setproduct(res.data.data.product_detail);
+      let array = [];
+      array.push(res.data.data.product_detail);
+      setproduct(array);
     })();
   }, []);
+
+  useEffect(() => {
+    console.log('RESPONSE product: ', product);
+  });
 
   useEffect(() => {
     (async () => {
@@ -130,6 +138,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               marginHorizontal: 10,
               justifyContent: 'space-around',
               marginTop: 15,
+              // backgroundColor: 'pink',
             }}>
             <Text
               style={{
@@ -557,8 +566,78 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
             marginTop: 10,
             borderWidth: 2,
             borderColor: colors.WebGLQuery,
+            // backgroundColor: 'black',
           }}>
-          <View
+          {/* <View style={{backgroundColor: 'pink', height: 100}}> */}
+          <FlatList
+            data={product}
+            keyExtractor={(product) => product.product_id}
+            renderItem={({item}) => {
+              console.log('RESPONSE ITEM: ', item);
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    backgroundColor: '#FAFAFA',
+                    borderBottomWidth: 2,
+                    borderColor: colors.WebGLQuery,
+                    padding: 10,
+                    // backgroundColor: 'black',
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      source={require('../../../assets/miniDress.png')}
+                      style={{width: 73, height: 73}}
+                    />
+                    <View style={{marginLeft: 10}}>
+                      <Text style={{fontSize: 16, color: 'black'}}>{'No'}</Text>
+                      <Text style={{fontSize: 10}}>Black</Text>
+                    </View>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        width: 30,
+                        height: 30,
+                        borderColor: colors.WebGLQuery,
+                        backgroundColor: colors.white,
+                        elevation: 1,
+                        marginRight: 15,
+                      }}>
+                      <Text style={{textAlign: 'center', marginTop: 3}}>
+                        {item.qty}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: colors.gray,
+                        }}>
+                        {'$' + item.product_price}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            }}
+          />
+          {/* </View> */}
+
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -567,6 +646,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               borderBottomWidth: 2,
               borderColor: colors.WebGLQuery,
               padding: 10,
+              backgroundColor: 'black',
             }}>
             <View
               style={{
@@ -615,9 +695,9 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 </Text>
               </View>
             </View>
-          </View>
+          </View> */}
 
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -728,7 +808,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 </Text>
               </View>
             </View>
-          </View>
+          </View> */}
 
           <View
             style={{
@@ -745,7 +825,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 color: colors.greenColor,
                 marginHorizontal: 10,
               }}>
-              $6,274.75
+              ${order.order_total}
             </Text>
           </View>
         </View>
