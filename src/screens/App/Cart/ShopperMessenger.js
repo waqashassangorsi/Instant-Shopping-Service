@@ -284,7 +284,7 @@ const ShopperMessenger = (props) => {
 
   const renderItem = ({item, index}) => (
     <View>
-      {true ? (
+      {/* {true ? (
         <View
           style={{
             justifyContent: 'center',
@@ -299,7 +299,7 @@ const ShopperMessenger = (props) => {
           }}>
           <Text style={{color: 'white', fontSize: 10}}>Thursday</Text>
         </View>
-      ) : null}
+      ) : null} */}
 
       {item.sendid == user?.user_id && (
         <View style={{flexDirection: 'row', marginTop: 10}}>
