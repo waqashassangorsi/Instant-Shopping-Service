@@ -65,7 +65,7 @@ const ShopperMessenger = (props) => {
   const [messages, setMessages] = useState([]);
   const [online, setOnline] = useState([]);
   const [userData, setUserData] = useState(props?.route?.params?.userdata);
-  const [otherOnline, setOtherOnline] = useState(false);
+  const [otherOnline, setOtherOnline] = useState();
   const [otherlastonline, setotherlastonline] = useState();
 
   const myid = 20;
@@ -284,6 +284,23 @@ const ShopperMessenger = (props) => {
 
   const renderItem = ({item, index}) => (
     <View>
+      {true ? (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.greenColor,
+            marginTop: 15,
+            width: 100,
+            height: 25,
+            alignSelf: 'center',
+            borderRadius: 3,
+            // backgroundColor: 'black',
+          }}>
+          <Text style={{color: 'white', fontSize: 10}}>Thursday</Text>
+        </View>
+      ) : null}
+
       {item.sendid == user?.user_id && (
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <Image
@@ -665,7 +682,7 @@ const ShopperMessenger = (props) => {
           </TouchableOpacity>
         </View>
         <View style={{padding: 10, height: 600}}>
-          <View
+          {/* <View
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -675,9 +692,10 @@ const ShopperMessenger = (props) => {
               height: 25,
               alignSelf: 'center',
               borderRadius: 3,
+              backgroundColor: 'black',
             }}>
             <Text style={{color: 'white', fontSize: 10}}>Thursday</Text>
-          </View>
+          </View> */}
 
           <ScrollView
             // style={{backgroundColor: 'red'}}

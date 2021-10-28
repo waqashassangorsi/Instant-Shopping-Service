@@ -176,8 +176,12 @@ const Product = ({
 
   const checktoken = async (fcmtoken) => {
     const token = await AsyncStorage.getItem('token');
+    console.log('checktoken token: ', token);
+    console.log('checktoken fcmtoken: ', fcmtoken);
     // alert(token);
     if (token !== fcmtoken) {
+      console.log('checktoken condition token: ', token);
+      console.log('checktoken condition fcmtoken: ', fcmtoken);
       alert('Pushed');
       const formData = new FormData();
 

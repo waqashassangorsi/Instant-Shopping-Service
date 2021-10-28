@@ -40,17 +40,30 @@ const ProductsDetails = () => {
     }
   };
   const notificationListener = async () => {
+    var parsedData;
     messaging().onNotificationOpenedApp((remoteMessage) => {
       console.log(
-        'Notification caused app to open from background state:',
-        remoteMessage.notification,
+        'NOTIFICATION Notification caused app to open from background state:',
+        remoteMessage,
       );
+
+      parsedData = JSON.parse(remoteMessage?.data?.data);
+
+      if (parsedData.from == 2) {
+        navigation.navigate('ShopperDetail');
+      }
     });
     messaging().onMessage(async (remoteMessage) => {
       if (remoteMessage.data.name) {
         navigation.navigate(CreateCart);
       }
-      console.log(`received in foreground`, remoteMessage.data.name);
+      console.log(`NOTIFICATION received in foreground`, remoteMessage);
+
+      parsedData = JSON.parse(remoteMessage?.data?.data);
+
+      if (parsedData.from == 2) {
+        navigation.navigate('ShopperDetail');
+      }
     });
     messaging()
       .getInitialNotification()
@@ -58,8 +71,14 @@ const ProductsDetails = () => {
         if (remoteMessage) {
           console.log(
             'Notification caused app to open from quit state:',
-            remoteMessage.notification,
+            remoteMessage,
           );
+
+          parsedData = JSON.parse(remoteMessage?.data?.data);
+
+          if (parsedData.from == 2) {
+            navigation.navigate('ShopperDetail');
+          }
         }
 
         if (remoteMessage.data.name) {
