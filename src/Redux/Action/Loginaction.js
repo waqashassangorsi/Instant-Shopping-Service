@@ -29,6 +29,18 @@ import {
 //   };
 // };
 
+export const fcmApi = async (data) => {
+  console.log('fcmAPi: ', data);
+
+  const res = await axios.post(`${BASE_URL}upload_fcm`, data);
+
+  if (res.data.status == true) {
+    return res;
+  } else {
+    return res;
+  }
+};
+
 export const orderPlace = async (data) => {
   console.log('orderPlace: ', data);
 

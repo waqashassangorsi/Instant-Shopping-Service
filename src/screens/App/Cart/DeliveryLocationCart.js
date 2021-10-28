@@ -100,17 +100,40 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
   // };
 
   const onPressProceed = () => {
-    var addressDetails = {
+    console.log(
+      'deliverylocationcart onPressProceed: ',
       myselectedcat,
       myselectedcat1,
       location,
-      city: myselectedcity,
-      location: myselectedlocation,
-      address: address,
-      landmark: landmark,
-    };
-    console.log('userAddress', addressDetails);
-    dispatch(userAddress(addressDetails));
+      myselectedcity,
+      myselectedlocation,
+      address,
+      landmark,
+    );
+    if (
+      (myselectedcat,
+      myselectedcat1,
+      location,
+      myselectedcity,
+      myselectedlocation,
+      address,
+      landmark)
+    ) {
+      var addressDetails = {
+        cityId: myselectedcat,
+        locationId: myselectedcat1,
+        location,
+        city: myselectedcity,
+        location: myselectedlocation,
+        address: address,
+        landmark: landmark,
+      };
+      console.log('userAddress', addressDetails);
+      dispatch(userAddress(addressDetails));
+      navigation.navigate('ConfirmationCart');
+    } else {
+      alert('All fields are mandatory.');
+    }
   };
 
   return (
@@ -467,7 +490,6 @@ const DeliveryLocationCart = ({getcity, getlocation}) => {
           <TouchableOpacity
             onPress={() => {
               onPressProceed();
-              navigation.navigate('ConfirmationCart');
             }}
             style={{
               flex: 1,

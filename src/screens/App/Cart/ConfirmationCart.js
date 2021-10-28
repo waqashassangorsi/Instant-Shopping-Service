@@ -26,19 +26,18 @@ const ConfirmationCart = ({userdetails}) => {
     setLoaderModalVisible(!isLoaderModalVisible);
   };
   const onPressPlaceOrder = async () => {
+    let userId = user.user_id;
+
     let obj = {
       cart: cart_data,
       totalAmount,
       userAddress,
-      user,
+      userId,
     };
 
-    // console.log('onPressPlaceOrder OBJECT: ', obj);
-    // console.log('onPressPlaceOrder STRING: ', JSON.stringify(obj));
+    console.log('onPressPlaceOrder OBJECT: ', obj);
+    console.log('onPressPlaceOrder STRING: ', JSON.stringify(obj));
 
-    // navigation.navigate('CongratulationCart');
-
-    // const res = await orderPlace(obj);
     toggleModal();
     setLoading(true);
 

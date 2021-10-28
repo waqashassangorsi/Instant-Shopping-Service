@@ -63,7 +63,7 @@ import {
 } from '../../../assets';
 import styles from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import Modal from 'react-native-modal';
 import {Fonts} from '../../../utils/Fonts';
 import {useNavigation} from '@react-navigation/native';
@@ -75,7 +75,7 @@ import {
   getCateg,
 } from '../../../Redux/Action/Competitionaction';
 import {addToCart} from '../../../Redux/Action/cart';
-import {saveCharity} from '../../../Redux/Action/Loginaction';
+import {saveCharity, fcmApi} from '../../../Redux/Action/Loginaction';
 import {Alert} from 'react-native';
 import {compose} from 'redux';
 import Store from '../ProductDetail/Store';
@@ -121,6 +121,7 @@ const Product = ({
   allCateg,
 }) => {
   let navigation = useNavigation();
+  const user = useSelector((state) => state.auth?.user);
 
   //Push Notification Work Start
   // Must be outside of any component LifeCycle (such as `componentDidMount`).
@@ -178,9 +179,18 @@ const Product = ({
     // alert(token);
     if (token !== fcmtoken) {
       alert('Pushed');
+      const formData = new FormData();
+
+      formData.append('user_id', user.user_id);
+      formData.append('fcm_token', fcmtoken);
+
+      const res = await fcmApi(formData);
+      console.log('RESPONSE fcmApi: ', res);
+
       await AsyncStorage.setItem('token', fcmtoken);
     }
   };
+
   useEffect(() => {
     messaging()
       .getToken()

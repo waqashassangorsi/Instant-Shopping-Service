@@ -45,8 +45,8 @@ export const userAddress = (data1) => {
           location: data1.location,
           address: data1.address,
           landmark: data1.landmark,
-          myselectedcat: data1.myselectedcat,
-          myselectedcat1: data1.myselectedcat1,
+          cityId: data1.cityId,
+          locationId: data1.locationId,
         },
       });
     } catch (err) {

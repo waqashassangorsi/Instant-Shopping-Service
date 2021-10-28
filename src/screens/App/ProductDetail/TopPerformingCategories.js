@@ -33,7 +33,7 @@ const TopPerformingCategories = ({getallcategory}) => {
         padding: 10,
         backgroundColor: colors.WebGLQuery,
       }}>
-      {loading ? (
+      {/* {loading ? (
         <LoaderModal
           style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
           isVisible={isLoaderModalVisible}>
@@ -47,7 +47,7 @@ const TopPerformingCategories = ({getallcategory}) => {
             <UIActivityIndicator color="white" />
           </View>
         </LoaderModal>
-      ) : null}
+      ) : null} */}
       <View
         style={{
           flexDirection: 'row',

@@ -70,6 +70,7 @@ const DATA = [
 const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [userdata, setUserdata] = useState(useSelector((state) => state?.auth));
 
   const _handleAppStateChange = (nextAppState) => {
     if (
@@ -89,7 +90,11 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
     };
   }, []);
 
-  const myonlinereference = database().ref(`/online/` + user?.id);
+  // const myonlinereference = database().ref(`/online/` + user?.id);
+  const myonlinereference = database().ref(
+    `/online/` + userdata?.user?.user_id,
+  );
+  console.log('myonlinereference: ', userdata?.user?.user_id);
   myonlinereference.transaction((userexists) => {
     if (userexists === null) {
       myonlinereference
@@ -126,7 +131,7 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
       .then(() => console.log(''));
   }
 
-  let navigation = useNavigation();
+  let navigation = useNavigation({user});
   const [modalVisible, setModalVisible] = useState(false);
   const [listcity, setlistcity] = useState([]);
   const [allcategory, setallcategory] = useState([]);
@@ -274,23 +279,25 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
                   size={15}
                   color={colors.greenColor}
                 />
-                <View
-                  style={{
-                    height: 18,
-                    width: 18,
-                    borderRadius: 18 / 2,
-                    position: 'absolute',
-                    top: -10,
-                    right: -5,
-                    backgroundColor: 'white',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderWidth: 1,
-                    borderColor: 'green',
-                  }}>
-                  {/* <Text>{cart_data?.length}</Text> */}
-                  <Text>{cart?.length}</Text>
-                </View>
+                {cart?.length > 0 ? (
+                  <View
+                    style={{
+                      height: 18,
+                      width: 18,
+                      borderRadius: 18 / 2,
+                      position: 'absolute',
+                      top: -10,
+                      right: -5,
+                      backgroundColor: 'white',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      borderColor: 'green',
+                    }}>
+                    {/* <Text>{cart_data?.length}</Text> */}
+                    <Text>{cart?.length}</Text>
+                  </View>
+                ) : null}
               </TouchableOpacity>
             ) : null}
           </View>
@@ -445,7 +452,11 @@ const mapStateToProps = (state) => {
   const cart = state.cart.userCart;
   console.log('mainheader usercart: ', cart);
 
-  return {cart};
+  const {user} = state.auth;
+
+  console.log(`myreduxdata`, state);
+
+  return {cart, user};
 };
 export default connect(mapStateToProps, {
   getcity,

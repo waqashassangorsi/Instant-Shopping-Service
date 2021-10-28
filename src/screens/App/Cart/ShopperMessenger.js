@@ -59,8 +59,14 @@ const ShopperMessenger = (props) => {
   const [mymsg, setmymsg] = useState('');
   const roomRef = database().ref('rooms');
   const messagesRef = database().ref(`messages/${roomKey}`);
+  // const onlineRef = database().ref(`online/${roomKey}`);
+  const onlineRef = database().ref(`online/`);
+  const statusRef = database().ref(`messages/${roomKey}`);
   const [messages, setMessages] = useState([]);
+  const [online, setOnline] = useState([]);
   const [userData, setUserData] = useState(props?.route?.params?.userdata);
+  const [otherOnline, setOtherOnline] = useState(false);
+  const [otherlastonline, setotherlastonline] = useState();
 
   const myid = 20;
   const myname = 'waqas';
@@ -71,8 +77,74 @@ const ShopperMessenger = (props) => {
 
   useEffect(() => {
     // console.log('redux user: ', user);
+
+    // console.log('shoppermessenger messagesRef: ', messagesRef);
+    // console.log('shoppermessenger messages: ', messages);
+    // console.log('shoppermessenger onlineRef: ', onlineRef);
+    // console.log('shoppermessenger online: ', online);
     // console.log('shoppermessenger userData: ', userData);
+
+    var filteredUser = online.filter((i) => i._id == userData.id);
+    // console.log('shoppermessenger filteredUser: ', filteredUser);
+
+    // console.log(
+    //   'shoppermessenger lastonline: ',
+    //   moment(filteredUser[0]?.lastonline).format('DD-MM-YYYY hh:mm:ss'),
+    // );
+
+    // console.log(
+    //   'shoppermessenger lastonline: ',
+    //   moment(Date.now()).format('DD-MM-YYYY hh:mm:ss'),
+    // );
+
+    timeDifference(Date.now(), filteredUser[0]?.lastonline);
+
+    if (filteredUser[0]?.onlinestatus == 'Online') {
+      // console.log(
+      //   'shoppermessenger onlinestatus: ',
+      //   filteredUser[0]?.onlinestatus,
+      // );
+
+      setOtherOnline(true);
+    }
+
+    if (filteredUser[0]?.onlinestatus == 'Offline') {
+      // console.log(
+      //   'shoppermessenger onlinestatus: ',
+      //   filteredUser[0]?.onlinestatus,
+      // );
+      setOtherOnline(false);
+    }
   });
+
+  const timeDifference = (EndTime, StartTime) => {
+    var resolution;
+    resolution = EndTime - StartTime;
+    var seconds = (EndTime - StartTime) / 1000;
+    console.log('shoppermessenger seconds: ', secondsToHms(seconds));
+    setotherlastonline(secondsToHms(seconds));
+
+    // var resolutionTime = resolution / 1000 / 60 / 60;
+    // console.log('shoppermessenger resolutionTime: ', resolutionTime);
+
+    // console.log(
+    //   'shoppermessenger resolutionTime formatted: ',
+    //   moment(resolutionTime).format('hh:mm:ss'),
+    // );
+  };
+
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor((d % 3600) / 60);
+    var s = Math.floor((d % 3600) % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? ' hour, ' : ' hours, ') : '';
+    var mDisplay = m > 0 ? m + (m == 1 ? ' minute, ' : ' minutes, ') : '';
+    var sDisplay = s > 0 ? s + (s == 1 ? ' second' : ' seconds') : '';
+
+    return hDisplay + mDisplay + sDisplay;
+  }
 
   const onPressSend = () => {
     console.log('shoppermessenger onPressSend: ', user, userData);
@@ -124,6 +196,7 @@ const ShopperMessenger = (props) => {
 
   useEffect(() => {
     listenForMessages(messagesRef);
+    listenForOnline(onlineRef);
   }, []);
 
   const listenForMessages = (messagesRef) => {
@@ -152,6 +225,24 @@ const ShopperMessenger = (props) => {
       });
 
       setMessages(messagesFB);
+    });
+  };
+
+  const listenForOnline = () => {
+    onlineRef.on('value', (snapshot) => {
+      let onlineFB = [];
+      snapshot.forEach((child) => {
+        onlineFB = [
+          ...onlineFB,
+          {
+            _id: child.key,
+            lastonline: child.val().lastonline,
+            onlinestatus: child.val().onlinestatus,
+          },
+        ];
+      });
+
+      setOnline(onlineFB);
     });
   };
 
@@ -553,7 +644,8 @@ const ShopperMessenger = (props) => {
                 {userData?.name}
               </Text>
               <Text style={{color: 'white', fontSize: 10}}>
-                Last seen 10mins ago
+                {otherOnline ? 'online' : 'last seen' + otherlastonline}
+                {/* {'last seen ' + otherlastonline} */}
               </Text>
             </View>
           </View>
