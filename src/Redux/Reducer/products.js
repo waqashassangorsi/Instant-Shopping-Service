@@ -5,13 +5,14 @@ const initialState = {
 };
 
 export const productsReducer = (state = initialState, action) => {
-  console.log('STORE PRODUCTS: ', action);
+  console.log('STORE PRODUCTS: ', action.payload?.data);
   switch (action.type) {
     case PRODUCTS:
       return {
-        ...state,
-        ...state.products.push(action.payload.data),
+        products: [],
+        products: [...action.payload.data],
       };
+
     default:
       return state;
   }

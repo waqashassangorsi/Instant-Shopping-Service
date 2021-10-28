@@ -3,11 +3,15 @@ import {View, Text, Image, ScrollView, Pressable} from 'react-native';
 import colors from '../../../theme/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from '../Products/styles';
-import {connect} from 'react-redux';
 import {getallproducts} from '../../../Redux/Action/Loginaction';
+import {connect, useDispatch, useSelector} from 'react-redux';
 
 const PopularKitchen = ({getallproducts}) => {
   const [productdata, setproductdata] = useState([]);
+
+  const productsData = useSelector((state) => state.products);
+  // console.log('STORE popularkitchen productsData: ', productsData.products);
+
   useEffect(() => {
     (async () => {
       const res = await getallproducts();
@@ -15,6 +19,12 @@ const PopularKitchen = ({getallproducts}) => {
       setproductdata(res.data.data);
     })();
   }, []);
+
+  useEffect(() => {
+    setproductdata(productsData.products);
+    // console.log('STORE popularkitchen productdata: ', productdata);
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <View style={{marginTop: 10}}>

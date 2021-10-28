@@ -194,10 +194,10 @@ const MainHeader = ({
   // });
 
   const onPressStore = async (item) => {
-    console.log('STORE: ', item);
+    // console.log('STORE: ', item);
     const res = await getallproducts(item.brand_id);
     console.log('STORE RESPONSE: ', res);
-    dispatch(allproducts(res));
+    dispatch(allproducts(res.data.data));
   };
 
   return (
@@ -468,14 +468,14 @@ const MainHeader = ({
 
 const mapStateToProps = (state) => {
   const cart = state.cart.userCart;
-  console.log('mainheader usercart: ', cart);
+  // console.log('mainheader usercart: ', cart);
 
   const {user} = state.auth;
   const {products} = state.products;
 
-  console.log(`STORE myreduxdata`, products);
+  console.log(`STORE mainheader myreduxdata`, products);
 
-  return {cart, user};
+  return {cart, user, products};
 };
 export default connect(mapStateToProps, {
   getcity,

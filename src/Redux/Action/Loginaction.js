@@ -238,10 +238,10 @@ export const getlocation = (data) => {
 
 export const getallproducts = (data) => {
   // const params = new URLSearchParams([['brand_id', data]]);
-  console.log('STORE getallproducts: ', data);
+  // console.log('STORE getallproducts: ', data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}all_products`, data);
-    console.log('STORE RESPONSE getallproducts', res);
+    // console.log('STORE RESPONSE getallproducts', res);
     return res;
   };
 };

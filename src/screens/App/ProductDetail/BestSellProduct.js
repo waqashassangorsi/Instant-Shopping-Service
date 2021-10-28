@@ -5,8 +5,9 @@ import colors from '../../../theme/colors';
 import styles from '../Products/styles';
 import {primary, logo, secondary, ternary, forth} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
-import {connect} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {getallproducts} from '../../../Redux/Action/Loginaction';
+import {allproducts} from '../../../Redux/Action/products';
 
 import {UIActivityIndicator} from 'react-native-indicators';
 import LoaderModal from 'react-native-modal';
@@ -15,6 +16,10 @@ const BestSellProduct = ({getallproducts}) => {
   const [productdata, setproductdata] = useState([]);
   const [loading, setLoading] = useState();
   const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  const productsData = useSelector((state) => state.products);
+  // console.log('STORE bestsellproducts productsData: ', productsData.products);
 
   const toggleModal = () => {
     setLoaderModalVisible(!isLoaderModalVisible);
@@ -23,15 +28,23 @@ const BestSellProduct = ({getallproducts}) => {
   useEffect(() => {
     toggleModal();
     setLoading(true);
-    console.log('STORE');
-    (async () => {
-      const res = await getallproducts();
-      // console.log('fashindata,', res);
-      setproductdata(res.data.data);
-      setLoading(false);
-      toggleModal();
-    })();
+    setproductdata(productsData.products);
+    // console.log('STORE bestsellproducts productdata: ', productdata);
+    setLoading(false);
+    toggleModal();
   }, []);
+
+  // useEffect(() => {
+  // (async () => {
+  //   const res = await getallproducts();
+  //   console.log('fashindata,', res);
+  //   setproductdata(res.data.data);
+  //   dispatch(allproducts(res.data.data));
+  //   setLoading(false);
+  //   toggleModal();
+  // })();
+  // }, []);
+
   let navigation = useNavigation();
   return (
     <View style={{flex: 1, padding: 10}}>
@@ -91,7 +104,7 @@ const BestSellProduct = ({getallproducts}) => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {productdata.map((item) => (
+          {productdata?.map((item) => (
             <View key={item.id}>
               <Pressable
                 onPress={() => {
@@ -147,7 +160,7 @@ const BestSellProduct = ({getallproducts}) => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {productdata.map((item) => (
+          {productdata?.map((item) => (
             <View key={item.id}>
               <View
                 style={{
@@ -169,7 +182,7 @@ const BestSellProduct = ({getallproducts}) => {
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.productname}
               </Text>
-              {/* 
+              {/*
               <Text style={{fontSize: 10, textTransform: 'capitalize'}}>
                 {item.productdescription}
               </Text> */}
