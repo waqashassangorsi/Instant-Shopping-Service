@@ -30,12 +30,14 @@ import SignUpModal from '../../../components/SignUpModal';
 import SelectDropdown from 'react-native-select-dropdown';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
-import {connect, useSelector} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {
   getcity,
   getallbrands,
   getallcategory,
+  getallproducts,
 } from '../../../Redux/Action/Loginaction';
+import {allproducts} from '../../../Redux/Action/products';
 
 import database from '@react-native-firebase/database';
 import messaging from '@react-native-firebase/messaging';
@@ -67,10 +69,17 @@ const DATA = [
   {id: 12, name: 'amazon'},
 ];
 
-const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
+const MainHeader = ({
+  getcity,
+  getallbrands,
+  getallcategory,
+  cart,
+  getallproducts,
+}) => {
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [userdata, setUserdata] = useState(useSelector((state) => state?.auth));
+  const dispatch = useDispatch();
 
   const _handleAppStateChange = (nextAppState) => {
     if (
@@ -140,6 +149,7 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
   const [cart_data, setcart_data] = useState(
     useSelector((state) => state?.cart?.userCart),
   );
+  const [productdata, setproductdata] = useState([]);
   // const cart_data = useSelector((state) => state.cart.userCart);
   const user = useSelector((state) => state.auth?.user);
 
@@ -182,6 +192,13 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
   //     setlistcity(res.data.cityrecord);
   //   })();
   // });
+
+  const onPressStore = async (item) => {
+    console.log('STORE: ', item);
+    const res = await getallproducts(item.brand_id);
+    console.log('STORE RESPONSE: ', res);
+    dispatch(allproducts(res));
+  };
 
   return (
     <View>
@@ -420,6 +437,7 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
         </Pressable>
         {brandsname.map((item) => (
           <Pressable
+            onPress={() => onPressStore(item)}
             key={item.id}
             android_ripple={{color: colors.white, borderless: false}}
             style={{
@@ -453,8 +471,9 @@ const mapStateToProps = (state) => {
   console.log('mainheader usercart: ', cart);
 
   const {user} = state.auth;
+  const {products} = state.products;
 
-  console.log(`myreduxdata`, state);
+  console.log(`STORE myreduxdata`, products);
 
   return {cart, user};
 };
@@ -462,4 +481,5 @@ export default connect(mapStateToProps, {
   getcity,
   getallbrands,
   getallcategory,
+  getallproducts,
 })(MainHeader);

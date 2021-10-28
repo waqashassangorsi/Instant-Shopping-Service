@@ -23,6 +23,7 @@ const BestSellProduct = ({getallproducts}) => {
   useEffect(() => {
     toggleModal();
     setLoading(true);
+    console.log('STORE');
     (async () => {
       const res = await getallproducts();
       // console.log('fashindata,', res);

@@ -8,8 +8,25 @@ import {
   DELETE_FROM_CART,
   USER_DETAIL,
   UPDATE_CART,
+  PRODUCTS,
 } from './types';
 import {Alert} from 'react-native';
+
+export const allproducts = (data) => {
+  return async (dispatch) => {
+    console.log('STORE reduxfunction allproducts: ', data);
+    try {
+      dispatch({
+        type: PRODUCTS,
+        payload: {
+          data,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 export const addToCart = (data, totalPrice) => {
   return async (dispatch) => {

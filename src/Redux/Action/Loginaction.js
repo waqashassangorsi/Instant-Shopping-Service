@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {BASE_URL} from '../Baseurl';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {
   LOGIN_USER,
@@ -210,7 +211,6 @@ export const getcity = (data) => {
   };
 };
 export const getallbrands = (data) => {
-  console.log(data);
   return async (dispatch) => {
     const res = await axios.get(`${BASE_URL}all_brands`, data);
     console.log(res);
@@ -237,10 +237,11 @@ export const getlocation = (data) => {
 };
 
 export const getallproducts = (data) => {
-  console.log(data);
+  // const params = new URLSearchParams([['brand_id', data]]);
+  console.log('STORE getallproducts: ', data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}all_products`, data);
-    console.log(res);
+    console.log('STORE RESPONSE getallproducts', res);
     return res;
   };
 };
