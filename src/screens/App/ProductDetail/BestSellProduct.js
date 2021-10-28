@@ -19,7 +19,7 @@ const BestSellProduct = ({getallproducts}) => {
   const dispatch = useDispatch();
 
   const productsData = useSelector((state) => state.products);
-  // console.log('STORE bestsellproducts productsData: ', productsData.products);
+  console.log('STORE bestsellproducts productsData: ', productsData.products);
 
   const toggleModal = () => {
     setLoaderModalVisible(!isLoaderModalVisible);
@@ -29,10 +29,19 @@ const BestSellProduct = ({getallproducts}) => {
     toggleModal();
     setLoading(true);
     setproductdata(productsData.products);
-    // console.log('STORE bestsellproducts productdata: ', productdata);
+    console.log('STORE bestsellproducts productdata: ', productdata);
     setLoading(false);
     toggleModal();
   }, []);
+
+  useEffect(() => {
+    toggleModal();
+    setLoading(true);
+    setproductdata(productsData.products);
+    console.log('STORE bestsellproducts productdata: ', productdata);
+    setLoading(false);
+    toggleModal();
+  }, [productsData]);
 
   // useEffect(() => {
   // (async () => {

@@ -15,14 +15,14 @@ const PopularKitchen = ({getallproducts}) => {
   useEffect(() => {
     (async () => {
       const res = await getallproducts();
-      // console.log('fashindata,', res);
+      console.log('fashindata,', res);
       setproductdata(res.data.data);
     })();
-  }, []);
+  }, [productsData]);
 
   useEffect(() => {
     setproductdata(productsData.products);
-    // console.log('STORE popularkitchen productdata: ', productdata);
+    console.log('STORE popularkitchen productdata: ', productdata);
   }, []);
 
   return (

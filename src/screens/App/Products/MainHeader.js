@@ -195,7 +195,11 @@ const MainHeader = ({
 
   const onPressStore = async (item) => {
     // console.log('STORE: ', item);
-    const res = await getallproducts(item.brand_id);
+    const formData = new FormData();
+
+    formData.append('brand_id', item.brand_id);
+    console.log('myformdata', formData);
+    const res = await getallproducts(formData);
     console.log('STORE RESPONSE: ', res);
     dispatch(allproducts(res.data.data));
   };
