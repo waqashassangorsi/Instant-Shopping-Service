@@ -255,6 +255,7 @@ const MainHeader = ({getcity, getallbrands, getallcategory, cart}) => {
             )}
             {user ? (
               <TouchableOpacity
+                disabled={cart?.length == 0}
                 onPress={() => {
                   navigation.navigate('CreateCart');
                 }}

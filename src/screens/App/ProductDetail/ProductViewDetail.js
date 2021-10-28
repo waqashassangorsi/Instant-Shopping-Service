@@ -63,11 +63,16 @@ const sameShirt = [
 ];
 
 const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
-  const total = useSelector((state) => state.cart.totalPrice);
   const from = route?.params?.from;
   const [alreadyInCart, setAlreadyInCart] = useState(false);
   const user = useSelector((state) => state.auth?.user);
-  const cart_data = useState(useSelector((state) => state?.cart?.userCart));
+
+  const [cart_data, setcart_data] = useState(
+    useSelector((state) => state?.cart?.userCart),
+  );
+  const [total, setTotal] = useState(
+    useSelector((state) => state?.cart?.totalPrice),
+  );
 
   // console.log(`myobject`, userCart);
   const dispatch = useDispatch();
@@ -92,6 +97,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
       // console.log('fashindata,', res);
       if (res.data.status == true) {
         setproductdata(res.data.data[0]);
+        checkIfAlreadyAdded(res.data.data[0]);
         setLoading(false);
         toggleModal();
       } else {
@@ -102,23 +108,27 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
 
   // console.log(`myproduct123`, usercart);
 
-  const checkAlreadyAdded = async () => {
-    // console.log('Cart: ', userCart);
-    if (productdata.product_name && userCart) {
-      var arrayNames = [];
+  const checkIfAlreadyAdded = async (data) => {
+    console.log('addItemToCart checkIfAlreadyAdded userCart: ', userCart);
+    console.log(
+      'addItemToCart checkIfAlreadyAdded productdata.product_name: ',
+      data.product_name,
+    );
+
+    if (data.product_name && userCart) {
+      let arrayNames = [];
       for (var i = 0; i < userCart?.length; i++) {
         arrayNames.push(userCart[i].name);
       }
-      // console.log('arrayNames: ', arrayNames);
+      console.log('addItemToCart checkIfAlreadyAdded arrayNames: ', arrayNames);
 
       try {
-        var result = arrayNames.includes(productdata.product_name);
+        var result = arrayNames.includes(data.product_name);
+        console.log('addItemToCart checkIfAlreadyAdded result: ', result);
         if (result === true) {
           setAlreadyInCart(true);
-          console.log('Already in cart!');
-        } else {
-          arrayNames.push(productdata.product_name);
-          addCart();
+          console.log('addItemToCart Already in cart!');
+          // alert('Already added.');
         }
       } catch (e) {
         console.log(e);
@@ -126,27 +136,90 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
     }
   };
 
-  const addCart = () => {
+  const checkAlreadyAdded = async () => {
+    console.log('addItemToCart checkAlreadyAdded userCart: ', userCart);
+    console.log(
+      'addItemToCart checkAlreadyAdded productdata.product_name: ',
+      productdata.product_name,
+    );
+
+    if (productdata.product_name && userCart) {
+      var arrayNames = [];
+      for (var i = 0; i < userCart?.length; i++) {
+        arrayNames.push(userCart[i].name);
+      }
+      console.log('addItemToCart checkAlreadyAdded arrayNames: ', arrayNames);
+
+      try {
+        var result = arrayNames.includes(productdata.product_name);
+        console.log('addItemToCart checkAlreadyAdded result: ', result);
+        if (result === true) {
+          setAlreadyInCart(true);
+          console.log('addItemToCart Already in cart!');
+          // alert('Already added.');
+        } else {
+          arrayNames.push(productdata.product_name);
+          addItemToCart();
+          // addCart();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const addItemToCart = () => {
+    console.log('addItemToCart item: ', productdata);
+
     var productdatanew = {
       price: productdata.price,
       qty: qty,
       from: from,
-      product_img: productdata.product_img,
-      product_name: productdata.product_name,
-      product_id: productdata.productid,
+      img: productdata.product_img,
+      name: productdata.product_name,
+      productid: productdata.from,
     };
-    // console.log('cartdatanew', productdatanew);
 
-    dispatch(
-      updateTotalPrice(total + productdatanew.price * productdatanew.qty),
-    );
-    dispatch(
-      addToCart(productdatanew, productdatanew.price * productdatanew.qty),
-    );
-    console.log('productviewdetail: ', cart_data[0]);
+    console.log('addItemToCart total: ', total);
+    console.log('addItemToCart userCart: ', userCart);
 
-    // dispatch(updateCart(cart_data[0], totalPrice));
+    let currentTotal = total;
+    currentTotal = currentTotal + productdatanew.price * productdatanew.qty;
+
+    let currentCart = [...userCart];
+    currentCart.push(productdatanew);
+
+    console.log('addItemToCart currentCart: ', currentCart);
+    console.log('addItemToCart currentTotal: ', currentTotal);
+
+    dispatch(updateTotalPrice(currentTotal));
+
+    dispatch(updateCart(currentCart, currentTotal));
+
+    setAlreadyInCart(true);
   };
+
+  // const addCart = () => {
+  //   var productdatanew = {
+  //     price: productdata.price,
+  //     qty: qty,
+  //     from: from,
+  //     product_img: productdata.product_img,
+  //     product_name: productdata.product_name,
+  //     product_id: productdata.productid,
+  //   };
+  //   // console.log('cartdatanew', productdatanew);
+
+  //   dispatch(
+  //     updateTotalPrice(total + productdatanew.price * productdatanew.qty),
+  //   );
+  //   dispatch(
+  //     addToCart(productdatanew, productdatanew.price * productdatanew.qty),
+  //   );
+  //   console.log('productviewdetail: ', cart_data[0]);
+
+  //   // dispatch(updateCart(cart_data[0], totalPrice));
+  // };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -364,7 +437,7 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              // onPress={() => dispatch(addToCart(productdata, qty))}
+              disabled={alreadyInCart}
               onPress={() => {
                 user
                   ? checkAlreadyAdded()
@@ -380,8 +453,8 @@ const ProductViewDetail = ({navigation, route, getsingleProduct, userCart}) => {
               <Ionicons name="basket-outline" size={15} color={colors.white} />
 
               <Text style={{fontSize: 12, color: colors.white, marginLeft: 10}}>
-                {/* {!alreadyInCart ? 'add to cart' : 'added'} */}
-                add to cart
+                {!alreadyInCart ? 'add to cart' : 'added'}
+                {/* add to cart */}
               </Text>
             </TouchableOpacity>
           </View>
