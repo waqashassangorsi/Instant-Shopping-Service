@@ -25,14 +25,14 @@ const BestSellProduct = ({getallproducts}) => {
     setLoaderModalVisible(!isLoaderModalVisible);
   };
 
-  useEffect(() => {
-    toggleModal();
-    setLoading(true);
-    setproductdata(productsData.products);
-    console.log('STORE bestsellproducts productdata: ', productdata);
-    setLoading(false);
-    toggleModal();
-  }, []);
+  // useEffect(() => {
+  //   toggleModal();
+  //   setLoading(true);
+  //   setproductdata(productsData.products);
+  //   console.log('STORE bestsellproducts productdata: ', productdata);
+  //   setLoading(false);
+  //   toggleModal();
+  // }, []);
 
   useEffect(() => {
     toggleModal();
@@ -43,16 +43,16 @@ const BestSellProduct = ({getallproducts}) => {
     toggleModal();
   }, [productsData]);
 
-  // useEffect(() => {
-  // (async () => {
-  //   const res = await getallproducts();
-  //   console.log('fashindata,', res);
-  //   setproductdata(res.data.data);
-  //   dispatch(allproducts(res.data.data));
-  //   setLoading(false);
-  //   toggleModal();
-  // })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const res = await getallproducts();
+      console.log('fashindata,', res);
+      setproductdata(res.data.data);
+      dispatch(allproducts(res.data.data));
+      setLoading(false);
+      toggleModal();
+    })();
+  }, []);
 
   let navigation = useNavigation();
   return (

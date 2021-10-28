@@ -134,6 +134,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
       const res = await getuserRecord(formdata);
       // console.log('fashindata,', res);
       setuserdata(res.data.data);
+
       setLoading(false);
       toggleModal();
     })();
@@ -153,20 +154,20 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
-      number = 'telprompt:' + userdata.phone_number;
+      number = 'telprompt:' + userdata?.phone_number;
     } else {
-      number = 'tel:' + userdata.phone_number;
+      number = 'tel:' + userdata?.phone_number;
     }
     Linking.openURL(number);
   };
 
   const onPressMessenger = () => {
     console.log('userprofile userdata: ', userdata);
-    if (userdata.length != 0) {
-      navigation.navigate('ShopperMessenger', {
-        userdata: userdata,
-      });
-    }
+    // if (userdata?.length != 0) {
+    //   navigation.navigate('ShopperMessenger', {
+    //     userdata: userdata,
+    //   });
+    // }
   };
 
   return (
@@ -229,7 +230,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
           }}>
           <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
             <Image
-              source={{uri: userdata.dp}}
+              source={{uri: userdata?.dp}}
               style={{
                 height: 80,
                 width: 80,
@@ -245,10 +246,10 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
           </View>
           <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
             <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
-              {userdata.name}
+              {userdata?.name}
             </Text>
             <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
-              {userdata.joining_date}
+              {userdata?.joining_date}
             </Text>
 
             <View
@@ -354,7 +355,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
               </View>
               <View style={{}}>
                 <Text style={{fontSize: 12, color: 'black', marginLeft: 10}}>
-                  {userdata.gender}
+                  {userdata?.gender}
                 </Text>
               </View>
             </View>
@@ -366,7 +367,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
               </View>
               <View style={{}}>
                 <Text style={{fontSize: 12, color: 'black', marginLeft: 10}}>
-                  {userdata.date_of_birth}
+                  {userdata?.date_of_birth}
                 </Text>
               </View>
             </View>
@@ -380,7 +381,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
 
             <View style={{left: 5, marginRight: 30}}>
               <Text style={{fontSize: 12, color: 'black'}}>
-                {userdata.address}
+                {userdata?.address}
               </Text>
             </View>
           </View>
@@ -411,14 +412,14 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
               <Text style={{fontSize: 12, color: 'gray'}}>Phone:</Text>
               <Text
                 style={{fontSize: 12, color: colors.greenColor, marginLeft: 5}}>
-                {userdata.phone_number}
+                {userdata?.phone_number}
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 12, color: 'gray'}}>Email:</Text>
               <Text
                 style={{fontSize: 12, color: colors.greenColor, marginLeft: 5}}>
-                {userdata.email}
+                {userdata?.email}
               </Text>
             </View>
           </View>

@@ -10,7 +10,7 @@ const PopularKitchen = ({getallproducts}) => {
   const [productdata, setproductdata] = useState([]);
 
   const productsData = useSelector((state) => state.products);
-  // console.log('STORE popularkitchen productsData: ', productsData.products);
+  console.log('STORE popularkitchen productsData: ', productsData.products);
 
   useEffect(() => {
     (async () => {
@@ -18,12 +18,12 @@ const PopularKitchen = ({getallproducts}) => {
       console.log('fashindata,', res);
       setproductdata(res.data.data);
     })();
-  }, [productsData]);
+  }, []);
 
   useEffect(() => {
     setproductdata(productsData.products);
     console.log('STORE popularkitchen productdata: ', productdata);
-  }, []);
+  }, [productsData]);
 
   return (
     <View style={{flex: 1}}>
