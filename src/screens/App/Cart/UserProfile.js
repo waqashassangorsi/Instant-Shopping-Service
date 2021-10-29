@@ -226,12 +226,12 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
   };
 
   const onPressMessenger = () => {
-    console.log('userprofile userdata: ', userdata);
-    // if (userdata?.length != 0) {
-    //   navigation.navigate('ShopperMessenger', {
-    //     userdata: userdata,
-    //   });
-    // }
+    // console.log('userprofile userdata: ', userdata);
+    if (userdata?.length != 0) {
+      navigation.navigate('ShopperMessenger', {
+        userdata: userdata,
+      });
+    }
   };
 
   return (

@@ -59,6 +59,7 @@ export const loginaction = (data) => {
   return async (dispatch) => {
     console.log('inside dispathc', data);
     const res = await axios.post(`${BASE_URL}login_user`, data);
+    console.log('RESPONSE loginaction: ', res);
 
     if (res.data.status == true) {
       dispatch({
@@ -284,10 +285,9 @@ export const getorderDetail = (data) => {
 };
 
 export const getassignedOrder = (data) => {
-  console.log(data);
+  console.log('shopperdetail loginaction getassignedOrder data: ', data);
   return async (dispatch) => {
     const res = await axios.post(`${BASE_URL}get_assigned_order_detail`, data);
-
     console.log(res);
     return res;
   };
@@ -297,7 +297,6 @@ export const not_assigned_order = (data) => {
   console.log(data);
   return async (dispatch) => {
     const res = await axios.get(`${BASE_URL}not_assigned_order`, data);
-
     console.log(res);
     return res;
   };

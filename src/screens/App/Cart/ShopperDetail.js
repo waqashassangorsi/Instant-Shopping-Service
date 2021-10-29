@@ -38,6 +38,11 @@ import {
   not_assigned_order,
 } from '../../../Redux/Action/Loginaction';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
+import moment from 'moment';
+import database from '@react-native-firebase/database';
+import {useNavigation} from '@react-navigation/native';
 
 const DATA = [
   {
@@ -62,6 +67,7 @@ const ShopperDetail = ({
   not_assigned_order,
   user,
 }) => {
+  let navigation = useNavigation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
   const [userdata, setuserdata] = useState([]);
@@ -74,24 +80,104 @@ const ShopperDetail = ({
 
   const [productdata, setproductdata] = useState([]);
   const [updateordercompo, setupdateordercompo] = useState([]);
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+  const onlineRef = database().ref(`online/`);
+  const [online, setOnline] = useState([]);
+  const [otherOnline, setOtherOnline] = useState(false);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
 
   useEffect(() => {
+    listenForOnline(onlineRef);
+  }, []);
+
+  useEffect(() => {
+    // console.log('redux user: ', user);
+
+    // console.log('shoppermessenger messagesRef: ', messagesRef);
+    // console.log('shoppermessenger messages: ', messages);
+    // console.log('shoppermessenger onlineRef: ', onlineRef);
+    // console.log('shoppermessenger online: ', online);
+    // console.log('shoppermessenger userData: ', userData);
+
+    var filteredUser = online.filter((i) => i._id == userdata.id);
+    // console.log('userprofile filteredUser: ', filteredUser);
+    // console.log('userprofile user_data: ', userdata?.id);
+
+    // console.log(
+    //   'shoppermessenger lastonline: ',
+    //   moment(filteredUser[0]?.lastonline).format('DD-MM-YYYY hh:mm:ss'),
+    // );
+
+    // console.log(
+    //   'shoppermessenger lastonline: ',
+    //   moment(Date.now()).format('DD-MM-YYYY hh:mm:ss'),
+    // );
+
+    // timeDifference(Date.now(), filteredUser[0]?.lastonline);
+
+    if (filteredUser[0]?.onlinestatus == 'Online') {
+      // console.log('userprofile onlinestatus: ', filteredUser[0]?.onlinestatus);
+
+      setOtherOnline(true);
+    }
+
+    if (filteredUser[0]?.onlinestatus == 'Offline') {
+      // console.log('userprofile onlinestatus: ', filteredUser[0]?.onlinestatus);
+
+      setOtherOnline(false);
+    }
+  });
+
+  const listenForOnline = () => {
+    onlineRef.on('value', (snapshot) => {
+      let onlineFB = [];
+      snapshot.forEach((child) => {
+        onlineFB = [
+          ...onlineFB,
+          {
+            _id: child.key,
+            lastonline: child.val().lastonline,
+            onlinestatus: child.val().onlinestatus,
+          },
+        ];
+      });
+
+      setOnline(onlineFB);
+    });
+  };
+
+  useEffect(() => {
+    toggleModal();
+    setLoading(true);
+
     (async () => {
       const formdata = new FormData();
       formdata.append('user_id', user.user_id);
       const res = await getuserRecord(formdata);
-      // console.log('fashindata,', res);
-      setuserdata(res.data.data);
+      console.log('shopperdetail RESPONSE getuserRecord,', res);
+      setuserdata(res?.data?.data);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
+      let userId;
+      userId = user?.user_id;
+      userId = JSON.parse(userId);
+      console.log('shopperdetail typeof userId : ', typeof userId);
+      console.log('shopperdetail userId : ', userId);
       const formdata = new FormData();
-      formdata.append('user_id', user.user_id);
-      const res = await not_assigned_order(formdata);
-      console.log('myfashindata,', res);
+      formdata.append('user_id', "'" + userId + "'");
+      console.log('shopperdetail getassignedOrder formdata: ', formdata);
+      const res = await getassignedOrder(formdata);
+      console.log('shopperdetail RESPONSE getassignedOrder: ', res);
       setassignedorder(res.data.data);
+      setLoading(false);
+      toggleModal();
     })();
   }, [updateordercompo]);
 
@@ -115,8 +201,13 @@ const ShopperDetail = ({
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
+  const onPressOrder = (item) => {
+    console.log('shopperdetail order pressed: ', item);
+    navigation.navigate('OrderPage', item.order_id);
+  };
+
   const renderItem = ({item}) => (
-    <View style={{padding: 10}}>
+    <TouchableOpacity onPress={() => onPressOrder(item)} style={{padding: 10}}>
       <View
         style={{
           flexDirection: 'row',
@@ -136,8 +227,12 @@ const ShopperDetail = ({
           </View>
           <View style={{}}>
             <Text style={{fontSize: 18}}>{item.order_number}</Text>
-            <Text style={{fontSize: 12}}>{item.order_date}</Text>
-            <Text style={{fontSize: 12}}>14:25</Text>
+            <Text style={{fontSize: 12}}>
+              {moment(item.order_date).format('D MMM YYYY')}
+            </Text>
+            <Text style={{fontSize: 12}}>
+              {moment(item.order_date).format('hh:mm')}
+            </Text>
           </View>
         </View>
 
@@ -203,10 +298,26 @@ const ShopperDetail = ({
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
       <MainHeader />
       <View>
         <View style={{flex: 1, backgroundColor: colors.greenColor}}>
@@ -260,18 +371,21 @@ const ShopperDetail = ({
                   alignSelf: 'flex-end',
                 }}
               />
-              <Badge
-                value=" "
-                status="success"
-                containerStyle={{position: 'absolute', top: 54, right: 0}}
-              />
+              {otherOnline ? (
+                <Badge
+                  value=" "
+                  status="success"
+                  containerStyle={{position: 'absolute', top: 54, right: 0}}
+                />
+              ) : null}
             </View>
             <View style={{flex: 1, justifyContent: 'center'}}>
               <Text style={{color: 'white', fontSize: 18, marginLeft: 10}}>
                 {userdata.name}
               </Text>
               <Text style={{color: 'white', marginLeft: 10, fontSize: 10}}>
-                {userdata.joining_date}
+                {'Active Since ' +
+                  moment(userdata.joining_date).format('MMMM YYYY')}
               </Text>
               <TouchableOpacity
                 style={{

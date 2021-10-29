@@ -89,7 +89,7 @@ const ProductsDetails = () => {
           }
           if (parsedData.from == 2) {
             // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
-            navigation.navigate(' ', parsedData.order_id);
+            navigation.navigate('OrderPage', parsedData.order_id);
           }
         }
 

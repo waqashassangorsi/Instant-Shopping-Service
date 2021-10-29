@@ -264,6 +264,30 @@ const ShopperMessenger = (props) => {
     });
   }, []);
 
+  function generateItems(msgs) {
+    const days = groupedDays(msgs);
+    const sortedDays = Object.keys(days).sort(
+      (x, y) => moment(y, 'YYYY-MM-DD').unix() - moment(x, 'YYYY-MM-DD').unix(),
+    );
+    const items = sortedDays.reduce((acc, date) => {
+      const sortedMessages = days[date].sort(
+        (x, y) => new Date(y.created_at) - new Date(x.created_at),
+      );
+      return acc.concat([...sortedMessages, {type: 'day', date, id: date}]);
+    }, []);
+    return items;
+  }
+
+  function groupedDays(msgs) {
+    return msgs.reduce((acc, el, i) => {
+      const messageDay = moment(el.createdAt).format('YYYY-MM-DD');
+      if (acc[messageDay]) {
+        return {...acc, [messageDay]: acc[messageDay].concat([el])};
+      }
+      return {...acc, [messageDay]: [el]};
+    }, {});
+  }
+
   // if(roomexist=="no"){
 
   // (async () => {
@@ -284,7 +308,7 @@ const ShopperMessenger = (props) => {
 
   const renderItem = ({item, index}) => (
     <View>
-      {/* {true ? (
+      {true ? (
         <View
           style={{
             justifyContent: 'center',
@@ -299,7 +323,7 @@ const ShopperMessenger = (props) => {
           }}>
           <Text style={{color: 'white', fontSize: 10}}>Thursday</Text>
         </View>
-      ) : null} */}
+      ) : null}
 
       {item.sendid == user?.user_id && (
         <View style={{flexDirection: 'row', marginTop: 10}}>
@@ -702,6 +726,9 @@ const ShopperMessenger = (props) => {
             contentContainerStyle={{flexGrow: 1}}
             nestedScrollEnabled={true}>
             <FlatList
+              data={generateItems(messages).sort(
+                (a, b) => b.createdAt - a.createdAt,
+              )}
               data={messages}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}

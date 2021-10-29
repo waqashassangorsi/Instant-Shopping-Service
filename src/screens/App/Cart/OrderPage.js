@@ -17,7 +17,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Zocial from 'react-native-vector-icons/Zocial';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import * as Progress from 'react-native-progress';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {getuserRecord, getorderDetail} from '../../../Redux/Action/Loginaction';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
@@ -40,6 +40,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
   const [loading, setloading] = useState([]);
   const [order, setorder] = useState([]);
   const [product, setproduct] = useState([]);
+  const [user, setUser] = useState(useSelector((state) => state?.auth));
   let navigation = useNavigation();
 
   const openDialScreen = () => {
@@ -53,12 +54,14 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
   };
 
   useEffect(() => {
+    console.log('orderpage useeffect user: ', user?.user?.user_role);
+    console.log('orderpage useeffect props');
     (async () => {
       const formdata = new FormData();
-      formdata.append('order_id', 53);
+      formdata.append('order_id', 54);
       const res = await getorderDetail(formdata);
-      console.log('RESPONSE orderpage: ', res);
-      console.log('fashindata,', res);
+      console.log('orderpage RESPONSE: ', res);
+
       setorder(res.data.data.order_detail[0]);
       let array = [];
       array.push(res.data.data.product_detail);
@@ -138,7 +141,6 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               marginHorizontal: 10,
               justifyContent: 'space-around',
               marginTop: 15,
-              // backgroundColor: 'pink',
             }}>
             <Text
               style={{
@@ -158,7 +160,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View>
+        {/* <View>
           <TouchableOpacity
             style={{
               borderRadius: 3,
@@ -178,201 +180,208 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               Load More Orders
             </Text>
           </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: colors.greenColor,
-            marginHorizontal: 10,
-            marginTop: 15,
-            height: 150,
-          }}>
-          <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
-            <Image
-              source={{uri: userdata.dp}}
-              style={{
-                height: 80,
-                width: 80,
-                borderRadius: 50,
-                alignSelf: 'flex-end',
-              }}
-            />
-            <Badge
-              value=" "
-              status="success"
-              containerStyle={{position: 'absolute', bottom: 35, right: 4}}
-            />
-          </View>
-          <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
-            <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
-              {userdata.name}
-            </Text>
-            <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
-              {userdata.joining_date}
-            </Text>
+        </View> */}
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-              }}>
-              <TouchableOpacity
-                onPress={() => onPressMessenger()}
+        {user?.user?.user_role == 'subscriber' ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              backgroundColor: colors.greenColor,
+              marginHorizontal: 10,
+              marginTop: 15,
+              height: 150,
+              // backgroundColor: 'pink',
+            }}>
+            <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
+              <Image
+                source={{uri: userdata.dp}}
                 style={{
-                  height: 36,
-                  width: 100,
-
-                  backgroundColor: 'white',
-                  borderRadius: 2,
-                  flexDirection: 'row',
-
-                  justifyContent: 'center',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: colors.greenColor,
-                    fontSize: 11,
-                    textAlign: 'center',
-                  }}>
-                  Messenger
-                </Text>
-                <MaterialIcons
-                  name="messenger"
-                  size={18}
-                  style={{
-                    marginLeft: 5,
-                    color: colors.greenColor,
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => openDialScreen()}
-                style={{
-                  height: 36,
-                  width: 100,
-                  padding: 10,
-                  backgroundColor: 'white',
-                  borderRadius: 2,
-
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: colors.greenColor,
-                    fontSize: 11,
-                    textAlign: 'center',
-                  }}>
-                  Phone Call
-                </Text>
-                <Zocial
-                  name="call"
-                  size={18}
-                  style={{
-                    marginLeft: 5,
-                    color: colors.greenColor,
-                  }}
-                />
-              </TouchableOpacity>
+                  height: 80,
+                  width: 80,
+                  borderRadius: 50,
+                  alignSelf: 'flex-end',
+                }}
+              />
+              <Badge
+                value=" "
+                status="success"
+                containerStyle={{position: 'absolute', bottom: 35, right: 4}}
+              />
             </View>
-          </View>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 155,
-            marginHorizontal: 10,
-            marginTop: 15,
-            borderWidth: 1,
-            borderColor: 'gray',
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                flex: 1,
-                marginTop: 10,
-              }}>
-              <Text style={{textAlign: 'center', fontSize: 16}}>
-                Sucess Rate
+            <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
+              <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
+                {userdata.name}
               </Text>
+              <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
+                {userdata.joining_date}
+              </Text>
+
               <View
                 style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  marginTop: 10,
                 }}>
-                {/* <Text>{userdata.success_rate}</Text> */}
-                {/* <Progress.Circle
+                <TouchableOpacity
+                  onPress={() => onPressMessenger()}
+                  style={{
+                    height: 36,
+                    width: 100,
+
+                    backgroundColor: 'white',
+                    borderRadius: 2,
+                    flexDirection: 'row',
+
+                    justifyContent: 'center',
+
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.greenColor,
+                      fontSize: 11,
+                      textAlign: 'center',
+                    }}>
+                    Messenger
+                  </Text>
+                  <MaterialIcons
+                    name="messenger"
+                    size={18}
+                    style={{
+                      marginLeft: 5,
+                      color: colors.greenColor,
+                    }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => openDialScreen()}
+                  style={{
+                    height: 36,
+                    width: 100,
+                    padding: 10,
+                    backgroundColor: 'white',
+                    borderRadius: 2,
+
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.greenColor,
+                      fontSize: 11,
+                      textAlign: 'center',
+                    }}>
+                    Phone Call
+                  </Text>
+                  <Zocial
+                    name="call"
+                    size={18}
+                    style={{
+                      marginLeft: 5,
+                      color: colors.greenColor,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        ) : null}
+
+        {user?.user?.user_role == 'subscriber' ? (
+          <View
+            style={{
+              backgroundColor: 'white',
+              height: 155,
+              marginHorizontal: 10,
+              marginTop: 15,
+              borderWidth: 1,
+              borderColor: 'gray',
+              // backgroundColor: 'black',
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: 10,
+                }}>
+                <Text style={{textAlign: 'center', fontSize: 16}}>
+                  Sucess Rate
+                </Text>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 5,
+                  }}>
+                  {/* <Text>{userdata.success_rate}</Text> */}
+                  {/* <Progress.Circle
                   size={100}
                   color={colors.greenColor}
                   allowFontScaling={true}
                   showsText={true}
                   borderWidth={4}
                 /> */}
-                <AnimatedCircularProgress
-                  size={100}
-                  width={3}
-                  fill={userdata.success_rate}
-                  tintColor={colors.greenColor}
-                  backgroundColor={colors.WebGLQuery}>
-                  {(fill) => (
-                    <Text
-                      style={{
-                        color: colors.greenColor,
-                        fontSize: 32,
-                        fontWeight: 'bold',
-                      }}>
-                      {userdata.success_rate}
-                    </Text>
-                  )}
-                </AnimatedCircularProgress>
+                  <AnimatedCircularProgress
+                    size={100}
+                    width={3}
+                    fill={userdata.success_rate}
+                    tintColor={colors.greenColor}
+                    backgroundColor={colors.WebGLQuery}>
+                    {(fill) => (
+                      <Text
+                        style={{
+                          color: colors.greenColor,
+                          fontSize: 32,
+                          fontWeight: 'bold',
+                        }}>
+                        {userdata.success_rate}
+                      </Text>
+                    )}
+                  </AnimatedCircularProgress>
+                </View>
               </View>
-            </View>
-            <View
-              style={{
-                borderRightWidth: 1,
-                borderRightColor: colors.WebGLQuery,
-                marginTop: 10,
-                height: 130,
-              }}
-            />
-            <View style={{flex: 1, marginTop: 10, backgroundColor: 'white'}}>
-              <Text style={{textAlign: 'center', fontSize: 16}}>
-                Shopping sprint
-              </Text>
               <View
                 style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 5,
-                }}>
-                {/* <Text>{userdata.shoping_sprint}</Text> */}
-                <AnimatedCircularProgress
-                  size={100}
-                  width={3}
-                  fill={userdata.shoping_sprint}
-                  tintColor={colors.greenColor}
-                  backgroundColor={colors.WebGLQuery}>
-                  {(fill) => (
-                    <Text
-                      style={{
-                        color: colors.greenColor,
-                        fontSize: 32,
-                        fontWeight: 'bold',
-                      }}>
-                      {userdata.shoping_sprint}
-                    </Text>
-                  )}
-                </AnimatedCircularProgress>
+                  borderRightWidth: 1,
+                  borderRightColor: colors.WebGLQuery,
+                  marginTop: 10,
+                  height: 130,
+                }}
+              />
+              <View style={{flex: 1, marginTop: 10, backgroundColor: 'white'}}>
+                <Text style={{textAlign: 'center', fontSize: 16}}>
+                  Shopping sprint
+                </Text>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 5,
+                  }}>
+                  {/* <Text>{userdata.shoping_sprint}</Text> */}
+                  <AnimatedCircularProgress
+                    size={100}
+                    width={3}
+                    fill={userdata.shoping_sprint}
+                    tintColor={colors.greenColor}
+                    backgroundColor={colors.WebGLQuery}>
+                    {(fill) => (
+                      <Text
+                        style={{
+                          color: colors.greenColor,
+                          fontSize: 32,
+                          fontWeight: 'bold',
+                        }}>
+                        {userdata.shoping_sprint}
+                      </Text>
+                    )}
+                  </AnimatedCircularProgress>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        ) : null}
       </View>
       <View
         style={{
@@ -396,7 +405,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 height: 20,
                 borderRadius: 20 / 2,
                 borderWidth: 1,
-                borderColor: colors.greenColor,
+                borderColor:
+                  order.assing_to == 0 ? colors.greenColor : colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -405,7 +415,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                   width: 16,
                   height: 16,
                   borderRadius: 16 / 2,
-                  backgroundColor: colors.greenColor,
+                  backgroundColor:
+                    order.assing_to == 0 ? colors.greenColor : colors.gray,
                 }}
               />
             </View>
@@ -413,7 +424,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               style={{
                 width: 80,
                 borderBottomWidth: 1,
-                borderBottomColor: colors.greenColor,
+                borderBottomColor:
+                  order.assing_to > 0 ? colors.greenColor : colors.gray,
               }}
             />
 
@@ -423,7 +435,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 height: 20,
                 borderRadius: 20 / 2,
                 borderWidth: 1,
-                borderColor: colors.greenColor,
+                borderColor:
+                  order.assing_to > 0 ? colors.greenColor : colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -432,7 +445,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                   width: 16,
                   height: 16,
                   borderRadius: 16 / 2,
-                  backgroundColor: colors.greenColor,
+                  backgroundColor:
+                    order.assing_to > 0 ? colors.greenColor : colors.gray,
                 }}
               />
             </View>
@@ -440,7 +454,9 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               style={{
                 width: 80,
                 borderBottomWidth: 1,
-                borderBottomColor: colors.greenColor,
+                // borderBottomColor: colors.greenColor,
+                borderBottomColor:
+                  order.assing_to > 0 ? colors.greenColor : colors.gray,
               }}
             />
 
@@ -450,7 +466,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 height: 20,
                 borderRadius: 20 / 2,
                 borderWidth: 1,
-                borderColor: colors.greenColor,
+                borderColor:
+                  order.assing_to > 0 ? colors.greenColor : colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -459,15 +476,18 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                   width: 16,
                   height: 16,
                   borderRadius: 16 / 2,
-                  backgroundColor: colors.greenColor,
+                  backgroundColor:
+                    order.assing_to > 0 ? colors.greenColor : colors.gray,
                 }}
               />
             </View>
+
             <View
               style={{
                 width: 80,
                 borderBottomWidth: 1,
-                borderBottomColor: colors.greenColor,
+                // borderBottomColor: colors.greenColor,
+                borderBottomColor: colors.gray,
               }}
             />
             <View
@@ -476,7 +496,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 height: 20,
                 borderRadius: 20 / 2,
                 borderWidth: 1,
-                borderColor: colors.greenColor,
+                // borderColor: colors.greenColor,
+                borderColor: colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -485,7 +506,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                   width: 16,
                   height: 16,
                   borderRadius: 16 / 2,
-                  backgroundColor: colors.greenColor,
+                  // backgroundColor: colors.greenColor,
+                  backgroundColor: colors.gray,
                 }}
               />
             </View>
@@ -501,7 +523,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.greenColor,
+                color: order.assing_to == 0 ? colors.greenColor : colors.gray,
                 right: 20,
               }}>
               create cart
@@ -510,7 +532,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.greenColor,
+                color: order.assing_to > 0 ? colors.greenColor : colors.gray,
                 left: 5,
               }}>
               Shopper assigned
@@ -519,7 +541,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.greenColor,
+                color: order.assing_to > 0 ? colors.greenColor : colors.gray,
                 left: 5,
               }}>
               shopping in progress
@@ -528,7 +550,8 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: colors.greenColor,
+                // color: colors.greenColor,
+                color: colors.gray,
                 left: 15,
               }}>
               confirmation
@@ -541,7 +564,6 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
         style={{
           flex: 1,
           backgroundColor: colors.white,
-
           padding: 10,
         }}>
         <View
@@ -597,8 +619,10 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                       style={{width: 73, height: 73}}
                     />
                     <View style={{marginLeft: 10}}>
-                      <Text style={{fontSize: 16, color: 'black'}}>{'No'}</Text>
-                      <Text style={{fontSize: 10}}>Black</Text>
+                      <Text style={{fontSize: 16, color: 'black'}}>
+                        {item.product_name}
+                      </Text>
+                      {/* <Text style={{fontSize: 10}}>Black</Text> */}
                     </View>
                   </View>
 

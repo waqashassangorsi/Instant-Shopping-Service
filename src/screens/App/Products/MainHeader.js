@@ -155,6 +155,7 @@ const MainHeader = ({
 
   console.log('mainheader mainheader: ', cart);
   const [brandsname, setbrandsname] = useState([]);
+
   useEffect(() => {
     // console.log('fashindata,', fashiondata);
     (async () => {
@@ -213,6 +214,16 @@ const MainHeader = ({
     const res = await getallproducts(formData);
     // console.log('STORE CATEGORIES RESPONSE: ', res);
     dispatch(allproducts(res.data.data));
+  };
+
+  useEffect(() => {
+    console.log('user mainheader: ', user);
+  });
+
+  const onPressUserProfile = () => {
+    user?.user_role == 'subscriber'
+      ? navigation.navigate('UserProfile')
+      : navigation.navigate('ShopperDetail');
   };
 
   return (
@@ -277,7 +288,7 @@ const MainHeader = ({
             {user && (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('UserProfile');
+                  onPressUserProfile();
                 }}>
                 <Image
                   source={require('../../../assets/person.png')}
@@ -290,7 +301,7 @@ const MainHeader = ({
                 />
               </TouchableOpacity>
             )}
-            {user ? (
+            {user?.user_role == 'subscriber' ? (
               <TouchableOpacity
                 disabled={cart?.length == 0}
                 onPress={() => {
