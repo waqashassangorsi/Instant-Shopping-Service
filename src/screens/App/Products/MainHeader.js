@@ -204,6 +204,17 @@ const MainHeader = ({
     dispatch(allproducts(res.data.data));
   };
 
+  const onPressCategories = async (item) => {
+    // console.log('STORE: ', item);
+    const formData = new FormData();
+
+    formData.append('category_id', item);
+    console.log('STORE CATEGORIES onPressCategories myformdata', formData);
+    const res = await getallproducts(formData);
+    console.log('STORE CATEGORIES RESPONSE: ', res);
+    dispatch(allproducts(res.data.data));
+  };
+
   return (
     <View>
       <Header
@@ -370,8 +381,9 @@ const MainHeader = ({
               }}
               data={category}
               onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
+                // console.log('CATEGORIES: ', selectedItem, index);
                 setmyselectedcat(allcategory[index].category_id);
+                onPressCategories(allcategory[index].category_id);
               }}
               buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem;
