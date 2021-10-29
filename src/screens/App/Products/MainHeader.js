@@ -209,9 +209,9 @@ const MainHeader = ({
     const formData = new FormData();
 
     formData.append('category_id', item);
-    console.log('STORE CATEGORIES onPressCategories myformdata', formData);
+    // console.log('STORE CATEGORIES onPressCategories myformdata', formData);
     const res = await getallproducts(formData);
-    console.log('STORE CATEGORIES RESPONSE: ', res);
+    // console.log('STORE CATEGORIES RESPONSE: ', res);
     dispatch(allproducts(res.data.data));
   };
 

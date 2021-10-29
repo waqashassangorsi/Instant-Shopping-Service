@@ -21,6 +21,7 @@ import {connect} from 'react-redux';
 import {getuserRecord, getuserOrder} from '../../../Redux/Action/Loginaction';
 import {UIActivityIndicator} from 'react-native-indicators';
 import LoaderModal from 'react-native-modal';
+import database from '@react-native-firebase/database';
 
 import {
   primary,
@@ -118,11 +119,70 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
   const [status, setorderstatus] = useState('all');
   const [loading, setLoading] = useState();
   const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
+  const onlineRef = database().ref(`online/`);
+  const [online, setOnline] = useState([]);
+  const [otherOnline, setOtherOnline] = useState(false);
 
   // console.log(`myredu`, user);
 
-  const toggleModal = () => {
-    setLoaderModalVisible(!isLoaderModalVisible);
+  useEffect(() => {
+    // console.log('redux user: ', user);
+
+    // console.log('shoppermessenger messagesRef: ', messagesRef);
+    // console.log('shoppermessenger messages: ', messages);
+    // console.log('shoppermessenger onlineRef: ', onlineRef);
+    // console.log('shoppermessenger online: ', online);
+    // console.log('shoppermessenger userData: ', userData);
+
+    var filteredUser = online.filter((i) => i._id == userdata.id);
+    // console.log('userprofile filteredUser: ', filteredUser);
+    // console.log('userprofile user_data: ', userdata?.id);
+
+    // console.log(
+    //   'shoppermessenger lastonline: ',
+    //   moment(filteredUser[0]?.lastonline).format('DD-MM-YYYY hh:mm:ss'),
+    // );
+
+    // console.log(
+    //   'shoppermessenger lastonline: ',
+    //   moment(Date.now()).format('DD-MM-YYYY hh:mm:ss'),
+    // );
+
+    // timeDifference(Date.now(), filteredUser[0]?.lastonline);
+
+    if (filteredUser[0]?.onlinestatus == 'Online') {
+      // console.log('userprofile onlinestatus: ', filteredUser[0]?.onlinestatus);
+
+      setOtherOnline(true);
+    }
+
+    if (filteredUser[0]?.onlinestatus == 'Offline') {
+      // console.log('userprofile onlinestatus: ', filteredUser[0]?.onlinestatus);
+
+      setOtherOnline(false);
+    }
+  });
+
+  useEffect(() => {
+    listenForOnline(onlineRef);
+  }, []);
+
+  const listenForOnline = () => {
+    onlineRef.on('value', (snapshot) => {
+      let onlineFB = [];
+      snapshot.forEach((child) => {
+        onlineFB = [
+          ...onlineFB,
+          {
+            _id: child.key,
+            lastonline: child.val().lastonline,
+            onlinestatus: child.val().onlinestatus,
+          },
+        ];
+      });
+
+      setOnline(onlineFB);
+    });
   };
 
   useEffect(() => {
@@ -139,6 +199,10 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
       toggleModal();
     })();
   }, []);
+
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
 
   useEffect(() => {
     (async () => {
@@ -228,7 +292,12 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
             marginTop: 15,
             height: 150,
           }}>
-          <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
+          <View
+            style={{
+              flex: 0.4,
+              justifyContent: 'center',
+              marginTop: 10,
+            }}>
             <Image
               source={{uri: userdata?.dp}}
               style={{
@@ -238,11 +307,13 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
                 alignSelf: 'flex-end',
               }}
             />
-            <Badge
-              value=" "
-              status="success"
-              containerStyle={{position: 'absolute', bottom: 35, right: 4}}
-            />
+            {otherOnline ? (
+              <Badge
+                value=" "
+                status="success"
+                containerStyle={{position: 'absolute', bottom: 35, right: 4}}
+              />
+            ) : null}
           </View>
           <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
             <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
