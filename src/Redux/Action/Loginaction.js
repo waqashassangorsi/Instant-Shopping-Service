@@ -274,14 +274,21 @@ export const getuserOrder = (data) => {
   };
 };
 
-export const getorderDetail = (data) => {
-  console.log(data);
-  return async (dispatch) => {
-    const res = await axios.post(`${BASE_URL}get_all_order_detail`, data);
+// export const getorderDetail = (data) => {
+//   console.log('orderpage getorderDetail data: ', data);
+//   return async (dispatch) => {
+//     const res = await axios.post(`${BASE_URL}get_all_order_detail`, data);
 
-    console.log(res);
-    return res;
-  };
+//     console.log(res);
+//     return res;
+//   };
+// };
+
+export const getorderDetail = async (data) => {
+  console.log('orderpage getorderDetail data: ', data);
+  const res = await axios.post(`${BASE_URL}get_all_order_detail`, data);
+  console.log(res);
+  return res;
 };
 
 export const getassignedOrder = (data) => {

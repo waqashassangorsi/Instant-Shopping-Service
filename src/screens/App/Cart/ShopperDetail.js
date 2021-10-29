@@ -202,8 +202,8 @@ const ShopperDetail = ({
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   const onPressOrder = (item) => {
-    console.log('shopperdetail order pressed: ', item);
-    navigation.navigate('OrderPage', item.order_id);
+    console.log('props shopperdetail order pressed: ', item);
+    navigation.navigate('OrderPage', item);
   };
 
   const renderItem = ({item}) => (

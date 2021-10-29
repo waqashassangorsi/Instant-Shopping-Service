@@ -215,6 +215,11 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
     })();
   }, [status]);
 
+  useEffect(() => {
+    console.log('userprofile user: ', user);
+    console.log('userprofile userdata: ', userdata);
+  });
+
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
@@ -298,15 +303,27 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
               justifyContent: 'center',
               marginTop: 10,
             }}>
-            <Image
-              source={{uri: userdata?.dp}}
-              style={{
-                height: 80,
-                width: 80,
-                borderRadius: 50,
-                alignSelf: 'flex-end',
-              }}
-            />
+            {user.user_id !== userdata.id ? (
+              <Image
+                source={{uri: userdata?.dp}}
+                style={{
+                  height: 80,
+                  width: 80,
+                  borderRadius: 50,
+                  alignSelf: 'flex-end',
+                }}
+              />
+            ) : (
+              <Image
+                source={{uri: user?.my_dp}}
+                style={{
+                  height: 80,
+                  width: 80,
+                  borderRadius: 50,
+                  alignSelf: 'flex-end',
+                }}
+              />
+            )}
             {otherOnline ? (
               <Badge
                 value=" "
@@ -323,73 +340,75 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
               {userdata?.joining_date}
             </Text>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-              }}>
-              <TouchableOpacity
-                onPress={() => onPressMessenger()}
+            {user.user_id !== userdata.id ? (
+              <View
                 style={{
-                  height: 36,
-                  width: 100,
-                  backgroundColor: 'white',
-                  borderRadius: 2,
                   flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  justifyContent: 'space-evenly',
+                  marginTop: 10,
                 }}>
-                <Text
+                <TouchableOpacity
+                  onPress={() => onPressMessenger()}
                   style={{
-                    color: colors.greenColor,
-                    fontSize: 11,
-                    textAlign: 'center',
+                    height: 36,
+                    width: 100,
+                    backgroundColor: 'white',
+                    borderRadius: 2,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
-                  Messenger
-                </Text>
-                <MaterialIcons
-                  name="messenger"
-                  size={18}
-                  style={{
-                    marginLeft: 5,
-                    color: colors.greenColor,
+                  <Text
+                    style={{
+                      color: colors.greenColor,
+                      fontSize: 11,
+                      textAlign: 'center',
+                    }}>
+                    Messenger
+                  </Text>
+                  <MaterialIcons
+                    name="messenger"
+                    size={18}
+                    style={{
+                      marginLeft: 5,
+                      color: colors.greenColor,
+                    }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    openDialScreen();
                   }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  openDialScreen();
-                }}
-                style={{
-                  height: 36,
-                  width: 100,
-                  padding: 10,
-                  backgroundColor: 'white',
-                  borderRadius: 2,
+                  style={{
+                    height: 36,
+                    width: 100,
+                    padding: 10,
+                    backgroundColor: 'white',
+                    borderRadius: 2,
 
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: colors.greenColor,
-                    fontSize: 11,
-                    textAlign: 'center',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}>
-                  Phone Call
-                </Text>
-                <Zocial
-                  name="call"
-                  size={18}
-                  style={{
-                    marginLeft: 5,
-                    color: colors.greenColor,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
+                  <Text
+                    style={{
+                      color: colors.greenColor,
+                      fontSize: 11,
+                      textAlign: 'center',
+                    }}>
+                    Phone Call
+                  </Text>
+                  <Zocial
+                    name="call"
+                    size={18}
+                    style={{
+                      marginLeft: 5,
+                      color: colors.greenColor,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         </View>
 

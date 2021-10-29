@@ -291,12 +291,13 @@ const MainHeader = ({
                   onPressUserProfile();
                 }}>
                 <Image
-                  source={require('../../../assets/person.png')}
+                  source={{uri: user.my_dp}}
                   resizeMode={'contain'}
                   style={{
                     borderRadius: 30 / 2,
                     width: 30,
                     height: 30,
+                    // backgroundColor: 'black',
                   }}
                 />
               </TouchableOpacity>

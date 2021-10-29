@@ -94,7 +94,9 @@ const DrawerContent = ({
             label="My Profile"
             labelStyle={styles.labelStyle}
             onPress={() => {
-              navigation.navigate('UserProfile');
+              user?.user_role == 'subscriber'
+                ? navigation.navigate('UserProfile')
+                : navigation.navigate('ShopperDetail');
             }}
             icon={({color, size}) => (
               <Icon name="home" color={colors.primary} size={25} />

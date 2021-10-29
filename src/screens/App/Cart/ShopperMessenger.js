@@ -509,7 +509,9 @@ const ShopperMessenger = (props) => {
           )}
 
           <Image
-            source={person1}
+            source={
+              !user ? require('../../../assets/person.png') : {uri: user?.my_dp}
+            }
             style={{
               height: 50,
               width: 50,

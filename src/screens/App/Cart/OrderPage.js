@@ -34,10 +34,14 @@ import {
 import MainHeader from '../Products/MainHeader';
 import Footer from '../../../components/Footer';
 import {useNavigation} from '@react-navigation/native';
+import {UIActivityIndicator} from 'react-native-indicators';
+import LoaderModal from 'react-native-modal';
 
-const OrderPage = ({getuserRecord, getorderDetail}) => {
+const OrderPage = (props) => {
   const [userdata, setuserdata] = useState([]);
-  const [loading, setloading] = useState([]);
+
+  const [loading, setLoading] = useState();
+  const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
   const [order, setorder] = useState([]);
   const [product, setproduct] = useState([]);
   const [user, setUser] = useState(useSelector((state) => state?.auth));
@@ -53,25 +57,9 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
     Linking.openURL(number);
   };
 
-  useEffect(() => {
-    console.log('orderpage useeffect user: ', user?.user?.user_role);
-    console.log('orderpage useeffect props');
-    (async () => {
-      const formdata = new FormData();
-      formdata.append('order_id', 54);
-      const res = await getorderDetail(formdata);
-      console.log('orderpage RESPONSE: ', res);
-
-      setorder(res.data.data.order_detail[0]);
-      let array = [];
-      array.push(res.data.data.product_detail);
-      setproduct(array);
-    })();
-  }, []);
-
-  useEffect(() => {
-    console.log('RESPONSE product: ', product);
-  });
+  const toggleModal = () => {
+    setLoaderModalVisible(!isLoaderModalVisible);
+  };
 
   useEffect(() => {
     (async () => {
@@ -81,7 +69,25 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
       // console.log('fashindata,', res);
       setuserdata(res.data.data);
     })();
-  }, []);
+  }, [props?.route?.params?.order_id]);
+
+  useEffect(() => {
+    toggleModal();
+    setLoading(true);
+    console.log('orderpage useEffect');
+    (async () => {
+      const formdata = new FormData();
+      formdata.append('order_id', JSON.parse(props?.route?.params?.order_id));
+      const res = await getorderDetail(formdata);
+      console.log('orderpage getorderDetail RESPONSE: ', res);
+      setorder(res.data.data.order_detail[0]);
+      let array = [];
+      array.push(res.data.data.product_detail);
+      setproduct(array);
+      setLoading(false);
+      toggleModal();
+    })();
+  }, [props?.route?.params?.order_id]);
 
   const onPressMessenger = () => {
     console.log('orderpage userdata: ', userdata);
@@ -95,6 +101,21 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* <Loading visible={loading} /> */}
+      {loading ? (
+        <LoaderModal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isLoaderModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 20,
+              borderRadius: 50,
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </LoaderModal>
+      ) : null}
 
       <MainHeader />
 
@@ -526,6 +547,7 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
                 color: order.assing_to == 0 ? colors.greenColor : colors.gray,
                 right: 20,
               }}>
+              {'   '}
               create cart
             </Text>
             <Text
@@ -862,9 +884,9 @@ const OrderPage = ({getuserRecord, getorderDetail}) => {
 
 const mapStateToProps = (state) => {
   const {user, isLoggedIn} = state.auth;
-
   return {user, isLoggedIn};
 };
+
 export default connect(mapStateToProps, {getuserRecord, getorderDetail})(
   OrderPage,
 );
