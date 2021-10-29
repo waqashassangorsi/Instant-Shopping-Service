@@ -292,9 +292,9 @@ export const getorderDetail = async (data) => {
 };
 
 export const getorderDetailNew = async (data) => {
-  console.log('orderpage getorderDetail data: ', data);
-  const res = await axios.post(`${BASE_URL}getorderdetail`, data);
-  console.log(res);
+  console.log('orderpage getorderDetailNew data: ', data);
+  const res = await axios.post(`${BASE_URL}get_order_detail`, data);
+  console.log('orderpage getorderDetailNew RESPONSE: ', res);
   return res;
 };
 

@@ -40,6 +40,7 @@ import Footer from '../../../components/Footer';
 import {useNavigation} from '@react-navigation/native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import LoaderModal from 'react-native-modal';
+import moment from 'moment';
 
 const OrderPage = (props) => {
   const [userdata, setuserdata] = useState([]);
@@ -48,14 +49,18 @@ const OrderPage = (props) => {
   const [order, setorder] = useState([]);
   const [product, setproduct] = useState([]);
   const [user, setUser] = useState(useSelector((state) => state?.auth));
+  const [resuser, setresuser] = useState([]);
+  const [resorderdata, setresorderdata] = useState([]);
+  const [resorderdetails, setresorderdetails] = useState([]);
+
   let navigation = useNavigation();
 
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
-      number = 'telprompt:' + userdata.phone_number;
+      number = 'telprompt:' + resuser[0]?.phone_number;
     } else {
-      number = 'tel:' + userdata.phone_number;
+      number = 'tel:' + resuser[0]?.phone_number;
     }
     Linking.openURL(number);
   };
@@ -75,36 +80,56 @@ const OrderPage = (props) => {
   }, [props?.route?.params?.order_id]);
 
   useEffect(() => {
-    toggleModal();
-    setLoading(true);
+    // toggleModal();
+    // setLoading(true);
     console.log('orderpage useEffect');
+    console.log('orderpage user: ', user?.user?.user_id);
     console.log('orderpage user?.user?.user_id: ', user?.user?.user_id);
     console.log(
       'orderpage props?.route?.params?.order_id: ',
       props?.route?.params?.order_id,
     );
+    console.log(
+      'orderpage user?.user?.user_id typeof: ',
+      typeof JSON.parse(props?.route?.params?.order_id),
+    );
+    console.log(
+      'orderpage props?.route?.params?.order_id typeof: ',
+      typeof JSON.parse(user?.user?.user_id),
+    );
     (async () => {
       const formdata = new FormData();
-      formdata.append('order_id', JSON.parse(props?.route?.params?.order_id));
-      formdata.append('user_id', JSON.parse(user?.user?.user_id));
-      const res = await getorderDetail(formdata);
-      console.log('orderpage getorderDetail RESPONSE: ', res);
-      setorder(res.data.data.order_detail[0]);
+      // formdata.append('order_id', JSON.parse(props?.route?.params?.order_id));
+      // formdata.append('user_id', JSON.parse(user?.user?.user_id));
+      formdata.append('order_id', 54);
+      formdata.append('user_id', 42);
+      // const res = await getorderDetail(formdata);
+      // console.log('orderpage getorderDetail RESPONSE: ', res);
+      // setorder(res.data.data.order_detail[0]);
+      // let array = [];
+      // array.push(res.data.data.product_detail);
+      // setproduct(array);
+      const response = await getorderDetailNew(formdata);
+      console.log('orderpage getorderDetailNew RESPONSE: ', response);
+      setresorderdata(response.data.data.order_data);
+      setresorderdetails(response.data.data.order_details);
       let array = [];
-      array.push(res.data.data.product_detail);
-      setproduct(array);
-      // const response = await getorderDetailNew(formdata);
-      // console.log('orderpage getorderDetailNew RESPONSE: ', response);
-      setLoading(false);
-      toggleModal();
+      array.push(response.data.data.user_Data);
+      setresuser(array);
+      console.log('orderpage resorderdata', resorderdata);
+      console.log('orderpage resorderdetails: ', resorderdetails);
+      console.log('orderpage resuser: ', resuser);
+
+      // setLoading(false);
+      // toggleModal();
     })();
   }, [props?.route?.params?.order_id]);
 
   const onPressMessenger = () => {
-    console.log('orderpage userdata: ', userdata);
-    if (userdata.length != 0) {
+    console.log('orderpage onPressMessenger: ', resuser);
+    if (resuser.length != 0) {
       navigation.navigate('ShopperMessenger', {
-        userdata: userdata,
+        userdata: resuser,
       });
     }
   };
@@ -180,7 +205,7 @@ const OrderPage = (props) => {
                 alignSelf: 'center',
                 marginRight: 120,
               }}>
-              {order.order_number}
+              {resorderdata[0]?.order_number}
             </Text>
             <Text
               style={{
@@ -188,7 +213,7 @@ const OrderPage = (props) => {
                 alignSelf: 'center',
                 fontFamily: 'Cochin',
               }}>
-              {order.order_status}
+              {resorderdata[0]?.order_status}
             </Text>
           </TouchableOpacity>
         </View>
@@ -213,8 +238,9 @@ const OrderPage = (props) => {
             </Text>
           </TouchableOpacity>
         </View> */}
-
-        {user?.user?.user_role == 'subscriber' ? (
+        {/* user?.user?.user_role == 'subscriber' */}
+        {user?.user?.user_id !== resuser[0]?.userid ||
+        user?.user?.user_role == 'subscriber' ? (
           <View
             style={{
               flexDirection: 'row',
@@ -226,7 +252,7 @@ const OrderPage = (props) => {
             }}>
             <View style={{flex: 0.4, justifyContent: 'center', marginTop: 10}}>
               <Image
-                source={{uri: userdata.dp}}
+                source={{uri: resuser[0]?.dp}}
                 style={{
                   height: 80,
                   width: 80,
@@ -242,10 +268,11 @@ const OrderPage = (props) => {
             </View>
             <View style={{flex: 1, justifyContent: 'center', marginTop: 10}}>
               <Text style={{color: 'white', fontSize: 22, marginLeft: 10}}>
-                {userdata.name}
+                {resuser[0]?.first_name} {resuser[0]?.last_name}
               </Text>
               <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
-                {userdata.joining_date}
+                {'Active Since ' +
+                  moment(resuser[0]?.user_registered).format('MMMM YYYY')}
               </Text>
 
               <View
@@ -319,8 +346,10 @@ const OrderPage = (props) => {
             </View>
           </View>
         ) : null}
+        {/* user?.user?.user_role == 'subscriber' */}
 
-        {user?.user?.user_role == 'subscriber' ? (
+        {user?.user?.user_id !== resuser[0]?.userid ||
+        user?.user?.user_role == 'subscriber' ? (
           <View
             style={{
               backgroundColor: 'white',
@@ -346,18 +375,19 @@ const OrderPage = (props) => {
                     alignItems: 'center',
                     marginTop: 5,
                   }}>
-                  {/* <Text>{userdata.success_rate}</Text> */}
+                  {/* <Text>{resuser[0].success_Rate}</Text> */}
+
                   {/* <Progress.Circle
-                  size={100}
-                  color={colors.greenColor}
-                  allowFontScaling={true}
-                  showsText={true}
-                  borderWidth={4}
-                /> */}
+                    size={100}
+                    color={colors.greenColor}
+                    allowFontScaling={true}
+                    showsText={true}
+                    borderWidth={4}
+                  /> */}
                   <AnimatedCircularProgress
                     size={100}
                     width={3}
-                    fill={userdata.success_rate}
+                    fill={resuser[0]?.success_Rate}
                     tintColor={colors.greenColor}
                     backgroundColor={colors.WebGLQuery}>
                     {(fill) => (
@@ -367,7 +397,7 @@ const OrderPage = (props) => {
                           fontSize: 32,
                           fontWeight: 'bold',
                         }}>
-                        {userdata.success_rate}
+                        {resuser[0]?.success_Rate}
                       </Text>
                     )}
                   </AnimatedCircularProgress>
@@ -395,7 +425,8 @@ const OrderPage = (props) => {
                   <AnimatedCircularProgress
                     size={100}
                     width={3}
-                    fill={userdata.shoping_sprint}
+                    fill={resuser[0]?.shoppingsprint}
+                    fill={0.5}
                     tintColor={colors.greenColor}
                     backgroundColor={colors.WebGLQuery}>
                     {(fill) => (
@@ -405,7 +436,7 @@ const OrderPage = (props) => {
                           fontSize: 32,
                           fontWeight: 'bold',
                         }}>
-                        {userdata.shoping_sprint}
+                        {resuser[0]?.shoppingsprint}
                       </Text>
                     )}
                   </AnimatedCircularProgress>
@@ -438,7 +469,9 @@ const OrderPage = (props) => {
                 borderRadius: 20 / 2,
                 borderWidth: 1,
                 borderColor:
-                  order.assing_to == 0 ? colors.greenColor : colors.gray,
+                  resorderdata[0]?.assign_to == 0
+                    ? colors.greenColor
+                    : colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -448,7 +481,9 @@ const OrderPage = (props) => {
                   height: 16,
                   borderRadius: 16 / 2,
                   backgroundColor:
-                    order.assing_to == 0 ? colors.greenColor : colors.gray,
+                    resorderdata[0]?.assign_to == 0
+                      ? colors.greenColor
+                      : colors.gray,
                 }}
               />
             </View>
@@ -457,7 +492,9 @@ const OrderPage = (props) => {
                 width: 80,
                 borderBottomWidth: 1,
                 borderBottomColor:
-                  order.assing_to > 0 ? colors.greenColor : colors.gray,
+                  resorderdata[0]?.assign_to > 0
+                    ? colors.greenColor
+                    : colors.gray,
               }}
             />
 
@@ -468,7 +505,9 @@ const OrderPage = (props) => {
                 borderRadius: 20 / 2,
                 borderWidth: 1,
                 borderColor:
-                  order.assing_to > 0 ? colors.greenColor : colors.gray,
+                  resorderdata[0]?.assign_to > 0
+                    ? colors.greenColor
+                    : colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -478,7 +517,9 @@ const OrderPage = (props) => {
                   height: 16,
                   borderRadius: 16 / 2,
                   backgroundColor:
-                    order.assing_to > 0 ? colors.greenColor : colors.gray,
+                    resorderdata[0]?.assign_to > 0
+                      ? colors.greenColor
+                      : colors.gray,
                 }}
               />
             </View>
@@ -488,7 +529,9 @@ const OrderPage = (props) => {
                 borderBottomWidth: 1,
                 // borderBottomColor: colors.greenColor,
                 borderBottomColor:
-                  order.assing_to > 0 ? colors.greenColor : colors.gray,
+                  resorderdata[0]?.assign_to > 0
+                    ? colors.greenColor
+                    : colors.gray,
               }}
             />
 
@@ -499,7 +542,9 @@ const OrderPage = (props) => {
                 borderRadius: 20 / 2,
                 borderWidth: 1,
                 borderColor:
-                  order.assing_to > 0 ? colors.greenColor : colors.gray,
+                  resorderdata[0]?.assign_to > 0
+                    ? colors.greenColor
+                    : colors.gray,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -509,7 +554,9 @@ const OrderPage = (props) => {
                   height: 16,
                   borderRadius: 16 / 2,
                   backgroundColor:
-                    order.assing_to > 0 ? colors.greenColor : colors.gray,
+                    resorderdata[0]?.assign_to > 0
+                      ? colors.greenColor
+                      : colors.gray,
                 }}
               />
             </View>
@@ -555,7 +602,10 @@ const OrderPage = (props) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: order.assing_to == 0 ? colors.greenColor : colors.gray,
+                color:
+                  resorderdata[0]?.assign_to == 0
+                    ? colors.greenColor
+                    : colors.gray,
                 right: 20,
               }}>
               {'   '}
@@ -565,7 +615,10 @@ const OrderPage = (props) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: order.assing_to > 0 ? colors.greenColor : colors.gray,
+                color:
+                  resorderdata[0]?.assign_to > 0
+                    ? colors.greenColor
+                    : colors.gray,
                 left: 5,
               }}>
               Shopper assigned
@@ -574,7 +627,10 @@ const OrderPage = (props) => {
               style={{
                 fontSize: 9,
                 textTransform: 'capitalize',
-                color: order.assing_to > 0 ? colors.greenColor : colors.gray,
+                color:
+                  resorderdata[0]?.assign_to > 0
+                    ? colors.greenColor
+                    : colors.gray,
                 left: 5,
               }}>
               shopping in progress
@@ -612,7 +668,7 @@ const OrderPage = (props) => {
               color: colors.greenColor,
               fontWeight: 'bold',
             }}>
-            {order.order_number}
+            {resorderdata[0]?.order_number}
           </Text>
         </View>
         <View
@@ -625,10 +681,10 @@ const OrderPage = (props) => {
           }}>
           {/* <View style={{backgroundColor: 'pink', height: 100}}> */}
           <FlatList
-            data={product}
-            keyExtractor={(product) => product.product_id}
+            data={resorderdetails}
+            keyExtractor={(resorderdetails) => resorderdetails?.id}
             renderItem={({item}) => {
-              console.log('RESPONSE ITEM: ', item);
+              console.log('orderpage item: ', item);
               return (
                 <View
                   style={{
@@ -647,13 +703,20 @@ const OrderPage = (props) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
-                    <Image
-                      source={require('../../../assets/miniDress.png')}
-                      style={{width: 73, height: 73}}
-                    />
+                    {resorderdetails ? (
+                      <Image
+                        source={{uri: item.product_pic}}
+                        style={{width: 73, height: 73}}
+                      />
+                    ) : (
+                      <Image
+                        source={require('../../../assets/miniDress.png')}
+                        style={{width: 73, height: 73}}
+                      />
+                    )}
                     <View style={{marginLeft: 10}}>
                       <Text style={{fontSize: 16, color: 'black'}}>
-                        {item.product_name}
+                        {item?.product_name}
                       </Text>
                       {/* <Text style={{fontSize: 10}}>Black</Text> */}
                     </View>
@@ -675,7 +738,7 @@ const OrderPage = (props) => {
                         marginRight: 15,
                       }}>
                       <Text style={{textAlign: 'center', marginTop: 3}}>
-                        {item.qty}
+                        {item?.quantity}
                       </Text>
                     </View>
                     <View>
@@ -684,7 +747,7 @@ const OrderPage = (props) => {
                           fontSize: 16,
                           color: colors.gray,
                         }}>
-                        {'$' + item.product_price}
+                        {'$' + item?.total}
                       </Text>
                     </View>
                   </View>
@@ -882,7 +945,7 @@ const OrderPage = (props) => {
                 color: colors.greenColor,
                 marginHorizontal: 10,
               }}>
-              ${order.order_total}
+              ${resorderdata[0]?.total}
             </Text>
           </View>
         </View>
