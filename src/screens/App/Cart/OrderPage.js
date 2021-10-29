@@ -18,7 +18,11 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import * as Progress from 'react-native-progress';
 import {connect, useSelector} from 'react-redux';
-import {getuserRecord, getorderDetail} from '../../../Redux/Action/Loginaction';
+import {
+  getuserRecord,
+  getorderDetail,
+  getorderDetailNew,
+} from '../../../Redux/Action/Loginaction';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import {
@@ -39,7 +43,6 @@ import LoaderModal from 'react-native-modal';
 
 const OrderPage = (props) => {
   const [userdata, setuserdata] = useState([]);
-
   const [loading, setLoading] = useState();
   const [isLoaderModalVisible, setLoaderModalVisible] = useState(false);
   const [order, setorder] = useState([]);
@@ -75,15 +78,23 @@ const OrderPage = (props) => {
     toggleModal();
     setLoading(true);
     console.log('orderpage useEffect');
+    console.log('orderpage user?.user?.user_id: ', user?.user?.user_id);
+    console.log(
+      'orderpage props?.route?.params?.order_id: ',
+      props?.route?.params?.order_id,
+    );
     (async () => {
       const formdata = new FormData();
       formdata.append('order_id', JSON.parse(props?.route?.params?.order_id));
+      formdata.append('user_id', JSON.parse(user?.user?.user_id));
       const res = await getorderDetail(formdata);
       console.log('orderpage getorderDetail RESPONSE: ', res);
       setorder(res.data.data.order_detail[0]);
       let array = [];
       array.push(res.data.data.product_detail);
       setproduct(array);
+      // const response = await getorderDetailNew(formdata);
+      // console.log('orderpage getorderDetailNew RESPONSE: ', response);
       setLoading(false);
       toggleModal();
     })();

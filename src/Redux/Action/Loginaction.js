@@ -291,6 +291,13 @@ export const getorderDetail = async (data) => {
   return res;
 };
 
+export const getorderDetailNew = async (data) => {
+  console.log('orderpage getorderDetail data: ', data);
+  const res = await axios.post(`${BASE_URL}getorderdetail`, data);
+  console.log(res);
+  return res;
+};
+
 export const getassignedOrder = (data) => {
   console.log('shopperdetail loginaction getassignedOrder data: ', data);
   return async (dispatch) => {

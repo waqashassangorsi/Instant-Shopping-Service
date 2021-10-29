@@ -179,7 +179,7 @@ const Product = ({
     console.log('checktoken token: ', token);
     console.log('checktoken fcmtoken: ', fcmtoken);
     // alert(token);
-    if (token !== fcmtoken) {
+    if (token == fcmtoken) {
       console.log('checktoken condition token: ', token);
       console.log('checktoken condition fcmtoken: ', fcmtoken);
       // alert('Pushed');

@@ -611,7 +611,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
           )}
 
           <View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 navigation.navigate('ShopperDetail');
               }}
@@ -632,7 +632,7 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
                 }}>
                 Load More Orders
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

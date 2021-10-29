@@ -54,7 +54,8 @@ const ProductsDetails = () => {
       }
       if (parsedData.from == 2) {
         // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
-        navigation.navigate('OrderPage', parsedData.order_id);
+        // navigation.navigate('OrderPage', parsedData.order_id);
+        navigation.navigate('OrderPage', parsedData);
       }
     });
     messaging().onMessage(async (remoteMessage) => {
@@ -70,7 +71,8 @@ const ProductsDetails = () => {
       }
       if (parsedData.from == 2) {
         // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
-        navigation.navigate('OrderPage', parsedData.order_id);
+        // navigation.navigate('OrderPage', parsedData.order_id);
+        navigation.navigate('OrderPage', parsedData);
       }
     });
     messaging()
@@ -89,7 +91,8 @@ const ProductsDetails = () => {
           }
           if (parsedData.from == 2) {
             // console.log('NOTIFICATION ORDER: ', parsedData.order_id);
-            navigation.navigate('OrderPage', parsedData.order_id);
+            // navigation.navigate('OrderPage', parsedData.order_id);
+            navigation.navigate('OrderPage', parsedData);
           }
         }
 
