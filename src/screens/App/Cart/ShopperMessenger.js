@@ -306,9 +306,9 @@ const ShopperMessenger = (props) => {
 
   // }
 
-  const renderItem = ({item, index}) => (
-    <View>
-      {true ? (
+  const renderItem = ({item, index}) => {
+    if (item.type === 'day' && item.date === moment().format('YYYY-MM-DD')) {
+      return (
         <View
           style={{
             justifyContent: 'center',
@@ -321,23 +321,46 @@ const ShopperMessenger = (props) => {
             borderRadius: 3,
             // backgroundColor: 'black',
           }}>
-          <Text style={{color: 'white', fontSize: 10}}>Thursday</Text>
+          <Text style={{color: 'white', fontSize: 10}}>Today</Text>
         </View>
-      ) : null}
+      );
+    } else if (item.type === 'day') {
+      return (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.greenColor,
+            marginTop: 15,
+            width: 100,
+            height: 25,
+            alignSelf: 'center',
+            borderRadius: 3,
+            // backgroundColor: 'black',
+          }}>
+          <Text style={{color: 'white', fontSize: 10}}>
+            {moment(item.date).format('ll')}
+          </Text>
+        </View>
+      );
+    } else {
+      console.log(JSON.stringify(item));
+    }
+    return (
+      <View>
+        {item.sendid == user?.user_id && (
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Image
+              source={{uri: userData?.dp}}
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 50 / 2,
+                marginLeft: 10,
+              }}
+            />
 
-      {item.sendid == user?.user_id && (
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-          <Image
-            source={{uri: userData?.dp}}
-            style={{
-              height: 50,
-              width: 50,
-              borderRadius: 50 / 2,
-              marginLeft: 10,
-            }}
-          />
-
-          {/* <View
+            {/* <View
             style={{
               justifyContent: 'center',
               marginLeft: 10,
@@ -358,172 +381,179 @@ const ShopperMessenger = (props) => {
             </Text>
           </View> */}
 
-          {item.b64 ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                marginLeft: 10,
-                backgroundColor: colors.greenColor,
-                maxWidth: 200,
-                alignSelf: 'center',
-                borderRadius: 5,
-                padding: 10,
-              }}>
+            {item.b64 ? (
               <View
                 style={{
-                  flex: 1,
-                  // backgroundColor: 'black',
                   justifyContent: 'center',
-                  alignItems: 'center',
+                  marginLeft: 10,
+                  backgroundColor: colors.greenColor,
+                  maxWidth: 200,
+                  alignSelf: 'center',
+                  borderRadius: 5,
+                  padding: 10,
                 }}>
-                <Image
+                <View
                   style={{
-                    width: 100,
-                    height: 100,
-                    resizeMode: 'contain',
-                    borderWidth: 1,
-                    // borderColor: 'red',
-                  }}
-                  // source={{
-                  //   uri:
-                  //     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                  // }}
-                  source={{uri: `data:image/jpg;base64,${item.text}`}}
-                />
-                {/* <View style={{backgroundColor: 'pink'}}>
+                    flex: 1,
+                    // backgroundColor: 'black',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      width: 100,
+                      height: 100,
+                      resizeMode: 'contain',
+                      borderWidth: 1,
+                      // borderColor: 'red',
+                    }}
+                    // source={{
+                    //   uri:
+                    //     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                    // }}
+                    source={{uri: `data:image/jpg;base64,${item.text}`}}
+                  />
+                  {/* <View style={{backgroundColor: 'pink'}}>
                   <Text>{`data:image/png;base64,${item.text}`}</Text>
                 </View> */}
+                </View>
               </View>
-            </View>
-          ) : (
-            <View
-              style={{
-                justifyContent: 'center',
-                marginLeft: 10,
-                backgroundColor: colors.greenColor,
-                maxWidth: 200,
-                alignSelf: 'center',
-                borderRadius: 5,
-                padding: 10,
-              }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 12,
-                }}>
-                {item.text}
-              </Text>
-            </View>
-          )}
-
-          <View
-            style={{
-              justifyContent: 'center',
-              marginTop: 25,
-              marginLeft: 5,
-              // backgroundColor: 'black',
-            }}>
-            <Text style={{fontSize: 10}}>{item.hour + ':' + item.minutes}</Text>
-          </View>
-        </View>
-      )}
-
-      {item.recvid == user?.user_id && (
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 10,
-            alignSelf: 'flex-end',
-          }}>
-          <View
-            style={{
-              justifyContent: 'center',
-              marginLeft: 5,
-              alignSelf: 'flex-end',
-            }}>
-            <Text style={{fontSize: 10}}>{item.hour + ':' + item.minutes}</Text>
-          </View>
-
-          {item.b64 ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                // alignItems: 'center',
-                marginLeft: 10,
-                backgroundColor: colors.primary,
-                // height: 80,
-                maxWidth: 200,
-                alignSelf: 'center',
-                borderRadius: 5,
-                padding: 10,
-              }}>
+            ) : (
               <View
                 style={{
-                  flex: 1,
-                  // backgroundColor: 'black',
                   justifyContent: 'center',
-                  alignItems: 'center',
+                  marginLeft: 10,
+                  backgroundColor: colors.greenColor,
+                  maxWidth: 200,
+                  alignSelf: 'center',
+                  borderRadius: 5,
+                  padding: 10,
                 }}>
-                <Image
+                <Text
                   style={{
-                    width: 100,
-                    height: 100,
-                    resizeMode: 'contain',
-                    borderWidth: 1,
-                    // borderColor: 'red',
-                  }}
-                  // source={{
-                  //   uri:
-                  //     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                  // }}
-                  source={{uri: `data:image/jpg;base64,${item.text}`}}
-                />
-                {/* <View style={{backgroundColor: 'pink'}}>
-                  <Text>{`data:image/png;base64,${item.text}`}</Text>
-                </View> */}
+                    color: 'white',
+                    fontSize: 12,
+                  }}>
+                  {item.text}
+                </Text>
               </View>
-            </View>
-          ) : (
+            )}
+
             <View
               style={{
                 justifyContent: 'center',
-                // alignItems: 'center',
-                marginLeft: 10,
-                backgroundColor: colors.primary,
-                // height: 80,
-                maxWidth: 200,
-                alignSelf: 'center',
-                borderRadius: 5,
-                padding: 10,
+                marginTop: 25,
+                marginLeft: 5,
+                // backgroundColor: 'black',
               }}>
-              <Text
-                style={{
-                  color: colors.greenColor,
-                  // marginHorizontal: 8,
-                  fontSize: 12,
-                  // marginLeft: 10,
-                }}>
-                {item.text}
+              <Text style={{fontSize: 10}}>
+                {item.hour + ':' + item.minutes}
               </Text>
             </View>
-          )}
+          </View>
+        )}
 
-          <Image
-            source={
-              !user ? require('../../../assets/person.png') : {uri: user?.my_dp}
-            }
+        {item.recvid == user?.user_id && (
+          <View
             style={{
-              height: 50,
-              width: 50,
-              borderRadius: 50 / 2,
-              marginLeft: 15,
+              flexDirection: 'row',
+              marginTop: 10,
               alignSelf: 'flex-end',
-            }}
-          />
-        </View>
-      )}
-    </View>
-  );
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                marginLeft: 5,
+                alignSelf: 'flex-end',
+              }}>
+              <Text style={{fontSize: 10}}>
+                {item.hour + ':' + item.minutes}
+              </Text>
+            </View>
+
+            {item.b64 ? (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  // alignItems: 'center',
+                  marginLeft: 10,
+                  backgroundColor: colors.primary,
+                  // height: 80,
+                  maxWidth: 200,
+                  alignSelf: 'center',
+                  borderRadius: 5,
+                  padding: 10,
+                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    // backgroundColor: 'black',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      width: 100,
+                      height: 100,
+                      resizeMode: 'contain',
+                      borderWidth: 1,
+                      // borderColor: 'red',
+                    }}
+                    // source={{
+                    //   uri:
+                    //     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                    // }}
+                    source={{uri: `data:image/jpg;base64,${item.text}`}}
+                  />
+                  {/* <View style={{backgroundColor: 'pink'}}>
+                  <Text>{`data:image/png;base64,${item.text}`}</Text>
+                </View> */}
+                </View>
+              </View>
+            ) : (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  // alignItems: 'center',
+                  marginLeft: 10,
+                  backgroundColor: colors.primary,
+                  // height: 80,
+                  maxWidth: 200,
+                  alignSelf: 'center',
+                  borderRadius: 5,
+                  padding: 10,
+                }}>
+                <Text
+                  style={{
+                    color: colors.greenColor,
+                    // marginHorizontal: 8,
+                    fontSize: 12,
+                    // marginLeft: 10,
+                  }}>
+                  {item.text}
+                </Text>
+              </View>
+            )}
+
+            <Image
+              source={
+                !user
+                  ? require('../../../assets/person.png')
+                  : {uri: user?.my_dp}
+              }
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 50 / 2,
+                marginLeft: 15,
+                alignSelf: 'flex-end',
+              }}
+            />
+          </View>
+        )}
+      </View>
+    );
+  };
 
   const openCamera1 = async (index) => {
     // setLoader(true);
@@ -731,7 +761,8 @@ const ShopperMessenger = (props) => {
               data={generateItems(messages).sort(
                 (a, b) => b.createdAt - a.createdAt,
               )}
-              data={messages}
+              inverted
+              // data={messages}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
             />

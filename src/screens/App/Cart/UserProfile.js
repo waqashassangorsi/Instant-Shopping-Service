@@ -339,8 +339,8 @@ const UserProfile = ({getuserRecord, route, getuserOrder, user}) => {
             <Text style={{color: 'white', marginLeft: 10, fontSize: 13}}>
               {userdata?.joining_date}
             </Text>
-
-            {user.user_id !== userdata.id ? (
+            {/*  user.user_id !== userdata.id */}
+            {true ? (
               <View
                 style={{
                   flexDirection: 'row',
